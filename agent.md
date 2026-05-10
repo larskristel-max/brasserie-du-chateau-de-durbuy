@@ -302,6 +302,16 @@ This line is the agreed baseline ("Option B" in the heritage findings document).
 - The **current château is a 1731 rebuild** by the Duke d'Ursel, on the surviving substructure (foundations and cellars from the pre-1675 château).
 - **Major neo-gothic modernisation in 1880–1882** by Comtesse Auguste d'Ursel (architect Thirian de Namur, advised by Viollet-le-Duc).
 - The current 2020 brasserie occupies the **anciennes écuries** (former stables) of the château — a separate building from the château proper.
+- **A historical brewery building** (per Comte Jean-Michel d'Ursel's direct testimony) stands at the **petite anticlinal** at the western end of the domain. It is **the oldest building still standing** on the château grounds, was not transformed in the 1731 rebuild, and contains the **old well descending to the Ourthe**. This claim is family knowledge — not documented in any public source including the d'Ursel family's own published château historique. Treat as Tier-D copy (requires explicit blessing from Jean-Michel to print). See `docs/heritage/research-findings.md` for the full evidence and `docs/heritage/brewing-deep-dive.md` for the architectural and economic context.
+
+### Research archive
+
+The brand's research lives in the repository at `docs/heritage/`:
+
+- **`docs/heritage/research-findings.md`** — the tiered evidence document. Headline finding, the Comte's testimony, Tier A facts (citable), modern brewery canonical facts, Tier B inferences, Tier C marketing claims, source list, copy proposals A/B/C/D, open questions. **Future agents writing copy should consult this first**, then `agent.md` for the canonical brand voice.
+- **`docs/heritage/brewing-deep-dive.md`** — historical context for the maître brasseur: what was brewed in 16th–17th century Wallonia, Marckloff's social position as maître d'hôtel of the governor, the economics of small-town brewing, and the staff-vs-franchise question for castle breweries. Used to ground deep brewing-history claims in the brand's communications.
+
+When new research arrives (Pirotte 1968 finally obtained, Cercle Terre de Durbuy revue 135, family archive access), update these files in the same commit that uses the new findings on the site.
 
 ---
 

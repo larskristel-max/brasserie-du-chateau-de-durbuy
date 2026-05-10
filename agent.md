@@ -257,18 +257,78 @@ External links (Instagram, future EN site, future booking domain) must include `
 
 ---
 
-## 14. Known unknowns — facts to verify before they appear in copy or markup
+## 14. Canonical brand facts (sourced)
 
-This section exists because real-world facts have already been confabulated once in this repository (an early draft asserted "Cinq cuves" — there are not five cuves). To prevent recurrence, the following facts are **explicitly unconfirmed**. They must not appear in copy, alt text, structured data, or design treatments until the creative director has verified them.
+The following facts are sourced and may be used in copy, structured data, or design treatments. Each entry names the source so future agents can verify before printing.
 
-- **The cuves count.** Unknown. **Do not invent a number.** If you need a brewing-equipment reference in copy, write around it ("Au cœur du domaine. Au rythme du lieu." rather than "X cuves, Y bières.").
-- **The 16th-century brewing claim.** There is anecdotal mention of a brewer and brewery present at the Château de Durbuy in the 16th century. This claim is currently **under research** — a tiered findings document is in progress. Until that document lands and the creative director chooses what to use, **do not echo the claim in copy**, even in soft form ("brassée depuis...", "héritage séculaire...", "depuis le XVIᵉ siècle..."). The temptation to anchor heritage with a century reference is real; resist it until the source is confirmed.
-- **Named historical brewers, brewing-master records, specific dates of operation or interruption.** Unknown. Do not invent.
-- **The d'Ursel family's exact acquisition date and the construction date of the "anciennes écuries"** the brasserie occupies. Unknown. The street address (`Rue du Comte Théodule d'Ursel`) is a strong hint that the d'Ursels were patrons; that does not authorise printing a date.
-- **The number of beers brewed.** Currently **four** (Blonde, Bohemian Pilsner, IPA, Amber Ale). If this changes, every reference to "Quatre" in copy must change with it — including the hero kicker, the visit grid, and the brewery prose.
+### People
 
-When an unknown is verified, **move the entry from this section into the body of the relevant section (4, 5, etc.) with the source cited in a comment in the markup**. Do not delete the historical record of the unknown — it is a useful audit trail.
+- **Comte Jean-Michel d'Ursel** is the current Comte d'Ursel and head of the family branch at Durbuy. He is also **co-founder and co-gérant of "La brasserie du château de Durbuy, srl"** (with Marc Leclercq). He is therefore both the family voice and the brand voice in the same person. Source: Belgian public mandates registry (Cumuleo) and direct testimony.
+- **Maître brasseur: Lars Kristel.** Official since **January 2026** (brewery consultant in 2024). Born 11 October 1985 in Naarden, Netherlands. Source: direct testimony from Lars Kristel.
+
+### Where the brewmaster appears in copy
+
+- **NOT on the homepage.** The place is the protagonist; the brewmaster stays anonymous on the home view.
+- **YES on the future Le Domaine sub-page**, as a single restrained line — *"Maître brasseur depuis 2026 : Lars Kristel."* — and nowhere else without explicit creative-director sign-off.
+
+### Production
+
+- **2024 production: 21 brews × 500 L = 10,500 L = 105 hectolitres.** This is genuinely *petites séries* by Belgian brewing standards (≈30% the size of Westvleteren's most restricted Trappist output). The site's claims of *"production limitée"* and *"distribution confidentielle"* are empirically defensible. Source: direct testimony from Lars Kristel.
+- **2025 production: not yet confirmed.** Do not invent. If similar to 2024 (≈100 hL), the *"vingt-et-un brassins"* / *"cent hectolitres"* line is robust.
+- The four current beers are: **Blonde du Château**, **Bohemian Pilsner**, **IPA** (houblon Sorachi), **Amber Ale**. The Amber Ale is **plausibly the historical Marckloff** (the heritage beer revived by the Trine brothers in 1989) but this identity has not yet been explicitly confirmed by the brewery — see Known Unknowns.
+
+### Heritage anchors (canonical, fully sourced)
+
+These two lines may be printed without further verification. Both are corroborated in multiple secondary sources and in the d'Ursel family's own published château historique (chateaudedurbuy.be):
+
+- **Brewing in Durbuy traces to *circa* 1560**, founded by **Philippe Marckloff** (maître d'hôtel of the seigneurie's governor Antoine de Metz) at *La Ferme au Chesne*. He established the second *brasserie franche* of the medieval town.
+- **The d'Ursel/Schetz family has been the seigneurial authority over Durbuy since 30 January 1628**, when Baron Antoine Schetz de Grobendonck took the engagère for 40,000 marks of gold (described in the family's narrative as *"le Marché du siècle"*). The family acquired full ownership in 1756 for 40,000 gold florins. They remain the owners of the château today.
+
+### Approved heritage line for the homepage (subject to Comte's blessing on first use)
+
+> *"Brassée à Durbuy depuis le XVI<sup>e</sup> siècle, sous la garde de la famille d'Ursel depuis 1628."*
+
+This line is the agreed baseline ("Option B" in the heritage findings document). It is fully sourced and does not depend on any contested claim. Use this in the brewery section (Chapter II) when the heritage copy lands.
+
+### Reserved for the future Le Domaine sub-page (do NOT use on the homepage)
+
+- The brewmaster credit (Lars Kristel).
+- The four-date heritage timeline (1560 / 1609 / 1628 / 1675 / 1731 / 1989 / 2020 — see Option C in the heritage findings document).
+- Any claim about a brewery in the oldest part of the château at the well to the Ourthe (Comte Jean-Michel's oral testimony only — see Known Unknowns).
+
+### Architectural facts
+
+- The **original château was demolished by French troops on 10–12 August 1675** (Sandar de Louvignies, Maastricht campaign), with a coup de grâce on 20 October 1675.
+- The **current château is a 1731 rebuild** by the Duke d'Ursel, on the surviving substructure (foundations and cellars from the pre-1675 château).
+- **Major neo-gothic modernisation in 1880–1882** by Comtesse Auguste d'Ursel (architect Thirian de Namur, advised by Viollet-le-Duc).
+- The current 2020 brasserie occupies the **anciennes écuries** (former stables) of the château — a separate building from the château proper.
 
 ---
 
-*Last revised: 2026-05-10. Any divergence from this document requires explicit creative-director sign-off.*
+## 15. Known unknowns — facts NOT yet verified
+
+This section exists because real-world facts have already been confabulated once in this repository (an early draft asserted *"Cinq cuves"* — there are not five cuves). To prevent recurrence, the following facts are **explicitly unconfirmed**. They must not appear in copy, alt text, structured data, or design treatments until the creative director has verified them.
+
+- **The cuves count.** Unknown. **Do not invent a number.** Write around it (*"Au cœur du domaine. Au rythme du lieu."* rather than *"X cuves, Y bières."*).
+- **The brewery in the oldest part of the château, at the old well to the Ourthe.** Per Comte Jean-Michel's direct oral testimony to Lars (May 2026). Architecturally and operationally plausible (the 1675 demolition means "oldest part" = surviving foundations / cellars at the rocky outcrop's base, where the well descends to the Ourthe). **However, this claim is NOT documented in any public source** — including the d'Ursel family's own published château historique on chateaudedurbuy.be. Use Option D copy only with explicit blessing from Jean-Michel d'Ursel. If approved, the line is Option D.3: *"Une brassine occupait jadis la plus ancienne partie du château, au-dessus du vieux puits descendant à l'Ourthe."*
+- **The exact location of the well on an aerial map.** To be marked by Lars Kristel and recorded for the Le Domaine sub-page.
+- **The Marckloff / Amber Ale identity.** The historical heritage beer "Marckloff" (revived 1989 by the Trine brothers, 6.5% ABV) is plausibly the same beer as the modern bottle line's "Amber Ale" (6.2% ABV, also amber). **This needs explicit confirmation** before the heritage copy can name "Marckloff" on the bottle page.
+- **2025 and projected 2026 production volumes.** Awaiting confirmation from Lars Kristel.
+- **Pre-1628 vs post-1628 origin of the château brewery.** Was it operating *before* the Schetz/d'Ursel acquisition (under d'Oostfrise / earlier seigneurs as a domanial brewery), or did it begin under the Schetz/d'Ursel administration (1628 onward, before the 1675 demolition)? Open question.
+- **Whether the Marckloff family had any direct contact with the d'Ursel/Schetz family.** Possible only in the narrow window 1628–1630 (Schetz arrival → brewery transfer to de Blier). Plausible but not documented.
+
+When an unknown is verified, **move the entry from this section into Section 14 (Canonical brand facts) with the source cited**. Do not delete the historical record of the unknown — it is a useful audit trail.
+
+### Resolved (audit trail)
+
+These were previously in the Known Unknowns and are now resolved. The text below is preserved so the audit trail is visible:
+
+- ~~The 16th-century brewing claim~~ — RESOLVED. Brewing in Durbuy is documented from *circa* 1560 (Marckloff at Ferme au Chesne). See Section 14.
+- ~~The d'Ursel family's exact acquisition date~~ — RESOLVED. **30 January 1628** (engagère, 40,000 marks of gold), full ownership 1756. The earlier "1726/1756" framing was wrong — 1726 is internal family inheritance from the senior Schetz line to the d'Ursel branch, within the same family.
+- ~~The number of beers brewed~~ — RESOLVED. Four (Blonde du Château, Bohemian Pilsner, IPA, Amber Ale).
+- ~~The construction date of the "anciennes écuries"~~ — partially resolved. The stables are part of the château complex; the current château dates from 1731 (rebuild on pre-1675 substructure), modernised 1880–1882. Specific dating of the stables themselves is still open but the broader timeframe is now sourced.
+- ~~Modern production volume~~ — RESOLVED. 105 hL in 2024.
+
+---
+
+*Last revised: 2026-05-10 (third revision — added Section 14 Canonical brand facts with sourced production, brewmaster, and heritage anchors; renumbered Known Unknowns to Section 15; resolved several previously-open facts and preserved the audit trail). Any divergence from this document requires explicit creative-director sign-off.*

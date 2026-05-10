@@ -20,10 +20,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Prepare dist (canonical static site — no build step)
+      - name: Prepare dist (self-hosted static site — no build step)
         run: |
-          mkdir -p dist
+          mkdir -p dist/src/assets
           cp index.html dist/
+          # Copy only assets actually referenced by the site (favicons + WebP + JPG + crest)
+          cp src/assets/favicon.ico             dist/src/assets/ 2>/dev/null || true
+          cp src/assets/favicon-16.png          dist/src/assets/ 2>/dev/null || true
+          cp src/assets/favicon-32.png          dist/src/assets/ 2>/dev/null || true
+          cp src/assets/apple-touch-icon.png    dist/src/assets/ 2>/dev/null || true
+          cp src/assets/logo-crest.png          dist/src/assets/ 2>/dev/null || true
+          cp src/assets/*.webp                   dist/src/assets/ 2>/dev/null || true
+          cp src/assets/*.jpg                    dist/src/assets/ 2>/dev/null || true
+          echo "Deployed assets:"
+          ls -la dist/src/assets/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

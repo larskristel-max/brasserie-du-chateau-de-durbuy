@@ -31,10 +31,21 @@ If at any moment the page begins to feel like a craft-brewery website with luxur
 A candid running list — so a future agent reads the doc and understands *the shape of "next"*, not only what is already in place:
 
 - **Dark / cinematic register is underrepresented.** The moodboard called for both light editorial *and* dark cinematic atmosphere. The current build delivers the light editorial cleanly; only the brewery slab carries the dark register. There is room for at least one more atmospheric chapter (twilight grounds, candle-lit interior, copper-closeup) to honour the second half of the brief.
-- **No second page.** Heritage is currently implied through three short paragraphs in Le Lieu. A real luxury estate site has at minimum a Le Domaine page (heritage essay + 8–12 photographs).
-- **Reservation flow is still `mailto:`.** A small four-field form (name, email, dates, party size) posting to `brasseurduchateau@gmail.com` is the minimum upgrade.
-- **No English version.** A Belgian estate that wants international visitors needs a `FR / EN` toggle.
-- **Tablet (768–1024px) tuning is absent.** Tablet portrait currently falls into the mobile bucket; the design jumps from full desktop to stacked-mobile with no in-between.
+- **No second page.** Heritage is currently implied through three short paragraphs in Le Lieu plus the homepage's Tier-A heritage line. A real luxury estate site has at minimum a Le Domaine page (heritage essay + 8–12 photographs). Research is already written and committed to `/docs/heritage/` — the missing piece is the *editorial* page that uses it.
+- **Reservation flow is still `mailto:`.** A small four-field form (name, email, dates, party size) posting to `brasseurduchateau@gmail.com` is the minimum upgrade. A scheduling integration (Tock-style) is the ambitious version.
+- **Photography is generated, not photographed.** All five hero/section images on the live page are AI-generated stand-ins. A one-day shoot (golden-hour exterior, twilight courtyard, brewery interior with copper, bottle still life, jardin) is the single highest-leverage upgrade left.
+- **No motion-design pass beyond reveals and hero-settle.** Type doesn't enter on scroll; section transitions are flat. A restrained scroll-tied stagger on chapter headings would push the build from "very good static site" toward "Aman-grade".
+
+**Closed since the May 2026 polish pass (do not list as gaps):**
+- ~~No English version~~ — full FR/NL/EN/DE switcher shipped, drafts flagged for native review in `/docs/translations.md` style.
+- ~~Tablet (768–1024px) tuning is absent~~ — added `(min-width: 920px) and (max-width: 1100px)` bucket that bridges the gap.
+- ~~Crest disappears against bright sky~~ — soft radial vignette behind `.hero-crest` (May 2026 polish pass).
+- ~~Nav CTA reads as a button~~ — replaced with Aman-style underline-only register (May 2026 polish pass).
+- ~~Les Bières kicker repeats the heading word~~ — replaced "Bières du domaine" → "Quatre. Brassées au château." (May 2026 polish pass).
+- ~~Beer tasting notes are generic~~ — rewritten to evocative copy in all 4 langs (May 2026 polish pass).
+- ~~Hero is static on first paint~~ — slow zoom-out animation (1.04 → 1.0 over 1.6s, respects prefers-reduced-motion) (May 2026 polish pass).
+- ~~Les Bières feels cramped on ultrawide~~ — widened to 1280px at `min-width: 1600px` (May 2026 polish pass).
+- ~~Footer fine print sounded like a beer label~~ — dropped "À votre santé / To your health / Op uw gezondheid / Zum Wohl" in all 4 langs (May 2026 polish pass).
 
 These are not invitations to drift. They are the named work that closes the gap between "approaching estate-grade" and "world-class". Tackle them deliberately, in order, against the rules below.
 
@@ -392,4 +403,17 @@ These were previously in the Known Unknowns and are now resolved. The text below
 
 ---
 
-*Last revised: 2026-05-10 (third revision — added Section 14 Canonical brand facts with sourced production, brewmaster, and heritage anchors; renumbered Known Unknowns to Section 15; resolved several previously-open facts and preserved the audit trail). Any divergence from this document requires explicit creative-director sign-off.*
+### Polish pass — final 20% (May 2026, post-critique audit)
+
+Seven micro-refinements applied as a single polish pass after the heritage and multilingual work. None are structural; all are details that separate "very good static site" from "luxury-grade hospitality site". Recorded here so future agents see the *shape* of polish work, not only the destination.
+
+1. **Hero crest vignette.** A soft radial gradient (`rgba(14,12,10,0.22)` at 0% → transparent at 65%) lives behind `.hero-crest` via a `::before` pseudo-element. Lifts the line-work off bright sky and prevents the crest from disappearing on light hero images. ~22% peak opacity, ~70% radius — barely perceptible but materially improves legibility.
+2. **Nav CTA register.** Removed the 1px border around "Réservations" in the top nav. Replaced with an Aman-style underline-only treatment: the underline is the default state (always visible, scaleX 1), then *shrinks* to scaleX 0.55 on hover (left-anchored, 380ms cubic-bezier). This reads as confident invitation rather than a clickable button. Mobile CTA inside the hamburger menu is unchanged (a centred bordered button is correct in that context).
+3. **Hero zoom-out animation.** `.hero-image` animates from `scale(1.04)` to `scale(1)` over 1600ms with `cubic-bezier(0.2, 0.8, 0.2, 1)` on first paint, transform-origin centred on the same point as the existing background-position (`center 58%`). Settles the eye, signals "stay a while". Respects `prefers-reduced-motion`.
+4. **Les Bières kicker.** Replaced "Bières du domaine" (which echoed "Les Bières" right below it) with "Quatre. Brassées au château." Stops the repeat, gives the kicker a specific job (announcing the count + the architectural fact in one breath). Translations: NL "Vier. In het kasteel gebrouwen.", EN "Four. Brewed at the château.", DE "Vier. Im Schloss gebraut."
+5. **Les Bières lead.** Rewrote to "Chacune dans son propre tempo. Petites séries, fermentation traditionnelle." — moved the brewing fact down a register so the lead doesn't redundantly state what the kicker now announces.
+6. **Evocative beer tasting notes.** All four notes rewritten in all four languages from generic descriptors ("ronde et lumineuse", "amertume délicate") to sense-based copy that places each beer in a specific moment of light or season. Examples (FR): Blonde "Pain frais, miel pâle, finale sèche. La lumière d'une fin d'après-midi." Amber "Caramel, écorce, foin sec. La couleur d'un soir d'automne sur l'Ourthe." This is the canonical voice for tasting notes — domain-anchored sensory metaphor, not a sommelier's checklist.
+7. **Footer fine print.** Removed "À votre santé / To your health / Op uw gezondheid / Zum Wohl" from all four languages. The toast belongs in a glass, not a fine-print line — kept the responsible-consumption statement alone, which is sufficient and more sober.
+8. **Ultrawide Les Bières widening.** Added `@media (min-width: 1600px)` rule that widens both `.bieres-image` and `.beer-list` from 1080px to 1280px max, and increases the beer-card gap. Brings Les Bières into visual parity with the hero on 27"+ monitors and prevents the section from feeling cramped relative to surrounding full-bleed sections.
+
+*Last revised: 2026-05-10 (fourth revision — recorded the May 2026 polish pass; updated the "what this site is currently missing" list to reflect closed items and surface the remaining gaps in priority order). Any divergence from this document requires explicit creative-director sign-off.*

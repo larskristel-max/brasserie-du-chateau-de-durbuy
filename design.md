@@ -118,8 +118,10 @@ If a section feels designed, you've added too much. Remove the most assertive el
 - 100svh, full-bleed CSS-`background-image` (the hero is not an `<img>` — it's a div with `background-image`). Golden-hour château, `object-position: center 58%` to keep the river reflection in frame.
 - **Responsive backgrounds** via CSS media queries (since CSS background-image doesn't support `srcset`): `hero-chateau-720w.webp` on phones (≤720px), `1280w.webp` as the default, `2560w.webp` for desktops ≥1281px or retina (`min-resolution: 1.5dppx`). All served via jsDelivr.
 - `filter: brightness(0.74) saturate(0.94) contrast(1.05)` — the *only* photographic grade strong enough to count.
+- **First-paint zoom-out (shipped May 2026):** `.hero-image` animates from `scale(1.04)` to `scale(1)` over 1600ms with `cubic-bezier(0.2, 0.8, 0.2, 1)`, `transform-origin` matching the background-position (`center 58%`). `will-change: transform` is set. Wrapped in `@media (prefers-reduced-motion: reduce) { .hero-image { animation: none; } }`. The settle is barely perceptible but registers in the body as "this site is calm". Do not tune it faster than 1.4s or steeper than 1.05× — the goal is *settle*, not *push-in*.
 - Two-layer veil: a radial dim (legibility) + a top/bottom gradient (text readability).
 - Centred vertical lockup: crest → eyebrow (`Durbuy · Belgique`) → three-line title (middle italic) → italic subtitle → vertical hairline.
+- **Crest vignette (shipped May 2026):** `.hero-crest` carries a `::before` radial-gradient at `inset: -55%`: `rgba(14,12,10,0.22)` at 0% → `rgba(14,12,10,0.12)` at 35% → transparent at 65%, `z-index: -1`, `pointer-events: none`. Lifts the crest line-work off bright skies. Tunable — increase the centre alpha to `0.28` if the hero image gets even brighter, but do not exceed `0.32` (the vignette becomes visible as a halo).
 - **Hero subtitle (canonical, FR)**: *"À son rythme, entre tradition et précision. Sans bruit."* — translated into NL / EN / DE via the `data-i18n="hero.subtitle"` mechanism. **Do not restore "Le brassage" at the start of the line** — its removal was a deliberate château-first move (the prior subtitle led with brewing, which inverted the brand's positioning hierarchy).
 - Vertical scroll cue (`Entrer dans le domaine`) at bottom-right, `writing-mode: vertical-rl`, with a 1px rule above.
 
@@ -145,6 +147,10 @@ If a section feels designed, you've added too much. Remove the most assertive el
 - Sequence: heading → bottle photograph (`min(100% - 2*gutter, 1080px)`) → 4-column beer roster aligning under the bottles → italic transition line.
 - **The list aligns column-by-column to the bottles in the photo above.** Beer order in the markup matches bottle order in the photo (left to right: Blonde, Bohemian Pilsner, IPA, Amber Ale).
 - Bottle photograph uses `filter: brightness(0.93) contrast(1.05) saturate(0.93)` to belong to the unified atmospheric world.
+- **Kicker copy (shipped May 2026):** "Quatre. Brassées au château." in FR / "Vier. In het kasteel gebrouwen." in NL / "Four. Brewed at the château." in EN / "Vier. Im Schloss gebraut." in DE. The previous "Bières du domaine" was rejected because it echoed the "Les Bières" heading directly below it — a kicker's job is to *introduce a fact the heading doesn't*, not to paraphrase.
+- **Lead copy (shipped May 2026):** "Chacune dans son propre tempo. Petites séries, fermentation traditionnelle." The brewing fact moved from the kicker (which now states the count + architectural fact) down to the lead, where it can breathe.
+- **Tasting-note voice (canonical, May 2026):** Sense-based, domain-anchored sensory metaphor. Each note is *flavour signal + atmospheric moment*. Example pattern: "Pain frais, miel pâle, finale sèche. La lumière d'une fin d'après-midi." This is the voice. Do not regress to abstract descriptors ("ronde et lumineuse", "amertume délicate") — they are correct in a sommelier checklist and wrong here.
+- **Ultrawide widening (shipped May 2026):** at `min-width: 1600px`, both `.bieres-image` and `.beer-list` widen from `min(100% - 2*gutter, 1080px)` to `min(100% - 2*gutter, 1280px)`, and `.beer-list` gap increases to `clamp(1.8rem, 2.4vw, 3rem)`. Brings Les Bières into the same horizontal envelope as the hero on 27"+ displays.
 - Mobile: single-column beer list at 880px (skipping the 2-column intermediate). Name and ABV on the same baseline at the top of each row, notes underneath. The bottle-to-list column rhyme is lost on mobile anyway as soon as the layout stacks, so a 2-column intermediate would be a false economy.
 
 ### 4.5 La Visite (Chapter IV)
@@ -241,13 +247,15 @@ The workflow for adding a new photograph to the site:
 | Motion | Where | Curve | Duration |
 |---|---|---|---|
 | Reveal on scroll | Sections (`[data-reveal]`) | `cubic-bezier(0.2, 0.8, 0.2, 1)` | 1100ms |
+| Hero zoom-out (first paint) | `.hero-image` `transform: scale(1.04→1)` | `cubic-bezier(0.2, 0.8, 0.2, 1)` | 1600ms |
 | Underline-fill | Nav links | `ease` | 360ms |
+| Nav CTA underline-shrink | `.nav-cta::after` scaleX(1→0.55) on hover | `cubic-bezier(0.2, 0.8, 0.2, 1)` | 380ms |
 | CTA gap grow | Reservations CTA arrow | `ease` | 280ms |
 | Nav theme | Background and color change | `ease` | 600–700ms |
 
 That is the entire motion vocabulary.
 
-**`prefers-reduced-motion` is respected.** When set, all reveal animations are cancelled (`opacity: 1; transform: none; transition: none`).
+**`prefers-reduced-motion` is respected.** When set, all reveal animations are cancelled (`opacity: 1; transform: none; transition: none`) and the hero zoom-out is cancelled (`.hero-image { animation: none; }`).
 
 No parallax. No GSAP. No spring physics. No marquee. No scroll-bound 3D.
 
@@ -272,6 +280,14 @@ This is **deterministic by design.** IntersectionObserver was tried and rejected
 - Reservations CTA at the bottom of the overlay, bordered.
 - `Escape` closes; tapping any nav link closes.
 
+### 7.3 Desktop nav CTA (shipped May 2026 — Aman-style register)
+
+- `.nav-cta` carries **no border, no background**. The underline (`::after`, `height: 1px`, `background: currentColor`) is the entire affordance.
+- **Default state:** underline `scaleX(1)` from `transform-origin: left center`. The underline is always visible.
+- **Hover/focus state:** underline `scaleX(0.55)` — *shrinks* from the right edge inward. 380ms `cubic-bezier(0.2, 0.8, 0.2, 1)`. This reads as confident invitation, not a clickable button.
+- The previous bordered button was correct in principle but felt CMS-template; the underline register is the Aman / Six Senses / Château Margaux norm.
+- **Mobile CTA inside the hamburger overlay is unchanged** — `.mobile-menu .mobile-cta` keeps the centred bordered button. In the mobile overlay context, a clear tappable target is the right call; an underline-only CTA in a vertical-stacked menu reads as a regular link.
+
 ---
 
 ## 8. Responsive principles
@@ -282,6 +298,8 @@ This is **deterministic by design.** IntersectionObserver was tried and rejected
 @media (max-width: 920px)   /* nav collapses to hamburger */
 @media (max-width: 880px)   /* two-column sections become stacked */
 @media (max-width: 540px)   /* feature row and beer roster become single column */
+@media (min-width: 920px) and (max-width: 1100px)   /* tablet portrait bridge — keeps side-by-side */
+@media (min-width: 1600px) /* ultrawide widening — Les Bières widens to 1280px */
 ```
 
 ### 8.2 Stacked-section rules
@@ -298,18 +316,31 @@ The mobile experience is the same emotional pace as the desktop. Same crest. Sam
 
 What changes is composition (stacked vs side-by-side), not voice or hierarchy.
 
-### 8.4 Tablet (920–1024px) — open tuning gap
+### 8.4 Tablet (920–1100px) — bridge breakpoint (shipped May 2026)
 
-**Tablet portrait currently falls into the mobile bucket.** The site jumps from full desktop to stacked-mobile via the 920 / 880 breakpoints, with no in-between treatment. A tablet user gets the stacked-mobile experience, which is wrong — tablets have horizontal real estate that calls for the side-by-side layouts at slightly softened scale.
+Tablet portrait used to fall into the mobile bucket. **Now** a `@media (min-width: 920px) and (max-width: 1100px)` rule:
 
-When a future agent addresses this gap:
+- Tightens `--display-xl` to `clamp(2.6rem, 5vw, 4.4rem)` and `--display-lg` to `clamp(2.2rem, 4vw, 3.8rem)` so the headlines don't dominate at tablet width.
+- Sets `.lieu` and `.lieu-image` to `min-height: 78vh`, `.visite` and `.visite-image` to `min-height: 82vh` (down from the desktop 92/96vh) — the column heights would otherwise feel tall on tablet.
+- Caps `.brasserie-image` at `clamp(54vh, 64vh, 36rem)` so the dark slab doesn't crush the screen.
+- Tightens hero spacing: `.hero-stage { gap: clamp(1.2rem, 2vw, 1.8rem); }` and shrinks the crest to `clamp(72px, 8vw, 96px)`.
 
-- Add a `@media (min-width: 920px) and (max-width: 1100px)` query that **keeps** side-by-side layouts active.
-- Inside that query, tighten the H1 clamp to `clamp(2.6rem, 5vw, 4.4rem)` and reduce image `min-height` to `64vh`.
-- Pad the side-by-side gutters slightly more (`clamp(1.6rem, 4vw, 3rem)` instead of the desktop value) so the two columns breathe.
-- Verify on a real iPad / Pixel Tablet before merging.
+Verify on a real iPad / Pixel Tablet before changing these values further. The side-by-side layouts of Le Lieu and La Visite are *preserved* through this range, which was the entire point — tablets have horizontal real estate, and the editorial reading rhythm depends on the two-column composition.
 
-Until that work lands, the tablet experience is the most important untuned surface on the site.
+### 8.5 Ultrawide (≥1600px) — widening (shipped May 2026)
+
+At desktop widths above ~1600px, `min(100% - 2*gutter, 1080px)` constraints make the design feel small and float-y on 27"+ monitors. The shipped rule:
+
+```
+@media (min-width: 1600px) {
+  .bieres-image, .beer-list { width: min(100% - 2*gutter, 1280px); }
+  .beer-list { gap: clamp(1.8rem, 2.4vw, 3rem); }
+}
+```
+
+This widens **only** Les Bières — the full-bleed sections (Hero, La Brasserie, Le Lieu, La Visite) already scale naturally because they fill `100vw`. Les Bières is the one centred constrained section, so it's the one that benefits.
+
+A future widening pass could similarly tune the footer columns and the hero typography clamp ceilings — but only if the design proves to feel cramped on ultrawide after this baseline ships. Don't anticipate.
 
 ---
 
@@ -431,4 +462,4 @@ The audit trail of what was pending and when it landed lives in the git log of t
 
 ---
 
-*Last revised: 2026-05-10 (second revision — added "What this site is missing" in agent.md §1, Known unknowns in agent.md §14, Pending notes for La Brasserie and Les Bières polish, tablet open-gap subsection §8.4, and tightened maintenance rule). Implementation lives in `index.html` (current single-file demo) and will migrate to the Vite/React tree under `src/` in a subsequent commit.*
+*Last revised: 2026-05-10 (third revision — May 2026 polish pass: documented hero zoom-out animation (§4.1, §6), hero crest vignette (§4.1), Aman-style underline-only nav CTA (§7.3, §6), Les Bières kicker/lead/tasting-note rewrites (§4.4), ultrawide widening at 1600px (§4.4, §8.5), tablet 920–1100px bridge breakpoint promoted from §8.4 open-gap to §8.4 shipped feature). Implementation lives in `index.html` / `redesign-template.html` (current single-file demo) and will migrate to the Vite/React tree under `src/` in a subsequent commit.*

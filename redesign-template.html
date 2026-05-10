@@ -393,13 +393,16 @@
         margin: 0;
       }
       .menu-toggle {
-        /* Absolute-positioned so it doesn't push the centred nav-mark off-axis */
+        /* Absolute-positioned so it doesn't push the centred nav-mark off-axis.
+           top: 50% references the padding-box centre, but the nav has asymmetric
+           padding (safe-area-inset-top adds to top, nothing to bottom), so the
+           content-box centre is higher than the padding-box centre. Subtract
+           half the inset from top so the hamburger aligns with the centred
+           wordmark inside the content area. */
         position: absolute;
-        top: 50%;
+        top: calc(50% - env(safe-area-inset-top, 0px) / 2);
         right: calc(var(--gutter) + env(safe-area-inset-right, 0px));
         transform: translateY(-50%);
-        /* re-anchor vertically AFTER the safe-area top padding pushes content down */
-        margin-top: calc(env(safe-area-inset-top, 0px) / 2);
       }
     }
 

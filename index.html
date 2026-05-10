@@ -1,23 +1,1633 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Brasserie du Château de Durbuy — bières de fermentation traditionnelle brassées au cœur du domaine, visites des jardins et dégustations sur réservation."
-    />
-    <meta property="og:title" content="Brasserie du Château de Durbuy" />
-    <meta
-      property="og:description"
-      content="Le brassage a son rythme, entre tradition et précision. Sans bruit."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="fr_BE" />
-    <title>Brasserie du Château de Durbuy</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brasserie du Château de Durbuy</title>
+  <meta name="description" content="Domaine du Château de Durbuy. Brasserie de fermentation traditionnelle, en petites séries. Jardins et dégustations sur réservation. Rue du Comte Théodule d'Ursel, 2 — 6940 Durbuy, Belgique." />
+  <meta name="theme-color" content="#0E0C0A" />
+  <meta name="format-detection" content="telephone=no, address=no, email=no" />
+  <link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/apple-touch-icon.png" />
+  <meta property="og:image" content="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-1280w.webp" />
+  <meta property="og:url" content="https://brasseriechateaudurbuy.be" />
+  <meta property="og:site_name" content="Brasserie du Château de Durbuy" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FoodEstablishment",
+    "@id": "https://brasseriechateaudurbuy.be#brasserie",
+    "name": "Brasserie du Château de Durbuy",
+    "description": "Domaine du Château de Durbuy. Brasserie de fermentation traditionnelle, en petites séries.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rue du Comte Théodule d'Ursel, 2",
+      "postalCode": "6940",
+      "addressLocality": "Durbuy",
+      "addressCountry": "BE"
+    },
+    "email": "brasseurduchateau@gmail.com",
+    "url": "https://brasseriechateaudurbuy.be",
+    "image": "https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-1280w.webp",
+    "servesCuisine": "Bière artisanale belge",
+    "priceRange": "Sur réservation"
+  }
+  </script>
+  <meta property="og:title" content="Brasserie du Château de Durbuy" />
+  <meta property="og:description" content="À son rythme, entre tradition et précision. Sans bruit." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0E0C0A;
+      --ink-soft: rgba(14, 12, 10, 0.74);
+      --ink-fade: rgba(14, 12, 10, 0.50);
+      --char: #1A1612;
+      --char-deep: #14110D;
+      --cream: #F2EBDD;
+      --cream-soft: #EDE5D2;
+      --cream-on-dark: rgba(242, 235, 221, 0.92);
+      --cream-fade: rgba(242, 235, 221, 0.62);
+      --bone: #D9CDB6;
+      --copper: #8C5E33;
+      --copper-light: #A87E4F;
+      --line: rgba(14, 12, 10, 0.16);
+      --line-soft: rgba(14, 12, 10, 0.10);
+      --line-dark: rgba(242, 235, 221, 0.16);
+      --line-dark-soft: rgba(242, 235, 221, 0.10);
+
+      --serif: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+      --gutter: clamp(1.4rem, 5vw, 5.5rem);
+      --section-y: clamp(7rem, 13vw, 13rem);
+      --section-y-tight: clamp(5rem, 9vw, 9rem);
+
+      --display-xl: clamp(3.4rem, 7.4vw, 8.6rem);
+      --display-lg: clamp(2.6rem, 5.4vw, 6rem);
+      --display-md: clamp(1.7rem, 2.6vw, 2.9rem);
+      --body-lg: clamp(1.12rem, 0.5vw + 1rem, 1.36rem);
+      --body: clamp(1rem, 0.32vw + 0.94rem, 1.12rem);
+      --micro: 0.74rem;
+      --tiny: 0.62rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      font-family: var(--sans);
+      font-size: var(--body);
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--cream);
+      font-weight: 300;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    a { color: inherit; text-decoration: none; }
+
+    ::selection { background: rgba(140, 94, 51, 0.22); color: var(--ink); }
+
+    /* ------------------------ Typography primitives ------------------------ */
+
+    .eyebrow,
+    .kicker,
+    .chapter,
+    .nav-links,
+    .nav-cta,
+    .scroll-cue,
+    .visit-grid h3,
+    .footer-label,
+    .footer-fine,
+    .text-cta,
+    .private-note {
+      font-family: var(--sans);
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .chapter {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      color: var(--copper);
+      font-size: var(--micro);
+      margin: 0 0 1.3rem;
+    }
+
+    .kicker {
+      color: var(--copper);
+      font-size: var(--tiny);
+      margin: 0 0 1.4rem;
+    }
+
+    .eyebrow {
+      font-size: var(--tiny);
+      margin: 0;
+      color: var(--cream-fade);
+    }
+
+    h1, h2, h3 {
+      font-family: var(--serif);
+      font-weight: 400;
+      margin: 0;
+      letter-spacing: 0.005em;
+    }
+
+    p { margin: 0 0 1.1rem; }
+
+    .prose p { margin-bottom: 1.2rem; }
+    .prose p:last-child { margin-bottom: 0; }
+    .prose-em { font-style: italic; color: var(--copper-light); }
+
+    /* ------------------------ Crest ------------------------ */
+
+    .crest {
+      display: inline-block;
+      background-image: url('https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/logo-crest.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .crest-sm  { width: 36px; height: 36px; }
+    .crest-md  { width: 84px; height: 84px; }
+    .crest-lg  { width: clamp(96px, 11vw, 138px); height: clamp(96px, 11vw, 138px); }
+
+    /* By default crest is dark. On dark sections, invert to light cream. */
+    .on-dark .crest, .crest.on-dark {
+      filter: invert(0.94) sepia(0.06) saturate(0.7) brightness(1.04);
+    }
+
+    /* ------------------------ Navigation ------------------------ */
+
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      align-items: center;
+      gap: clamp(0.8rem, 2.4vw, 2.4rem);
+      padding: 1.4rem var(--gutter);
+      font-size: 0.7rem;
+      color: var(--cream);
+      transition: color 700ms ease, background-color 700ms ease, border-color 700ms ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav.scrolled {
+      background: rgba(14, 12, 10, 0.42);
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    }
+
+    body.nav-cream .nav { color: var(--ink); }
+    body.nav-cream .nav.scrolled {
+      background: rgba(242, 235, 221, 0.78);
+      border-bottom-color: var(--line-soft);
+    }
+
+    .nav-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .nav-mark .crest { filter: invert(0.94) sepia(0.06) saturate(0.7) brightness(1.04); }
+    body.nav-cream .nav-mark .crest { filter: none; }
+
+    .nav-mark-text {
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      max-width: 8rem;
+      display: none;
+    }
+    @media (min-width: 1100px) { .nav-mark-text { display: inline-block; } }
+
+    /* Mobile-only single-line wordmark below the crest so the mobile nav isn't bare */
+    .nav-mark-mobile {
+      font-size: 0.56rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    @media (min-width: 1100px) { .nav-mark-mobile { display: none; } }
+
+    /* ------------------------ Language switcher ------------------------ */
+
+    .lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+    .lang-switcher button {
+      background: none;
+      border: 0;
+      padding: 0.35rem 0.55rem;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      opacity: 0.42;
+      transition: opacity 220ms ease;
+    }
+    .lang-switcher button:hover, .lang-switcher button:focus-visible { opacity: 0.78; }
+    .lang-switcher button[aria-pressed="true"] { opacity: 1; }
+    .lang-switcher .sep {
+      opacity: 0.36;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @media (max-width: 920px) {
+      .lang-switcher { display: none; }
+    }
+
+    /* Mobile menu language switcher (always visible in mobile overlay) */
+    .mobile-lang-switcher {
+      display: flex;
+      gap: 0;
+      margin-top: 2.4rem;
+      align-items: center;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+    .mobile-lang-switcher button {
+      background: none;
+      border: 0;
+      padding: 0.5rem 0.7rem;
+      color: var(--cream);
+      cursor: pointer;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      opacity: 0.48;
+      transition: opacity 220ms ease;
+    }
+    .mobile-lang-switcher button:hover { opacity: 0.86; }
+    .mobile-lang-switcher button[aria-pressed="true"] { opacity: 1; }
+    .mobile-lang-switcher .sep {
+      opacity: 0.36;
+      pointer-events: none;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: clamp(1rem, 3vw, 2.6rem);
+    }
+    .nav-links a {
+      position: relative;
+      opacity: 0.84;
+      transition: opacity 220ms ease;
+      padding-bottom: 0.2rem;
+    }
+    .nav-links a:hover, .nav-links a:focus-visible { opacity: 1; }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 360ms ease;
+    }
+    .nav-links a:hover::after, .nav-links a:focus-visible::after { transform: scaleX(1); }
+
+    /* Aman-style register: underline-only CTA, no enclosing border */
+    .nav-cta {
+      position: relative;
+      padding: 0.62rem 0.2rem;
+      border: 0;
+      background: transparent;
+      transition: opacity 220ms ease;
+    }
+    .nav-cta::after {
+      content: '';
+      position: absolute;
+      left: 0.2rem;
+      right: 0.2rem;
+      bottom: 0.35rem;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(1);
+      transform-origin: left center;
+      transition: transform 380ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .nav-cta:hover, .nav-cta:focus-visible { opacity: 1; background: transparent; }
+    .nav-cta:hover::after, .nav-cta:focus-visible::after {
+      transform: scaleX(0.55);
+      transform-origin: left center;
+    }
+    body.nav-cream .nav-cta:hover { color: var(--cream); }
+
+    .menu-toggle {
+      display: none;
+      width: 2.4rem;
+      height: 2.4rem;
+      padding: 0.55rem;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 100%;
+      height: 1px;
+      margin: 0.25rem 0;
+      background: currentColor;
+      transition: transform 240ms ease, opacity 240ms ease;
+    }
+
+    @media (max-width: 920px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .menu-toggle { display: block; }
+    }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 95;
+      display: grid;
+      place-items: center;
+      padding: var(--gutter);
+      background: rgba(14, 12, 10, 0.98);
+      color: var(--cream);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 360ms ease;
+    }
+    .mobile-menu[data-open="true"] { opacity: 1; pointer-events: auto; }
+    .mobile-menu nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 6vw, 2.4rem);
+      letter-spacing: 0.04em;
+    }
+    .mobile-menu .mobile-cta {
+      margin-top: 1.6rem;
+      padding: 0.7rem 1.4rem;
+      border: 1px solid var(--cream);
+      font-family: var(--sans);
+      font-size: 0.74rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    body.menu-open { overflow: hidden; }
+
+    /* ------------------------ Hero ------------------------ */
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      padding: 6rem var(--gutter) 5rem;
+      color: var(--cream);
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image: url('https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-1280w.webp');
+      background-size: cover;
+      background-position: center 58%;
+      filter: brightness(0.74) saturate(0.94) contrast(1.05);
+      /* Slow zoom-out on first paint — settles the eye, signals "stay a while" */
+      transform-origin: center 58%;
+      animation: hero-settle 1600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      will-change: transform;
+    }
+    @keyframes hero-settle {
+      from { transform: scale(1.04); }
+      to   { transform: scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-image { animation: none; }
+    }
+
+    /* Hero responsive backgrounds: serve a small image to phones, retina to large screens */
+    @media (max-width: 720px) {
+      .hero-image {
+        background-image: url('https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-720w.webp');
+      }
+    }
+    @media (min-width: 1281px), (min-resolution: 1.5dppx) {
+      .hero-image {
+        background-image: url('https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-2560w.webp');
+      }
+    }
+
+    .hero-veil {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse 85% 70% at 50% 50%, rgba(14,12,10,0.10) 0%, rgba(14,12,10,0.36) 60%, rgba(14,12,10,0.62) 100%),
+        linear-gradient(180deg, rgba(14,12,10,0.42) 0%, rgba(14,12,10,0.04) 28%, rgba(14,12,10,0.04) 64%, rgba(14,12,10,0.62) 100%);
+    }
+
+    .hero-stage {
+      width: min(70rem, 100%);
+      text-align: center;
+      display: grid;
+      gap: clamp(1.6rem, 2.8vw, 2.8rem);
+      justify-items: center;
+    }
+
+    .hero-crest {
+      position: relative;
+      width: clamp(82px, 9.5vw, 124px);
+      height: clamp(82px, 9.5vw, 124px);
+      background-image: url('https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/logo-crest.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      filter: invert(0.94) sepia(0.06) saturate(0.7) brightness(1.04);
+      opacity: 0.88;
+      margin-bottom: 0.6rem;
+    }
+    /* Soft vignette to lift the crest line-work off bright skies */
+    .hero-crest::before {
+      content: '';
+      position: absolute;
+      inset: -55%;
+      background: radial-gradient(
+        circle at center,
+        rgba(14, 12, 10, 0.22) 0%,
+        rgba(14, 12, 10, 0.12) 35%,
+        transparent 65%
+      );
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: var(--display-xl);
+      font-weight: 300;
+      line-height: 0.96;
+      letter-spacing: 0.005em;
+      max-width: 18ch;
+    }
+    .hero h1 .row { display: block; }
+    .hero h1 .row-mid {
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(242, 235, 221, 0.88);
+    }
+
+    .hero-subtitle {
+      max-width: 32rem;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.05rem, 1.1vw + 0.85rem, 1.45rem);
+      line-height: 1.55;
+      color: rgba(242, 235, 221, 0.88);
+      margin: 0;
+    }
+
+    .hero-rule {
+      width: 1px;
+      height: clamp(2rem, 4vh, 3rem);
+      background: var(--cream-fade);
+      margin: 0.4rem 0 0;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      right: var(--gutter);
+      bottom: clamp(1.4rem, 4vh, 2.6rem);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 0.62rem;
+      letter-spacing: 0.32em;
+      color: var(--cream-fade);
+      transition: color 260ms ease;
+    }
+    .scroll-cue::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 2.6rem;
+      background: currentColor;
+      margin: 0 auto 0.7rem;
+      transform: rotate(180deg);
+    }
+    .scroll-cue:hover { color: var(--cream); }
+
+    @media (max-width: 720px) {
+      .scroll-cue { display: none; }
+    }
+
+    /* Hero subtitle softens on phones — clamp bottom bumped + line-height up */
+    @media (max-width: 540px) {
+      .hero-subtitle {
+        font-size: clamp(1.15rem, 1.5vw + 0.95rem, 1.4rem);
+        line-height: 1.6;
+        max-width: 24rem;
+      }
+    }
+
+    /* ------------------------ Section shell ------------------------ */
+
+    .section-shell {
+      width: min(100%, 1380px);
+      margin: 0 auto;
+      padding-inline: var(--gutter);
+    }
+
+    /* ------------------------ Le Lieu ------------------------ */
+
+    .lieu {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      grid-template-rows: 1fr;
+      min-height: 92vh;
+      padding: 0;
+      align-items: stretch;
+    }
+
+    .lieu-image {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 92vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .lieu-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.94) contrast(1.05) saturate(0.96);
+    }
+    /* Soft left-edge fade so image meets cream copy panel calmly (image is on the right now) */
+    .lieu-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(270deg, transparent 65%, rgba(242,235,221,0.18) 100%);
+    }
+
+    .lieu-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--section-y-tight) clamp(var(--gutter), 6vw, 5rem);
+      max-width: 38rem;
+      margin-left: auto; /* push copy toward the right inside its column, near the image */
+    }
+    .lieu-copy h2 {
+      font-size: var(--display-lg);
+      line-height: 1;
+      margin-bottom: 2rem;
+    }
+    .lieu-copy .prose {
+      color: var(--ink-soft);
+      font-size: var(--body-lg);
+      line-height: 1.65;
+    }
+    .lieu-copy .prose p { margin-bottom: 1.2rem; }
+
+    @media (max-width: 880px) {
+      .lieu { grid-template-columns: 1fr; min-height: auto; }
+      .lieu-image { min-height: 60vh; }
+      .lieu-image::after { display: none; }
+      .lieu-copy { margin-left: 0; padding: var(--section-y-tight) var(--gutter); }
+    }
+
+    /* ------------------------ La Brasserie ------------------------ */
+
+    .brasserie {
+      background: var(--char);
+      color: var(--cream-on-dark);
+      padding-block: var(--section-y);
+    }
+    .brasserie .kicker { color: var(--copper-light); }
+    .brasserie .chapter { color: var(--copper-light); }
+
+    .brasserie-head {
+      display: grid;
+      grid-template-columns: 0.9fr 1fr;
+      gap: clamp(2.5rem, 8vw, 9rem);
+      align-items: start;
+      margin-bottom: clamp(3.5rem, 7vw, 7rem);
+    }
+    .brasserie-head h2 {
+      font-size: var(--display-lg);
+      line-height: 0.98;
+    }
+    .brasserie-head .prose {
+      font-size: var(--body-lg);
+      line-height: 1.62;
+      color: rgba(242, 235, 221, 0.78);
+      max-width: 36rem;
+    }
+
+    .brasserie-image {
+      margin: 0;
+      width: 100%;
+      height: 78vh;
+      min-height: 30rem;
+      max-height: 56rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .brasserie-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 52%;
+      filter: brightness(0.94) contrast(1.06) saturate(0.96);
+    }
+    /* Subtle vignette at top and bottom so the image bleeds into the dark slab */
+    .brasserie-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, var(--char) 0%, rgba(26,22,18,0) 12%, rgba(26,22,18,0) 86%, var(--char) 100%);
+    }
+
+    .brasserie-line {
+      max-width: 32rem;
+      margin: clamp(2.4rem, 4.5vw, 3.6rem) auto 0;
+      padding-inline: var(--gutter);
+      text-align: center;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.2rem, 1.6vw + 0.6rem, 1.7rem);
+      line-height: 1.4;
+      color: var(--copper-light);
+      letter-spacing: 0.005em;
+    }
+
+    @media (max-width: 880px) {
+      .brasserie-head { grid-template-columns: 1fr; }
+      .brasserie-image {
+        height: clamp(48vh, 60vh, 28rem);
+        min-height: 0;
+        max-height: none;
+      }
+    }
+
+    /* ------------------------ Les Bières ------------------------ */
+
+    .bieres {
+      padding-block: var(--section-y);
+      display: grid;
+      gap: clamp(2.6rem, 5.5vw, 5.5rem);
+      text-align: center;
+    }
+
+    .bieres-head {
+      max-width: 38rem;
+      margin: 0 auto;
+      padding-inline: var(--gutter);
+    }
+    .bieres-head h2 {
+      font-size: var(--display-lg);
+      line-height: 1;
+      margin-bottom: 1.4rem;
+    }
+    .bieres-head .lead {
+      font-size: var(--body-lg);
+      line-height: 1.6;
+      color: var(--ink-soft);
+      max-width: 32rem;
+      margin: 0 auto;
+    }
+
+    .bieres-image {
+      margin: 0 auto;
+      width: min(100% - calc(var(--gutter) * 2), 1080px);
+    }
+    .bieres-image img {
+      width: 100%;
+      height: auto;
+      filter: brightness(0.93) contrast(1.05) saturate(0.93);
+    }
+
+    .beer-list {
+      list-style: none;
+      margin: 0 auto;
+      padding-inline: var(--gutter);
+      width: min(100% - calc(var(--gutter) * 2), 1080px);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(1.4rem, 2.6vw, 2.6rem);
+      text-align: left;
+    }
+    .beer-list li {
+      border-top: 1px solid var(--line);
+      padding-top: 1.2rem;
+    }
+    .beer-list h3 {
+      font-family: var(--serif);
+      font-size: clamp(1.05rem, 0.4vw + 0.95rem, 1.22rem);
+      font-weight: 400;
+      letter-spacing: 0.005em;
+      line-height: 1.1;
+      margin: 0 0 0.5rem;
+    }
+    .beer-abv {
+      font-family: var(--sans);
+      font-size: 0.64rem;
+      font-feature-settings: 'tnum';
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin: 0 0 0.7rem;
+    }
+    .beer-notes {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .transition {
+      max-width: 36rem;
+      margin: clamp(2rem, 4vw, 4rem) auto 0;
+      text-align: center;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1.3rem, 2vw, 1.9rem);
+      line-height: 1.36;
+      color: var(--copper);
+      padding-inline: var(--gutter);
+    }
+
+    @media (max-width: 880px) {
+      .beer-list {
+        grid-template-columns: 1fr;
+        max-width: 36rem;
+        margin-inline: auto;
+        gap: 0;
+      }
+      .beer-list li {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        column-gap: 1.2rem;
+        padding-top: 1.4rem;
+        padding-bottom: 0;
+      }
+      .beer-list h3 {
+        grid-column: 1;
+        margin: 0;
+      }
+      .beer-list .beer-abv {
+        grid-column: 2;
+        margin: 0;
+        padding-top: 0.45rem;
+        align-self: baseline;
+      }
+      .beer-list .beer-notes {
+        grid-column: 1 / -1;
+        margin: 0.45rem 0 0;
+      }
+    }
+
+    /* Ultrawide displays — let Les Bières breathe at the same width as the hero */
+    @media (min-width: 1600px) {
+      .bieres-image {
+        width: min(100% - calc(var(--gutter) * 2), 1280px);
+      }
+      .beer-list {
+        width: min(100% - calc(var(--gutter) * 2), 1280px);
+        gap: clamp(1.8rem, 2.4vw, 3rem);
+      }
+    }
+
+    /* ------------------------ La Visite ------------------------ */
+
+    .visite {
+      background: var(--cream-soft);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      min-height: 96vh;
+      align-items: stretch;
+    }
+    .visite-image {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 96vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .visite-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.92) contrast(1.06) saturate(0.96);
+    }
+    /* Soft right-edge fade so the image meets the cream copy panel calmly */
+    .visite-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent 60%, rgba(237,229,210,0.18) 100%);
+    }
+    .visite-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--section-y) clamp(var(--gutter), 6vw, 5rem) var(--section-y) clamp(var(--gutter), 6vw, 5rem);
+      max-width: 38rem;
+    }
+    .visite-copy h2 {
+      font-size: var(--display-lg);
+      line-height: 1.02;
+      margin-bottom: 1.6rem;
+    }
+    .visite-copy h2 .row-mid {
+      display: block;
+      font-style: italic;
+      color: var(--copper);
+    }
+    .visite-copy .lead {
+      font-size: var(--body-lg);
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 1.3rem;
+      max-width: 30rem;
+    }
+    .private-note {
+      font-size: var(--tiny);
+      color: var(--ink-fade);
+      letter-spacing: 0.18em;
+      width: fit-content;
+      padding: 0.85rem 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin: 0.4rem 0 clamp(2rem, 4vw, 3rem);
+    }
+
+    .visit-grid {
+      list-style: none;
+      margin: 0 0 2.6rem;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem 2.4rem;
+    }
+    .visit-grid h3 {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin: 0 0 0.55rem;
+      color: var(--ink);
+    }
+    .visit-grid p {
+      margin: 0;
+      font-size: 0.97rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+
+    .text-cta {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      color: var(--copper);
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid currentColor;
+      width: fit-content;
+      transition: gap 280ms ease, color 280ms ease;
+    }
+    .text-cta:hover { gap: 1rem; color: var(--ink); }
+
+    @media (max-width: 880px) {
+      .visite { grid-template-columns: 1fr; min-height: auto; }
+      .visite-image { min-height: 60vh; }
+      .visit-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-bottom: 2rem;
+      }
+      .visit-grid li {
+        padding: 1.3rem 0;
+        border-top: 1px solid var(--line);
+      }
+      .visit-grid li:last-child { border-bottom: 1px solid var(--line); }
+      .visit-grid h3 { margin-bottom: 0.4rem; }
+    }
+
+    /* ------------------------ Footer ------------------------ */
+
+    .footer {
+      background: var(--char-deep);
+      color: rgba(242, 235, 221, 0.74);
+      padding: clamp(4rem, 7vw, 6.5rem) var(--gutter) 2.4rem;
+    }
+
+    .footer-inner {
+      width: min(100%, 1380px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: clamp(2rem, 4vw, 3.5rem);
+      padding-bottom: clamp(3rem, 5vw, 4rem);
+      border-bottom: 1px solid var(--line-dark-soft);
+    }
+
+    .footer-mark {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+    .footer-mark .crest {
+      filter: invert(0.94) sepia(0.06) saturate(0.7) brightness(1.04);
+      opacity: 0.94;
+    }
+    .footer-mark p {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      color: var(--cream-on-dark);
+    }
+
+    .footer-info p { margin: 0 0 0.5rem; font-size: 0.92rem; line-height: 1.55; }
+    .footer-info p:last-child { margin-bottom: 0; }
+    .footer-label {
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--copper-light);
+      margin-bottom: 1rem !important;
+    }
+    .footer-info a {
+      border-bottom: 1px solid var(--line-dark);
+      transition: border-color 220ms ease;
+    }
+    .footer-info a:hover { border-color: var(--cream); }
+
+    .footer-fine {
+      width: min(100%, 1380px);
+      margin: 0 auto;
+      padding-top: 2rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      color: rgba(242, 235, 221, 0.5);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-fine p { margin: 0; }
+
+    @media (max-width: 880px) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 0;
+        text-align: left;
+        padding-bottom: clamp(2rem, 4vw, 3rem);
+      }
+      .footer-mark { gap: 1rem; margin-bottom: 1.8rem; }
+      .footer-info {
+        padding: 1.2rem 0;
+        border-top: 1px solid var(--line-dark-soft);
+      }
+      .footer-info:last-child { border-bottom: 1px solid var(--line-dark-soft); }
+      .footer-label { margin-bottom: 0.5rem !important; }
+      .footer-fine { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ------------------------ Tablet tuning (920–1100px) ------------------------ */
+
+    /* Keeps side-by-side layouts active for tablets, but softens type and image heights */
+    @media (min-width: 920px) and (max-width: 1100px) {
+      :root {
+        --display-xl: clamp(2.6rem, 5vw, 4.4rem);
+        --display-lg: clamp(2.2rem, 4vw, 3.8rem);
+      }
+      .lieu { min-height: 78vh; }
+      .lieu-image { min-height: 78vh; }
+      .visite { min-height: 82vh; }
+      .visite-image { min-height: 82vh; }
+      .brasserie-image { height: clamp(54vh, 64vh, 36rem); max-height: none; }
+      .hero-stage { gap: clamp(1.2rem, 2vw, 1.8rem); }
+      .hero-crest { width: clamp(72px, 8vw, 96px); height: clamp(72px, 8vw, 96px); }
+    }
+
+    /* ------------------------ Reveal animation ------------------------ */
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(1.2rem);
+      transition: opacity 1100ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                  transform 1100ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    [data-reveal].is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <a class="nav-mark" href="#top" aria-label="Brasserie du Château de Durbuy — accueil">
+      <span class="crest crest-sm" aria-hidden="true"></span>
+      <span class="nav-mark-text">Brasserie du<br>Château de Durbuy</span>
+      <span class="nav-mark-mobile">Brasserie · Château de Durbuy</span>
+    </a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="#domaine" data-i18n="nav.domaine">Le Domaine</a>
+      <a href="#brasserie" data-i18n="nav.brasserie">La Brasserie</a>
+      <a href="#bieres" data-i18n="nav.bieres">Les Bières</a>
+      <a href="#visite" data-i18n="nav.visite">La Visite</a>
+    </nav>
+    <div class="lang-switcher" role="group" aria-label="Choix de langue">
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+      <span class="sep">·</span>
+      <button type="button" data-lang="nl" aria-pressed="false">NL</button>
+      <span class="sep">·</span>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <span class="sep">·</span>
+      <button type="button" data-lang="de" aria-pressed="false">DE</button>
+    </div>
+    <a class="nav-cta" href="mailto:brasseurduchateau@gmail.com?subject=Demande%20de%20r%C3%A9servation" data-i18n="nav.reservations">Réservations</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-controls="mobileMenu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav aria-label="Navigation mobile">
+      <a href="#domaine" data-i18n="nav.domaine">Le Domaine</a>
+      <a href="#brasserie" data-i18n="nav.brasserie">La Brasserie</a>
+      <a href="#bieres" data-i18n="nav.bieres">Les Bières</a>
+      <a href="#visite" data-i18n="nav.visite">La Visite</a>
+      <a class="mobile-cta" href="mailto:brasseurduchateau@gmail.com" data-i18n="nav.reservations">Réservations</a>
+      <div class="mobile-lang-switcher" role="group" aria-label="Choix de langue">
+        <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+        <span class="sep">·</span>
+        <button type="button" data-lang="nl" aria-pressed="false">NL</button>
+        <span class="sep">·</span>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <span class="sep">·</span>
+        <button type="button" data-lang="de" aria-pressed="false">DE</button>
+      </div>
+    </nav>
+  </div>
+
+  <main>
+
+    <section id="top" class="hero" data-theme="dark">
+      <div class="hero-image" role="img" aria-label="Le Château de Durbuy au lever du jour, reflété dans l'Ourthe"></div>
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="hero-stage">
+        <span class="hero-crest" aria-hidden="true"></span>
+        <p class="eyebrow"><span data-i18n="hero.location">Durbuy &middot; Belgique</span></p>
+        <h1>
+          <span class="row">Brasserie</span>
+          <span class="row row-mid">du Château</span>
+          <span class="row">de Durbuy</span>
+        </h1>
+        <p class="hero-subtitle" data-i18n="hero.subtitle">À son rythme, entre tradition et précision. Sans bruit.</p>
+        <span class="hero-rule" aria-hidden="true"></span>
+      </div>
+      <a href="#domaine" class="scroll-cue" aria-label="Entrer dans le domaine" data-i18n="hero.scroll">Entrer dans le domaine</a>
+    </section>
+
+    <section id="domaine" class="lieu" data-reveal>
+      <div class="lieu-copy">
+        <p class="chapter" data-i18n="lieu.chapter">— Chapitre I —</p>
+        <p class="kicker" data-i18n="lieu.kicker">Le domaine précède le geste</p>
+        <h2 data-i18n="lieu.heading">Le Lieu</h2>
+        <div class="prose">
+          <p data-i18n="lieu.p1">Avant le brassin, le lieu.</p>
+          <p data-i18n="lieu.p2">Les pierres. La rivière. Les anciennes écuries du château.</p>
+          <p data-i18n="lieu.p3">Un domaine qui impose son tempo. La brasserie le suit, sans l'altérer.</p>
+        </div>
+      </div>
+      <figure class="lieu-image">
+        <picture>
+          <source type="image/webp"
+            srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/lieu-domaine-720w.webp 720w,
+                    https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/lieu-domaine-1024w.webp 1024w"
+            sizes="(max-width: 880px) 100vw, 50vw">
+          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/lieu-domaine-1024w.webp"
+               width="1024" height="1279"
+               alt="Pierres anciennes, cobblestone et dépendances du domaine du Château de Durbuy au crépuscule"
+               loading="lazy" decoding="async">
+        </picture>
+      </figure>
+    </section>
+
+    <section id="brasserie" class="brasserie" data-reveal>
+      <div class="brasserie-head section-shell">
+        <div>
+          <p class="chapter" data-i18n="brasserie.chapter">— Chapitre II —</p>
+          <p class="kicker" data-i18n="brasserie.kicker">Fermentation traditionnelle</p>
+          <h2 data-i18n="brasserie.heading">La Brasserie</h2>
+        </div>
+        <div class="prose">
+          <p data-i18n="brasserie.p1">Installée dans les anciennes écuries du domaine, la brasserie élabore quatre bières de fermentation traditionnelle, en petites séries.</p>
+          <p data-i18n="brasserie.p2">Le geste n'est pas nouveau. Une brassine est attestée à Durbuy depuis le XVI<sup>e</sup> siècle, sous la garde de la famille d'Ursel depuis 1628.</p>
+        </div>
+      </div>
+      <figure class="brasserie-image">
+        <picture>
+          <source type="image/webp"
+            srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/brasserie-production-720w.webp 720w,
+                    https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/brasserie-production-1920w.webp 1920w"
+            sizes="100vw">
+          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/brasserie-production-1920w.webp"
+               width="1536" height="1024"
+               alt="Cuves de cuivre et installations de brassage dans la brasserie du domaine, vapeurs en suspension"
+               loading="lazy" decoding="async">
+        </picture>
+      </figure>
+      <p class="brasserie-line" data-i18n="brasserie.line">Au cœur du domaine. Au rythme du lieu.</p>
+    </section>
+
+    <section id="bieres" class="bieres" data-reveal>
+      <header class="bieres-head">
+        <p class="chapter" data-i18n="bieres.chapter">— Chapitre III —</p>
+        <p class="kicker" data-i18n="bieres.kicker">Quatre. Brassées au château.</p>
+        <h2 data-i18n="bieres.heading">Les Bières</h2>
+        <p class="lead" data-i18n="bieres.lead">Chacune dans son propre tempo. Petites séries, fermentation traditionnelle.</p>
+      </header>
+      <figure class="bieres-image">
+        <picture>
+          <source type="image/webp"
+            srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/bieres-bouteilles-720w.webp 720w,
+                    https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/bieres-bouteilles-1280w.webp 1280w"
+            sizes="(max-width: 1280px) 100vw, 1080px">
+          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/bieres-bouteilles-1280w.webp"
+               width="1280" height="1024"
+               alt="Quatre bouteilles de la Brasserie du Château de Durbuy : Blonde, Bohemian Pilsner, IPA, Amber Ale"
+               loading="lazy" decoding="async">
+        </picture>
+      </figure>
+      <ul class="beer-list">
+        <li>
+          <h3>Blonde du Château</h3>
+          <p class="beer-abv">6,4°</p>
+          <p class="beer-notes" data-i18n="bieres.note1">Pain frais, miel pâle, finale sèche. La lumière d'une fin d'après-midi.</p>
+        </li>
+        <li>
+          <h3>Bohemian Pilsner</h3>
+          <p class="beer-abv">4,6°</p>
+          <p class="beer-notes" data-i18n="bieres.note2">Cristal et céréale, amertume franche. La précision tchèque, prise en estate.</p>
+        </li>
+        <li>
+          <h3>IPA</h3>
+          <p class="beer-abv">5,3°</p>
+          <p class="beer-notes" data-i18n="bieres.note3">Sorachi Ace : citron vert, herbes coupées. Tension fraîche, jamais bruyante.</p>
+        </li>
+        <li>
+          <h3>Amber Ale</h3>
+          <p class="beer-abv">6,2°</p>
+          <p class="beer-notes" data-i18n="bieres.note4">Caramel, écorce, foin sec. La couleur d'un soir d'automne sur l'Ourthe.</p>
+        </li>
+      </ul>
+      <p class="transition" data-i18n="bieres.transition">Le domaine continue après le brassage.</p>
+    </section>
+
+    <section id="visite" class="visite" data-reveal>
+      <figure class="visite-image">
+        <picture>
+          <source type="image/webp"
+            srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/jardins-visites-720w.webp 720w,
+                    https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/jardins-visites-1024w.webp 1024w"
+            sizes="(max-width: 880px) 100vw, 50vw">
+          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/jardins-visites-1024w.webp"
+               width="1023" height="1537"
+               alt="Tour, ruelle pavée et jardins du domaine du Château de Durbuy au crépuscule"
+               loading="lazy" decoding="async">
+        </picture>
+      </figure>
+      <div class="visite-copy">
+        <p class="chapter" data-i18n="visite.chapter">— Chapitre IV —</p>
+        <p class="kicker" data-i18n="visite.kicker">Sur réservation</p>
+        <h2>
+          <span data-i18n="visite.heading1">La Brasserie</span>
+          <span class="row-mid" data-i18n="visite.heading2">&amp; les Jardins</span>
+        </h2>
+        <p class="lead" data-i18n="visite.lead">Le domaine n'ouvre ses portes que sur réservation. Jardins, brasserie, dégustations — à un nombre restreint d'invités.</p>
+        <p class="private-note" data-i18n="visite.private">Le château est un espace privé et ne se visite pas.</p>
+        <ul class="visit-grid">
+          <li><h3 data-i18n="visite.item1.name">Dégustations</h3><p data-i18n="visite.item1.desc">Sélection de quatre bières du domaine.</p></li>
+          <li><h3 data-i18n="visite.item2.name">Les Jardins</h3><p data-i18n="visite.item2.desc">Accès aux jardins et promenades au bord de l'Ourthe.</p></li>
+          <li><h3 data-i18n="visite.item3.name">La Brasserie</h3><p data-i18n="visite.item3.desc">Visite guidée. Le geste, la fermentation, le rythme.</p></li>
+          <li><h3 data-i18n="visite.item4.name">Événements privés</h3><p data-i18n="visite.item4.desc">Mariages, réceptions, dîners privés.</p></li>
+          <li><h3 data-i18n="visite.item5.name">Bières du domaine</h3><p data-i18n="visite.item5.desc">Notre sélection, à emporter ou à offrir.</p></li>
+        </ul>
+        <a class="text-cta" href="mailto:brasseurduchateau@gmail.com?subject=Demande%20de%20r%C3%A9servation"><span data-i18n="visite.cta">Informations &amp; réservations</span> <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-mark">
+        <span class="crest crest-md" aria-hidden="true"></span>
+        <p>Brasserie du<br>Château de Durbuy</p>
+      </div>
+      <div class="footer-info">
+        <p class="footer-label" data-i18n="footer.label.domaine">Le Domaine</p>
+        <p>Rue du Comte Théodule d'Ursel,&nbsp;2<br>6940 Durbuy<br><span data-i18n="footer.country">Belgique</span></p>
+      </div>
+      <div class="footer-info">
+        <p class="footer-label" data-i18n="footer.label.reservation">Sur réservation</p>
+        <p><a href="mailto:brasseurduchateau@gmail.com">brasseurduchateau@gmail.com</a></p>
+      </div>
+      <div class="footer-info">
+        <p class="footer-label" data-i18n="footer.label.follow">Suivre</p>
+        <p><a href="https://www.instagram.com/brasserieduchateaudedurbuy" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+      </div>
+    </div>
+    <div class="footer-fine">
+      <p>© 2026 Brasserie du Château de Durbuy</p>
+      <p data-i18n="footer.fine">Bière à consommer avec modération.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      // Reveal on scroll
+      const revealEls = document.querySelectorAll('[data-reveal]');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-revealed');
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-revealed'); });
+      }
+
+      // Default theme on sections that don't have one
+      document.querySelectorAll('main > section, footer').forEach(function (s) {
+        if (!s.dataset.theme) s.dataset.theme = 'cream';
+      });
+
+      const nav = document.getElementById('nav');
+      const themeSections = Array.from(document.querySelectorAll('[data-theme]'));
+
+      // Scroll-position-based nav theme detection: pick the section whose top
+      // sits at or above the nav and bottom is below it. Deterministic — wins
+      // over IntersectionObserver which can race when sections fade in/out.
+      function updateNav() {
+        if (window.scrollY > 24) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+
+        // Find which section currently sits under the nav (just below top edge)
+        const probeY = 60; // pixels below the top of the viewport
+        let currentTheme = 'cream';
+        for (let i = 0; i < themeSections.length; i++) {
+          const sec = themeSections[i];
+          const rect = sec.getBoundingClientRect();
+          if (rect.top <= probeY && rect.bottom > probeY) {
+            currentTheme = sec.dataset.theme || 'cream';
+            break;
+          }
+        }
+        document.body.classList.toggle('nav-cream', currentTheme !== 'dark');
+      }
+      window.addEventListener('scroll', updateNav, { passive: true });
+      window.addEventListener('resize', updateNav, { passive: true });
+      updateNav();
+
+      // Mobile menu
+      const toggle = document.getElementById('menuToggle');
+      const menu = document.getElementById('mobileMenu');
+      let menuOpen = false;
+      const setOpen = function (open) {
+        menuOpen = open;
+        toggle.setAttribute('aria-expanded', String(open));
+        menu.dataset.open = String(open);
+        menu.setAttribute('aria-hidden', String(!open));
+        document.body.classList.toggle('menu-open', open);
+      };
+      toggle.addEventListener('click', function () { setOpen(!menuOpen); });
+      menu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setOpen(false); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && menuOpen) setOpen(false);
+      });
+
+      // ------------------------ Language switcher ------------------------
+      // Translations are drafts. Native review required before launch.
+      // See agent.md §14 and docs/heritage/research-findings.md.
+      const translations = {
+        fr: {
+          'nav.domaine': 'Le Domaine',
+          'nav.brasserie': 'La Brasserie',
+          'nav.bieres': 'Les Bières',
+          'nav.visite': 'La Visite',
+          'nav.reservations': 'Réservations',
+          'hero.location': 'Durbuy · Belgique',
+          'hero.subtitle': "À son rythme, entre tradition et précision. Sans bruit.",
+          'hero.scroll': 'Entrer dans le domaine',
+          'lieu.chapter': '— Chapitre I —',
+          'lieu.kicker': 'Le domaine précède le geste',
+          'lieu.heading': 'Le Lieu',
+          'lieu.p1': 'Avant le brassin, le lieu.',
+          'lieu.p2': "Les pierres. La rivière. Les anciennes écuries du château.",
+          'lieu.p3': "Un domaine qui impose son tempo. La brasserie le suit, sans l'altérer.",
+          'brasserie.chapter': '— Chapitre II —',
+          'brasserie.kicker': 'Fermentation traditionnelle',
+          'brasserie.heading': 'La Brasserie',
+          'brasserie.p1': 'Installée dans les anciennes écuries du domaine, la brasserie élabore quatre bières de fermentation traditionnelle, en petites séries.',
+          'brasserie.p2': "Le geste n'est pas nouveau. Une brassine est attestée à Durbuy depuis le XVI<sup>e</sup> siècle, sous la garde de la famille d'Ursel depuis 1628.",
+          'brasserie.line': 'Au cœur du domaine. Au rythme du lieu.',
+          'bieres.chapter': '— Chapitre III —',
+          'bieres.kicker': 'Quatre. Brassées au château.',
+          'bieres.heading': 'Les Bières',
+          'bieres.lead': 'Chacune dans son propre tempo. Petites séries, fermentation traditionnelle.',
+          'bieres.note1': "Pain frais, miel pâle, finale sèche. La lumière d'une fin d'après-midi.",
+          'bieres.note2': 'Cristal et céréale, amertume franche. La précision tchèque, prise en estate.',
+          'bieres.note3': 'Sorachi Ace : citron vert, herbes coupées. Tension fraîche, jamais bruyante.',
+          'bieres.note4': "Caramel, écorce, foin sec. La couleur d'un soir d'automne sur l'Ourthe.",
+          'bieres.transition': 'Le domaine continue après le brassage.',
+          'visite.chapter': '— Chapitre IV —',
+          'visite.kicker': 'Sur réservation',
+          'visite.heading1': 'La Brasserie',
+          'visite.heading2': '&amp; les Jardins',
+          'visite.lead': "Le domaine n'ouvre ses portes que sur réservation. Jardins, brasserie, dégustations — à un nombre restreint d'invités.",
+          'visite.private': "Le château est un espace privé et ne se visite pas.",
+          'visite.item1.name': 'Dégustations',
+          'visite.item1.desc': 'Sélection de quatre bières du domaine.',
+          'visite.item2.name': 'Les Jardins',
+          'visite.item2.desc': "Accès aux jardins et promenades au bord de l'Ourthe.",
+          'visite.item3.name': 'La Brasserie',
+          'visite.item3.desc': 'Visite guidée. Le geste, la fermentation, le rythme.',
+          'visite.item4.name': 'Événements privés',
+          'visite.item4.desc': 'Mariages, réceptions, dîners privés.',
+          'visite.item5.name': 'Bières du domaine',
+          'visite.item5.desc': 'Notre sélection, à emporter ou à offrir.',
+          'visite.cta': 'Informations &amp; réservations',
+          'footer.label.domaine': 'Le Domaine',
+          'footer.country': 'Belgique',
+          'footer.label.reservation': 'Sur réservation',
+          'footer.label.follow': 'Suivre',
+          'footer.fine': 'Bière à consommer avec modération.'
+        },
+        nl: {
+          'nav.domaine': 'Het Domein',
+          'nav.brasserie': 'De Brouwerij',
+          'nav.bieres': 'De Bieren',
+          'nav.visite': 'Bezoek',
+          'nav.reservations': 'Reservaties',
+          'hero.location': 'Durbuy · België',
+          'hero.subtitle': 'Op zijn eigen ritme, tussen traditie en precisie. In stilte.',
+          'hero.scroll': 'Het domein betreden',
+          'lieu.chapter': '— Hoofdstuk I —',
+          'lieu.kicker': 'Het domein gaat het gebaar vooraf',
+          'lieu.heading': 'De Plaats',
+          'lieu.p1': 'Voor het brouwsel, de plaats.',
+          'lieu.p2': 'De stenen. De rivier. De oude stallen van het kasteel.',
+          'lieu.p3': 'Een domein dat zijn eigen tempo oplegt. De brouwerij volgt het, zonder het te veranderen.',
+          'brasserie.chapter': '— Hoofdstuk II —',
+          'brasserie.kicker': 'Traditionele gisting',
+          'brasserie.heading': 'De Brouwerij',
+          'brasserie.p1': 'Gevestigd in de oude stallen van het domein, brouwt de brouwerij vier bieren van traditionele gisting, in kleine reeksen.',
+          'brasserie.p2': "Het gebaar is niet nieuw. Een brouwerij wordt in Durbuy vermeld sinds de 16<sup>e</sup> eeuw, onder de hoede van de familie d'Ursel sinds 1628.",
+          'brasserie.line': 'In het hart van het domein. Op het ritme van de plaats.',
+          'bieres.chapter': '— Hoofdstuk III —',
+          'bieres.kicker': 'Vier. In het kasteel gebrouwen.',
+          'bieres.heading': 'De Bieren',
+          'bieres.lead': 'Elk in zijn eigen tempo. Kleine reeksen, traditionele gisting.',
+          'bieres.note1': 'Vers brood, bleke honing, droge afdronk. Het licht van een late middag.',
+          'bieres.note2': 'Kristal en graan, eerlijke bitterheid. Tsjechische precisie, op het domein gebrouwen.',
+          'bieres.note3': 'Sorachi Ace: limoen, vers gemaaide kruiden. Frisse spanning, nooit luidruchtig.',
+          'bieres.note4': 'Karamel, schors, droog hooi. De kleur van een herfstavond aan de Ourthe.',
+          'bieres.transition': 'Het domein gaat door, ook na het brouwen.',
+          'visite.chapter': '— Hoofdstuk IV —',
+          'visite.kicker': 'Op afspraak',
+          'visite.heading1': 'De Brouwerij',
+          'visite.heading2': '&amp; de Tuinen',
+          'visite.lead': 'Het domein opent zijn deuren enkel op afspraak. Tuinen, brouwerij, proeverijen — voor een beperkt aantal gasten.',
+          'visite.private': 'Het kasteel is een privédomein en kan niet bezocht worden.',
+          'visite.item1.name': 'Proeverijen',
+          'visite.item1.desc': 'Selectie van vier bieren van het domein.',
+          'visite.item2.name': 'De Tuinen',
+          'visite.item2.desc': 'Toegang tot de tuinen en wandelingen langs de Ourthe.',
+          'visite.item3.name': 'De Brouwerij',
+          'visite.item3.desc': 'Begeleide rondleiding. Het gebaar, de gisting, het ritme.',
+          'visite.item4.name': 'Privé-evenementen',
+          'visite.item4.desc': 'Bruiloften, recepties, privédiners.',
+          'visite.item5.name': 'Bieren van het domein',
+          'visite.item5.desc': 'Onze selectie, om mee te nemen of cadeau te geven.',
+          'visite.cta': 'Informatie &amp; reservaties',
+          'footer.label.domaine': 'Het Domein',
+          'footer.country': 'België',
+          'footer.label.reservation': 'Op afspraak',
+          'footer.label.follow': 'Volgen',
+          'footer.fine': 'Bier met mate te consumeren.'
+        },
+        en: {
+          'nav.domaine': 'The Estate',
+          'nav.brasserie': 'The Brewery',
+          'nav.bieres': 'The Beers',
+          'nav.visite': 'Visit',
+          'nav.reservations': 'Reservations',
+          'hero.location': 'Durbuy · Belgium',
+          'hero.subtitle': 'At its own rhythm — between tradition and precision. Without noise.',
+          'hero.scroll': 'Enter the estate',
+          'lieu.chapter': '— Chapter I —',
+          'lieu.kicker': 'The estate precedes the craft',
+          'lieu.heading': 'The Place',
+          'lieu.p1': 'Before the brew, the place.',
+          'lieu.p2': 'The stones. The river. The former stables of the château.',
+          'lieu.p3': "An estate that sets its own tempo. The brewery follows it, without altering it.",
+          'brasserie.chapter': '— Chapter II —',
+          'brasserie.kicker': 'Traditional fermentation',
+          'brasserie.heading': 'The Brewery',
+          'brasserie.p1': 'Installed in the former stables of the estate, the brewery crafts four beers of traditional fermentation, in small batches.',
+          'brasserie.p2': "The craft is not new. A brewery is documented at Durbuy since the 16<sup>th</sup> century, under the guardianship of the d'Ursel family since 1628.",
+          'brasserie.line': 'At the heart of the estate. At the rhythm of the place.',
+          'bieres.chapter': '— Chapter III —',
+          'bieres.kicker': 'Four. Brewed at the château.',
+          'bieres.heading': 'The Beers',
+          'bieres.lead': 'Each in its own tempo. Small batches, traditional fermentation.',
+          'bieres.note1': 'Fresh bread, pale honey, dry finish. The light of a late afternoon.',
+          'bieres.note2': 'Crystal and grain, honest bitterness. Czech precision, taken on estate.',
+          'bieres.note3': 'Sorachi Ace: lime zest, cut herbs. Fresh tension — never loud.',
+          'bieres.note4': 'Caramel, bark, dry hay. The colour of an autumn evening on the Ourthe.',
+          'bieres.transition': 'The estate continues, beyond the brew.',
+          'visite.chapter': '— Chapter IV —',
+          'visite.kicker': 'By appointment',
+          'visite.heading1': 'The Brewery',
+          'visite.heading2': '&amp; the Gardens',
+          'visite.lead': 'The estate opens its doors by appointment only. Gardens, brewery, tastings — for a limited number of guests.',
+          'visite.private': 'The château is a private residence and cannot be visited.',
+          'visite.item1.name': 'Tastings',
+          'visite.item1.desc': 'Selection of four estate beers.',
+          'visite.item2.name': 'The Gardens',
+          'visite.item2.desc': 'Access to the gardens and walks along the Ourthe.',
+          'visite.item3.name': 'The Brewery',
+          'visite.item3.desc': 'Guided visit. The craft, the fermentation, the rhythm.',
+          'visite.item4.name': 'Private events',
+          'visite.item4.desc': 'Weddings, receptions, private dinners.',
+          'visite.item5.name': 'Estate beers',
+          'visite.item5.desc': 'Our selection, to take home or as a gift.',
+          'visite.cta': 'Information &amp; reservations',
+          'footer.label.domaine': 'The Estate',
+          'footer.country': 'Belgium',
+          'footer.label.reservation': 'By appointment',
+          'footer.label.follow': 'Follow',
+          'footer.fine': 'Please drink responsibly.'
+        },
+        de: {
+          'nav.domaine': 'Die Domäne',
+          'nav.brasserie': 'Die Brauerei',
+          'nav.bieres': 'Die Biere',
+          'nav.visite': 'Besuch',
+          'nav.reservations': 'Reservierungen',
+          'hero.location': 'Durbuy · Belgien',
+          'hero.subtitle': 'In seinem eigenen Rhythmus — zwischen Tradition und Präzision. In aller Stille.',
+          'hero.scroll': 'Die Domäne betreten',
+          'lieu.chapter': '— Kapitel I —',
+          'lieu.kicker': 'Die Domäne geht dem Handwerk voran',
+          'lieu.heading': 'Der Ort',
+          'lieu.p1': 'Vor dem Sud, der Ort.',
+          'lieu.p2': 'Die Steine. Der Fluss. Die alten Stallungen des Schlosses.',
+          'lieu.p3': 'Eine Domäne, die ihren Rhythmus vorgibt. Die Brauerei folgt ihm, ohne ihn zu verändern.',
+          'brasserie.chapter': '— Kapitel II —',
+          'brasserie.kicker': 'Traditionelle Gärung',
+          'brasserie.heading': 'Die Brauerei',
+          'brasserie.p1': 'In den alten Stallungen der Domäne untergebracht, braut die Brauerei vier Biere traditioneller Gärung — in kleinen Chargen.',
+          'brasserie.p2': "Das Handwerk ist nicht neu. Eine Brauerei ist in Durbuy seit dem 16. Jahrhundert belegt, in der Obhut der Familie d'Ursel seit 1628.",
+          'brasserie.line': 'Im Herzen der Domäne. Im Rhythmus des Ortes.',
+          'bieres.chapter': '— Kapitel III —',
+          'bieres.kicker': 'Vier. Im Schloss gebraut.',
+          'bieres.heading': 'Die Biere',
+          'bieres.lead': 'Jedes in seinem eigenen Rhythmus. Kleine Chargen, traditionelle Gärung.',
+          'bieres.note1': 'Frisches Brot, heller Honig, trockenes Finale. Das Licht eines späten Nachmittags.',
+          'bieres.note2': 'Kristall und Korn, ehrliche Bittere. Böhmische Präzision, auf der Domäne gebraut.',
+          'bieres.note3': 'Sorachi Ace: Limette, frisch geschnittene Kräuter. Frische Spannung, niemals laut.',
+          'bieres.note4': 'Karamell, Rinde, trockenes Heu. Die Farbe eines Herbstabends an der Ourthe.',
+          'bieres.transition': 'Die Domäne reicht über den Sud hinaus.',
+          'visite.chapter': '— Kapitel IV —',
+          'visite.kicker': 'Nur nach Vereinbarung',
+          'visite.heading1': 'Die Brauerei',
+          'visite.heading2': '&amp; die Gärten',
+          'visite.lead': 'Die Domäne öffnet ihre Tore nur nach Vereinbarung. Gärten, Brauerei, Verkostungen — für eine begrenzte Anzahl von Gästen.',
+          'visite.private': 'Das Schloss ist ein privater Wohnsitz und kann nicht besichtigt werden.',
+          'visite.item1.name': 'Verkostungen',
+          'visite.item1.desc': 'Auswahl von vier Bieren der Domäne.',
+          'visite.item2.name': 'Die Gärten',
+          'visite.item2.desc': 'Zugang zu den Gärten und Spaziergänge entlang der Ourthe.',
+          'visite.item3.name': 'Die Brauerei',
+          'visite.item3.desc': 'Geführte Besichtigung. Das Handwerk, die Gärung, der Rhythmus.',
+          'visite.item4.name': 'Private Veranstaltungen',
+          'visite.item4.desc': 'Hochzeiten, Empfänge, private Diners.',
+          'visite.item5.name': 'Biere der Domäne',
+          'visite.item5.desc': 'Unsere Auswahl, zum Mitnehmen oder zum Verschenken.',
+          'visite.cta': 'Informationen &amp; Reservierungen',
+          'footer.label.domaine': 'Die Domäne',
+          'footer.country': 'Belgien',
+          'footer.label.reservation': 'Nur nach Vereinbarung',
+          'footer.label.follow': 'Folgen',
+          'footer.fine': 'Bier in Maßen genießen.'
+        }
+      };
+
+      const supportedLangs = ['fr', 'nl', 'en', 'de'];
+      const STORAGE_KEY = 'brasserie-lang';
+
+      function getInitialLang() {
+        try {
+          const stored = localStorage.getItem(STORAGE_KEY);
+          if (stored && supportedLangs.indexOf(stored) !== -1) return stored;
+        } catch (e) { /* localStorage may be blocked */ }
+        const nav = (navigator.language || 'fr').slice(0, 2).toLowerCase();
+        return supportedLangs.indexOf(nav) !== -1 ? nav : 'fr';
+      }
+
+      function setLang(lang) {
+        if (supportedLangs.indexOf(lang) === -1) lang = 'fr';
+        const dict = translations[lang];
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key] != null) el.innerHTML = dict[key];
+        });
+        document.documentElement.setAttribute('lang', lang);
+        document.querySelectorAll('.lang-switcher button, .mobile-lang-switcher button').forEach(function (b) {
+          b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false');
+        });
+        try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* noop */ }
+      }
+
+      document.querySelectorAll('.lang-switcher button, .mobile-lang-switcher button').forEach(function (b) {
+        b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
+      });
+
+      setLang(getInitialLang());
+    })();
+  </script>
+</body>
 </html>

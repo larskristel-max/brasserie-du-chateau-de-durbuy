@@ -132,13 +132,15 @@ If a section feels designed, you've added too much. Remove the most assertive el
 - Dark slab (`#1A1612`).
 - Heading row: 0.9fr / 1fr split for kicker+heading vs prose.
 - Image: **edge-to-edge full width**, 78vh tall. Vignettes top and bottom blend into the dark slab.
-- Feature row: 5-column hairline grid below the image.
+- Below the image, a single centred italic line in copper-light: *"Au cœur du domaine. Au rythme du lieu."* (replaces the earlier 5-item hairline feature row, which read as a checklist after the cinematic image).
+- **Pending — to apply when the polish pass resumes:** cap the brewery image height on mobile (`@media (max-width: 880px) { .brasserie-image { height: clamp(48vh, 60vh, 28rem); min-height: 0; } }`) — currently 78vh on mobile crushes the phone screen. The 5-item feature row CSS may still be present in the stylesheet if not yet stripped — remove `.feature-row` rules in the same pass.
 
 ### 4.4 Les Bières (Chapter III)
 
 - Stacked layout, centred.
 - Sequence: heading → bottle photograph (`min(100% - 2*gutter, 1080px)`) → 4-column beer roster aligning under the bottles → italic transition line.
 - **The list aligns column-by-column to the bottles in the photo above.** Beer order in the markup matches bottle order in the photo (left to right: Blonde, Bohemian Pilsner, IPA, Amber Ale).
+- **Pending — to apply when the polish pass resumes:** (1) the bottle photograph currently uses `filter: brightness(0.99) contrast(1.02)` which is too light to belong to the unified atmospheric world — strengthen to `filter: brightness(0.93) contrast(1.05) saturate(0.93)` so the bottles join the rest of the photography; (2) collapse the mobile beer list directly to single column at 880px (skip the 2-column intermediate step), with name + ABV on the same baseline at the top of each row and notes underneath — the column-to-bottle visual rhyme is lost as soon as the layout stacks anyway, so trying to preserve a 2-column intermediate is a false economy.
 
 ### 4.5 La Visite (Chapter IV)
 
@@ -247,6 +249,19 @@ The mobile experience is the same emotional pace as the desktop. Same crest. Sam
 
 What changes is composition (stacked vs side-by-side), not voice or hierarchy.
 
+### 8.4 Tablet (920–1024px) — open tuning gap
+
+**Tablet portrait currently falls into the mobile bucket.** The site jumps from full desktop to stacked-mobile via the 920 / 880 breakpoints, with no in-between treatment. A tablet user gets the stacked-mobile experience, which is wrong — tablets have horizontal real estate that calls for the side-by-side layouts at slightly softened scale.
+
+When a future agent addresses this gap:
+
+- Add a `@media (min-width: 920px) and (max-width: 1100px)` query that **keeps** side-by-side layouts active.
+- Inside that query, tighten the H1 clamp to `clamp(2.6rem, 5vw, 4.4rem)` and reduce image `min-height` to `64vh`.
+- Pad the side-by-side gutters slightly more (`clamp(1.6rem, 4vw, 3rem)` instead of the desktop value) so the two columns breathe.
+- Verify on a real iPad / Pixel Tablet before merging.
+
+Until that work lands, the tablet experience is the most important untuned surface on the site.
+
 ---
 
 ## 9. Editorial composition rules
@@ -336,7 +351,7 @@ JSON-LD `FoodEstablishment` with the canonical address and email. (See `index.ht
 
 ---
 
-## 12. What this document is for
+## 12. Document maintenance
 
 This document is the **technical and aesthetic spine** of the site. It exists so that:
 
@@ -344,8 +359,27 @@ This document is the **technical and aesthetic spine** of the site. It exists so
 - A new developer can understand the system in 20 minutes.
 - A creative director can audit a PR against fixed criteria.
 
-If you change a token, a breakpoint, a motion curve, or a layout rule — update this document in the same PR.
+**Maintenance rule, no exceptions:**
+
+If a PR touches *any* of the following, it must update this document in the same PR — not the next one, not "later":
+
+- A CSS variable in the token system (any `--*`).
+- A breakpoint value.
+- A motion curve, duration, or distance.
+- A layout rule (column ratio, min-height, padding token).
+- A photographic grade, crop, or overlay.
+- A heading level used in copy markup.
+
+If a PR ships without the matching doc update, the doc is now lying about the system, which means the next agent will trust a stale source and re-introduce the very drift this document was written to prevent. **Reject the PR until the doc is updated.**
+
+When a *Pending* note in this document is implemented (e.g. the brewery feature row replacement, the bottle photo grade, the mobile beer list collapse), the implementing PR must:
+
+1. Apply the change to the markup / styles.
+2. Remove the *Pending* note from this document.
+3. Move the new behaviour into the body of the section it belongs to.
+
+The audit trail of what was pending and when it landed lives in the git log of this file.
 
 ---
 
-*Last revised: 2026-05-10. Implementation lives in `index.html` (current single-file demo) and will migrate to the Vite/React tree under `src/` in a subsequent commit.*
+*Last revised: 2026-05-10 (second revision — added "What this site is missing" in agent.md §1, Known unknowns in agent.md §14, Pending notes for La Brasserie and Les Bières polish, tablet open-gap subsection §8.4, and tightened maintenance rule). Implementation lives in `index.html` (current single-file demo) and will migrate to the Vite/React tree under `src/` in a subsequent commit.*

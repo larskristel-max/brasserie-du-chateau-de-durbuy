@@ -26,6 +26,18 @@ The site does **not** exist to:
 
 If at any moment the page begins to feel like a craft-brewery website with luxury styling on top, **you have failed**. Roll back.
 
+### What this site is currently missing
+
+A candid running list — so a future agent reads the doc and understands *the shape of "next"*, not only what is already in place:
+
+- **Dark / cinematic register is underrepresented.** The moodboard called for both light editorial *and* dark cinematic atmosphere. The current build delivers the light editorial cleanly; only the brewery slab carries the dark register. There is room for at least one more atmospheric chapter (twilight grounds, candle-lit interior, copper-closeup) to honour the second half of the brief.
+- **No second page.** Heritage is currently implied through three short paragraphs in Le Lieu. A real luxury estate site has at minimum a Le Domaine page (heritage essay + 8–12 photographs).
+- **Reservation flow is still `mailto:`.** A small four-field form (name, email, dates, party size) posting to `brasseurduchateau@gmail.com` is the minimum upgrade.
+- **No English version.** A Belgian estate that wants international visitors needs a `FR / EN` toggle.
+- **Tablet (768–1024px) tuning is absent.** Tablet portrait currently falls into the mobile bucket; the design jumps from full desktop to stacked-mobile with no in-between.
+
+These are not invitations to drift. They are the named work that closes the gap between "approaching estate-grade" and "world-class". Tackle them deliberately, in order, against the rules below.
+
 ---
 
 ## 2. Reference standards
@@ -237,8 +249,25 @@ These are the active contact details for the launch. Do not change them without 
 
 - Email: **brasseurduchateau@gmail.com**
 - Address: **Rue du Comte Théodule d'Ursel, 2 — 6940 Durbuy, Belgique**
+- Instagram: **https://www.instagram.com/brasserieduchateaudedurbuy**
 
 These appear in the footer, in mailto links, in the meta description, and in the JSON-LD structured data. If you change one, change all.
+
+External links (Instagram, future EN site, future booking domain) must include `target="_blank" rel="noopener noreferrer"` because the demo and any embedded contexts may be sandboxed iframes.
+
+---
+
+## 14. Known unknowns — facts to verify before they appear in copy or markup
+
+This section exists because real-world facts have already been confabulated once in this repository (an early draft asserted "Cinq cuves" — there are not five cuves). To prevent recurrence, the following facts are **explicitly unconfirmed**. They must not appear in copy, alt text, structured data, or design treatments until the creative director has verified them.
+
+- **The cuves count.** Unknown. **Do not invent a number.** If you need a brewing-equipment reference in copy, write around it ("Au cœur du domaine. Au rythme du lieu." rather than "X cuves, Y bières.").
+- **The 16th-century brewing claim.** There is anecdotal mention of a brewer and brewery present at the Château de Durbuy in the 16th century. This claim is currently **under research** — a tiered findings document is in progress. Until that document lands and the creative director chooses what to use, **do not echo the claim in copy**, even in soft form ("brassée depuis...", "héritage séculaire...", "depuis le XVIᵉ siècle..."). The temptation to anchor heritage with a century reference is real; resist it until the source is confirmed.
+- **Named historical brewers, brewing-master records, specific dates of operation or interruption.** Unknown. Do not invent.
+- **The d'Ursel family's exact acquisition date and the construction date of the "anciennes écuries"** the brasserie occupies. Unknown. The street address (`Rue du Comte Théodule d'Ursel`) is a strong hint that the d'Ursels were patrons; that does not authorise printing a date.
+- **The number of beers brewed.** Currently **four** (Blonde, Bohemian Pilsner, IPA, Amber Ale). If this changes, every reference to "Quatre" in copy must change with it — including the hero kicker, the visit grid, and the brewery prose.
+
+When an unknown is verified, **move the entry from this section into the body of the relevant section (4, 5, etc.) with the source cited in a comment in the markup**. Do not delete the historical record of the unknown — it is a useful audit trail.
 
 ---
 

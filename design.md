@@ -115,17 +115,21 @@ If a section feels designed, you've added too much. Remove the most assertive el
 
 ### 4.1 Hero
 
-- 100svh, full-bleed background image (golden-hour château), `object-position: center 58%` to keep the river reflection in frame.
+- 100svh, full-bleed CSS-`background-image` (the hero is not an `<img>` — it's a div with `background-image`). Golden-hour château, `object-position: center 58%` to keep the river reflection in frame.
+- **Responsive backgrounds** via CSS media queries (since CSS background-image doesn't support `srcset`): `hero-chateau-720w.webp` on phones (≤720px), `1280w.webp` as the default, `2560w.webp` for desktops ≥1281px or retina (`min-resolution: 1.5dppx`). All served via jsDelivr.
 - `filter: brightness(0.74) saturate(0.94) contrast(1.05)` — the *only* photographic grade strong enough to count.
 - Two-layer veil: a radial dim (legibility) + a top/bottom gradient (text readability).
 - Centred vertical lockup: crest → eyebrow (`Durbuy · Belgique`) → three-line title (middle italic) → italic subtitle → vertical hairline.
+- **Hero subtitle (canonical, FR)**: *"À son rythme, entre tradition et précision. Sans bruit."* — translated into NL / EN / DE via the `data-i18n="hero.subtitle"` mechanism. **Do not restore "Le brassage" at the start of the line** — its removal was a deliberate château-first move (the prior subtitle led with brewing, which inverted the brand's positioning hierarchy).
 - Vertical scroll cue (`Entrer dans le domaine`) at bottom-right, `writing-mode: vertical-rl`, with a 1px rule above.
 
 ### 4.2 Le Lieu (Chapter I)
 
 - Two-column grid, **min-height 92vh**, no horizontal padding on the section itself.
-- Left column (1.05fr): full-bleed image (`lieu-domaine.png`) at 100% height. Right edge has a soft fade into cream.
-- Right column (1fr): copy block, vertically centred, `max-width: 38rem`, internal padding only.
+- **Left column (1fr): copy block**, vertically centred, `max-width: 38rem`, `margin-left: auto` so the text sits toward the right edge of its column near the image. Internal padding only.
+- **Right column (1.05fr): full-bleed image** (`lieu-domaine`) at 100% height. **Left edge** has a soft cream fade where the image meets the copy panel.
+- **Reading order: text first, then image** — eye lands on the copy on the left, then visual closure on the right.
+- On mobile, the grid collapses to a single column with **the text appearing first** in the stack, then the image below. This is the deliberate flow that matches Le Lieu's role as the editorial opening of the page after the hero.
 
 ### 4.3 La Brasserie (Chapter II)
 
@@ -140,13 +144,17 @@ If a section feels designed, you've added too much. Remove the most assertive el
 - Stacked layout, centred.
 - Sequence: heading → bottle photograph (`min(100% - 2*gutter, 1080px)`) → 4-column beer roster aligning under the bottles → italic transition line.
 - **The list aligns column-by-column to the bottles in the photo above.** Beer order in the markup matches bottle order in the photo (left to right: Blonde, Bohemian Pilsner, IPA, Amber Ale).
-- **Pending — to apply when the polish pass resumes:** (1) the bottle photograph currently uses `filter: brightness(0.99) contrast(1.02)` which is too light to belong to the unified atmospheric world — strengthen to `filter: brightness(0.93) contrast(1.05) saturate(0.93)` so the bottles join the rest of the photography; (2) collapse the mobile beer list directly to single column at 880px (skip the 2-column intermediate step), with name + ABV on the same baseline at the top of each row and notes underneath — the column-to-bottle visual rhyme is lost as soon as the layout stacks anyway, so trying to preserve a 2-column intermediate is a false economy.
+- Bottle photograph uses `filter: brightness(0.93) contrast(1.05) saturate(0.93)` to belong to the unified atmospheric world.
+- Mobile: single-column beer list at 880px (skipping the 2-column intermediate). Name and ABV on the same baseline at the top of each row, notes underneath. The bottle-to-list column rhyme is lost on mobile anyway as soon as the layout stacks, so a 2-column intermediate would be a false economy.
 
 ### 4.5 La Visite (Chapter IV)
 
-- Two-column grid, min-height 96vh, identical mechanics to Le Lieu.
-- Left column: full-bleed gardens image with the same right-edge cream fade.
-- Right column: copy + visit grid (2 columns) + private note + reservation CTA.
+- Two-column grid, min-height 96vh — same dimensions as Le Lieu, but **deliberately opposite reading order**.
+- **Left column: full-bleed gardens image** with the right-edge cream fade where it meets the copy panel.
+- **Right column: copy** + visit grid (2 columns) + private note + reservation CTA.
+- **Reading order: image first, then text** — opposite of Le Lieu. This is intentional: at the end of the page the eye is winding down, and leading with the gardens photograph creates a slower, more contemplative entry into the final section. The functional content (what to book, what's private, what's offered) sits after the photograph rather than competing with it.
+- The asymmetry between Le Lieu (text→image, opening) and La Visite (image→text, closing) is **the page's editorial rhythm**: the page opens reading-led and closes image-led. Do not unify them.
+- Mobile: image first, then text (stacks naturally in HTML order).
 
 ### 4.6 Footer
 

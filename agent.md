@@ -326,6 +326,35 @@ When you obtain native translations for any language, update the `translations` 
 - The current 2020 brasserie occupies the **anciennes écuries** (former stables) of the château — a separate building from the château proper.
 - **A historical brewery building** (per Comte Jean-Michel d'Ursel's direct testimony) stands at the **petite anticlinal** at the western end of the domain. It is **the oldest building still standing** on the château grounds, was not transformed in the 1731 rebuild, and contains the **old well descending to the Ourthe**. This claim is family knowledge — not documented in any public source including the d'Ursel family's own published château historique. Treat as Tier-D copy (requires explicit blessing from Jean-Michel to print). See `docs/heritage/research-findings.md` for the full evidence and `docs/heritage/brewing-deep-dive.md` for the architectural and economic context.
 
+### Hero subtitle (canonical, May 2026)
+
+The hero subtitle is now: ***"À son rythme, entre tradition et précision. Sans bruit."***
+
+**Do not restore "Le brassage" at the start.** The earlier version (*"Le brassage a son rythme..."*) opened the brand by naming brewing — which inverted the château-first positioning hierarchy in §3. Removing those two words returns the subtitle to abstract atmosphere with the place itself as the implied subject. This is one of the highest-leverage editorial moves on the site; do not undo it without explicit creative-director sign-off.
+
+Translations in NL / EN / DE are wired through the `data-i18n="hero.subtitle"` mechanism in `index.html`. The OG description (Open Graph share preview) carries the same FR line.
+
+### Le Lieu vs La Visite — the editorial reading rhythm (canonical, May 2026)
+
+The two half-bleed sections of the homepage are **deliberately opposite** in reading order:
+
+- **Le Lieu (Chapter I)** — *text first, image second* (text on the left, image on the right at desktop; stacked text-then-image on mobile). Opens the page after the hero with copy-led reading.
+- **La Visite (Chapter IV)** — *image first, text second* (image on the left, text on the right at desktop; stacked image-then-text on mobile). Closes the page with image-led contemplation.
+
+This asymmetry is **the page's editorial rhythm**: page opens reading-led, page closes image-led. Do not unify them under the same column order. The rhythm was established 10 May 2026 after a deliberate side-by-side comparison.
+
+### Photography pipeline (shipped May 2026)
+
+All photography ships as **WebP at multiple resolutions** served via **jsDelivr CDN** in front of the GitHub repo. Full specification in `design.md` §5.5 and §5.6. Key facts for future agents:
+
+- Source PNG masters stay in `src/assets/` for archival.
+- WebP variants follow `{name}-{width}w.webp` naming.
+- Foreground images use `<picture>` + `<source srcset>` + responsive `sizes`.
+- Hero background uses CSS media queries to swap between 720w / 1280w / 2560w.
+- URL host: `https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/{filename}`.
+- **Do not switch the URL host back to `raw.githubusercontent.com`** — it is not designed for production traffic and was a 90%+ performance regression.
+- When adding any new photograph: follow the 6-step workflow in `design.md` §5.6.
+
 ### Research archive
 
 The brand's research lives in the repository at `docs/heritage/`:

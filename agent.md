@@ -288,7 +288,29 @@ These two lines may be printed without further verification. Both are corroborat
 
 > *"Brassée à Durbuy depuis le XVI<sup>e</sup> siècle, sous la garde de la famille d'Ursel depuis 1628."*
 
-This line is the agreed baseline ("Option B" in the heritage findings document). It is fully sourced and does not depend on any contested claim. Use this in the brewery section (Chapter II) when the heritage copy lands.
+This line is the agreed baseline ("Option B" in the heritage findings document). It is fully sourced and does not depend on any contested claim. **Applied to the live site in May 2026 (Chapter II prose).** Subject to Comte Jean-Michel d'Ursel's blessing on first publication.
+
+### Language switcher and translation policy
+
+The live site supports four languages via an in-page JS switcher: **FR · NL · EN · DE**. Position: top-right of the nav (desktop) and at the bottom of the mobile menu overlay. Implementation: `data-i18n="..."` attributes on every translatable element, a `translations` object with all four language sets, `localStorage` persistence, and dynamic update of `<html lang="...">`.
+
+**Translation status: draft, pending native review.** The current FR/NL/EN/DE strings were drafted by the AI agent. They are credible but **must not be considered canonical until reviewed by native speakers** in each target language:
+
+- **FR**: native (Belgian French). This is the original; safe.
+- **NL**: leans Flemish (Belgian Dutch). Word choices like *"brouwerij"* / *"het domein"* / *"op afspraak"* should be reviewed by a Flemish-speaking native. The Netherlands-Dutch register would differ.
+- **EN**: uses British English conventions appropriate for European luxury hospitality (*"estate"*, *"By appointment"*, *"Please drink responsibly"*). Worth a native sweep but the risk surface is small.
+- **DE**: standard German (Hochdeutsch), aimed at both Belgian German-speakers and German tourists. *"In aller Stille"*, *"Im Rhythmus des Ortes"*, *"In Maßen genießen"* — solid but should be checked by a native.
+
+What does NOT translate:
+
+- Brand names (*"Brasserie du Château de Durbuy"*, beer names, *"Marckloff"*).
+- Place names (*"Durbuy"*, *"Ourthe"*).
+- Historical proper nouns (*"Philippe Marckloff"*, *"Antoine de Metz"*, *"Nicolas de Blier"*, *"d'Ursel"*).
+- Address numerals.
+
+The country name **does** translate: *"Belgique"* / *"België"* / *"Belgium"* / *"Belgien"*. The country gets translated; the street and city stay French/local.
+
+When you obtain native translations for any language, update the `translations` object in `redesign-template.html` and republish. The keys are documented inside the translations object (~50 keys).
 
 ### Reserved for the future Le Domaine sub-page (do NOT use on the homepage)
 

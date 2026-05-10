@@ -172,11 +172,6 @@ body.menu-open {
   transition: opacity 320ms ease, transform 320ms ease;
 }
 
-.mobile-menu[data-open='true'] {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
 
 .mobile-menu nav {
   display: flex;
@@ -696,6 +691,12 @@ h2 span {
 
   .menu-toggle {
     display: block;
+  }
+
+  .mobile-menu[data-open='true'] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
   .hero-section {

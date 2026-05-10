@@ -69,6 +69,20 @@ function Navigation() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    const desktopQuery = window.matchMedia('(min-width: 961px)');
+    const closeMenuOnDesktop = (event: MediaQueryListEvent | MediaQueryList) => {
+      if (event.matches) {
+        setMenuOpen(false);
+      }
+    };
+
+    closeMenuOnDesktop(desktopQuery);
+    desktopQuery.addEventListener('change', closeMenuOnDesktop);
+
+    return () => desktopQuery.removeEventListener('change', closeMenuOnDesktop);
+  }, []);
+
+  useEffect(() => {
     document.body.classList.toggle('menu-open', menuOpen);
 
     if (!menuOpen) {

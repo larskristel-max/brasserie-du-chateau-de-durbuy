@@ -462,4 +462,29 @@ The audit trail of what was pending and when it landed lives in the git log of t
 
 ---
 
-*Last revised: 2026-05-10 (third revision — May 2026 polish pass: documented hero zoom-out animation (§4.1, §6), hero crest vignette (§4.1), Aman-style underline-only nav CTA (§7.3, §6), Les Bières kicker/lead/tasting-note rewrites (§4.4), ultrawide widening at 1600px (§4.4, §8.5), tablet 920–1100px bridge breakpoint promoted from §8.4 open-gap to §8.4 shipped feature). Implementation lives in `index.html` / `redesign-template.html` (current single-file demo) and will migrate to the Vite/React tree under `src/` in a subsequent commit.*
+## 13. Deploy architecture (shipped May 2026)
+
+**The canonical production site is the single static `index.html` at the repo root.** The GitHub Actions workflow (`.github/workflows/deploy.yml`) is a no-build static publish: it copies `index.html` to `dist/` and uploads it to GitHub Pages. End-to-end deploy time is **~26 seconds**.
+
+The Vite/React tree under `src/` is **legacy reference code only**. It is not built, not deployed, and not used in production. It remains in the repo as historical artifact:
+- `src/main.tsx` — earlier React component tree (no language switcher, old subtitle, old kicker, PNG imports). Frozen.
+- `src/styles.css` — earlier CSS. Frozen.
+- `src/scripts.js` — earlier scroll-reveal init. Frozen.
+- `package.json`, `package-lock.json`, `vite.config.ts` — Vite/npm scaffolding. Not invoked by the workflow.
+
+When making changes:
+- Edit `redesign-template.html` (the workspace demo) and `index.html` (the production source) together — they should remain byte-identical. The simplest pattern: edit `redesign-template.html`, then `cp redesign-template.html index.html` before committing.
+- **Do not touch `src/`** unless you're explicitly migrating back to a build step. The React tree is out of sync with the canonical site and any change to it that isn't a full rewrite will widen the gap.
+
+**Why static-first**: The redesign is a small (~63 KB) single-file site with inline CSS/JS and all images served via the jsDelivr CDN. Vite added no value — it was bundling a React app that wasn't shipping. A no-build static publish is faster (~30s vs ~2 min), simpler (no node_modules, no transitive vulnerabilities), and more reliable (no build to break).
+
+If a future agent decides to migrate to a real build step (e.g. for code-splitting, type-checking, or a multi-page site), the path forward is to:
+1. Rebuild the production source in `src/` to match `redesign-template.html` (this is the work that was deferred in May 2026).
+2. Restore the original `deploy.yml` (with `npm ci` + `npm run build`).
+3. Update this section to reflect the new architecture.
+
+Until that work lands, **do not run `npm install` or `npm run build` against this repo**. The lockfile and config are stale; rebuilding them is its own project.
+
+---
+
+*Last revised: 2026-05-10 (fourth revision — May 2026 polish pass and deploy architecture change: documented hero zoom-out animation (§4.1, §6), hero crest vignette (§4.1), Aman-style underline-only nav CTA (§7.3, §6), Les Bières kicker/lead/tasting-note rewrites (§4.4), ultrawide widening at 1600px (§4.4, §8.5), tablet 920–1100px bridge breakpoint promoted from §8.4 open-gap to §8.4 shipped feature, and the new no-build static deploy architecture in §13). Implementation lives in `index.html` at the repo root (canonical) and `redesign-template.html` in workspace/repo root (workspace demo, byte-identical to `index.html`).*

@@ -416,4 +416,20 @@ Seven micro-refinements applied as a single polish pass after the heritage and m
 7. **Footer fine print.** Removed "À votre santé / To your health / Op uw gezondheid / Zum Wohl" from all four languages. The toast belongs in a glass, not a fine-print line — kept the responsible-consumption statement alone, which is sufficient and more sober.
 8. **Ultrawide Les Bières widening.** Added `@media (min-width: 1600px)` rule that widens both `.bieres-image` and `.beer-list` from 1080px to 1280px max, and increases the beer-card gap. Brings Les Bières into visual parity with the hero on 27"+ monitors and prevents the section from feeling cramped relative to surrounding full-bleed sections.
 
-*Last revised: 2026-05-10 (fourth revision — recorded the May 2026 polish pass; updated the "what this site is currently missing" list to reflect closed items and surface the remaining gaps in priority order). Any divergence from this document requires explicit creative-director sign-off.*
+### Deploy architecture (shipped May 2026)
+
+**The live site at https://larskristel-max.github.io/brasserie-chateau-durbuy-2026/ is served by a single static `index.html` at the repo root.** No build step. The GitHub Actions workflow at `.github/workflows/deploy.yml` copies `index.html` to `dist/` and uploads. Deploy time: ~26 seconds.
+
+The Vite/React tree under `src/` is legacy. It was the original production target, but it drifted behind the editorial demo (no multilingual switcher, old subtitle, old kicker, PNG instead of WebP, no polish-pass items). Rather than rebuild it, we promoted `redesign-template.html` to the canonical `index.html` and retired the Vite build.
+
+**Editing workflow:**
+1. Edit `redesign-template.html` (workspace).
+2. `cp redesign-template.html index.html` (repo root).
+3. Commit both files in the same commit (they should remain byte-identical).
+4. Push to `main` → GitHub Actions deploys in ~26s.
+
+If you find yourself only editing one of the two files, you have created drift. Stop and sync them.
+
+**Do not touch `src/`** unless you're explicitly migrating back to a build step. Any partial change to the React tree widens the gap between it and the canonical site. The full migration plan is in `design.md` §13.
+
+*Last revised: 2026-05-10 (fifth revision — recorded the May 2026 polish pass, the canonical static deploy architecture, and the legacy status of the Vite/React `src/` tree). Any divergence from this document requires explicit creative-director sign-off.*

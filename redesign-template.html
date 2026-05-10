@@ -378,22 +378,28 @@
       .nav-cta { display: none; }
       .menu-toggle { display: block; }
 
-      /* Mobile nav layout: wordmark *truly* centered on the viewport axis.
-         The trick is equal-width side columns matching the hamburger width
-         (2.4rem). 1fr on both sides doesn't centre because the right column
-         expands to fit the hamburger while the left stays at 0, biasing
-         the auto column off-centre. Fixed widths sidestep this entirely. */
+      /* Mobile nav layout: flex centring with absolute-positioned hamburger.
+         Grid was finicky here — the previous 2.4rem | 1fr | 2.4rem pattern
+         technically computes a centred middle column, but iOS Safari rendered
+         it off-axis (likely a layout-engine quirk around mixed inline-flex
+         children + safe-area padding). Flex + absolute is more reliable. */
       .nav {
-        grid-template-columns: 2.4rem 1fr 2.4rem;
-        gap: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       .nav-mark {
-        grid-column: 2;
-        justify-self: center;
+        /* Single visible flex item — centred by parent's justify-content */
+        margin: 0;
       }
       .menu-toggle {
-        grid-column: 3;
-        justify-self: end;
+        /* Absolute-positioned so it doesn't push the centred nav-mark off-axis */
+        position: absolute;
+        top: 50%;
+        right: calc(var(--gutter) + env(safe-area-inset-right, 0px));
+        transform: translateY(-50%);
+        /* re-anchor vertically AFTER the safe-area top padding pushes content down */
+        margin-top: calc(env(safe-area-inset-top, 0px) / 2);
       }
     }
 

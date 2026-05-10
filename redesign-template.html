@@ -425,18 +425,26 @@
       overflow: hidden;
     }
 
-    .hero-image {
+    /* Hero photograph: a real <picture>/<img> element (not background-image).
+       iOS Safari has a known bug where background-image inside an absolutely-
+       positioned element with z-index: -2 + filter + will-change: transform
+       fails to paint. Native <img> + object-fit: cover sidesteps it entirely. */
+    .hero-picture {
       position: absolute;
       inset: 0;
       z-index: -2;
-      background-image: url('https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-1280w.webp');
-      background-size: cover;
-      background-position: center 58%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 58%;
       filter: brightness(0.74) saturate(0.94) contrast(1.05);
       /* Slow zoom-out on first paint — settles the eye, signals "stay a while" */
       transform-origin: center 58%;
       animation: hero-settle 1600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-      will-change: transform;
     }
     @keyframes hero-settle {
       from { transform: scale(1.04); }
@@ -444,18 +452,6 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .hero-image { animation: none; }
-    }
-
-    /* Hero responsive backgrounds: serve a small image to phones, retina to large screens */
-    @media (max-width: 720px) {
-      .hero-image {
-        background-image: url('https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-720w.webp');
-      }
-    }
-    @media (min-width: 1281px), (min-resolution: 1.5dppx) {
-      .hero-image {
-        background-image: url('https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-2560w.webp');
-      }
     }
 
     .hero-veil {
@@ -1134,7 +1130,26 @@
   <main>
 
     <section id="top" class="hero" data-theme="dark">
-      <div class="hero-image" role="img" aria-label="Le Château de Durbuy au lever du jour, reflété dans l'Ourthe"></div>
+      <picture class="hero-picture" aria-hidden="true">
+        <!-- WebP for modern browsers -->
+        <source media="(max-width: 720px)" type="image/webp"
+          srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-720w.webp">
+        <source media="(min-width: 1281px), (min-resolution: 1.5dppx)" type="image/webp"
+          srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-2560w.webp">
+        <source type="image/webp"
+          srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-1280w.webp">
+        <!-- JPG fallback for browsers that can't render WebP (some iOS Safari, carrier proxies) -->
+        <source media="(max-width: 720px)" type="image/jpeg"
+          srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-720w.jpg">
+        <source media="(min-width: 1281px), (min-resolution: 1.5dppx)" type="image/jpeg"
+          srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-2560w.jpg">
+        <img class="hero-image"
+             src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/hero-chateau-1280w.jpg"
+             width="1280" height="800"
+             alt="Le Château de Durbuy au lever du jour, reflété dans l'Ourthe"
+             fetchpriority="high"
+             decoding="async">
+      </picture>
       <div class="hero-veil" aria-hidden="true"></div>
       <div class="hero-stage">
         <span class="hero-crest" aria-hidden="true"></span>
@@ -1167,7 +1182,11 @@
             srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/lieu-domaine-720w.webp 720w,
                     https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/lieu-domaine-1024w.webp 1024w"
             sizes="(max-width: 880px) 100vw, 50vw">
-          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/lieu-domaine-1024w.webp"
+          <source type="image/jpeg"
+            srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/lieu-domaine-720w.jpg 720w,
+                    https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/lieu-domaine-1024w.jpg 1024w"
+            sizes="(max-width: 880px) 100vw, 50vw">
+          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/lieu-domaine-1024w.jpg"
                width="1024" height="1279"
                alt="Pierres anciennes, cobblestone et dépendances du domaine du Château de Durbuy au crépuscule"
                loading="lazy" decoding="async">
@@ -1193,7 +1212,11 @@
             srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/brasserie-production-720w.webp 720w,
                     https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/brasserie-production-1920w.webp 1920w"
             sizes="100vw">
-          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/brasserie-production-1920w.webp"
+          <source type="image/jpeg"
+            srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/brasserie-production-720w.jpg 720w,
+                    https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/brasserie-production-1920w.jpg 1920w"
+            sizes="100vw">
+          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/brasserie-production-1920w.jpg"
                width="1536" height="1024"
                alt="Cuves de cuivre et installations de brassage dans la brasserie du domaine, vapeurs en suspension"
                loading="lazy" decoding="async">
@@ -1215,7 +1238,11 @@
             srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/bieres-bouteilles-720w.webp 720w,
                     https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/bieres-bouteilles-1280w.webp 1280w"
             sizes="(max-width: 1280px) 100vw, 1080px">
-          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/bieres-bouteilles-1280w.webp"
+          <source type="image/jpeg"
+            srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/bieres-bouteilles-720w.jpg 720w,
+                    https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/bieres-bouteilles-1280w.jpg 1280w"
+            sizes="(max-width: 1280px) 100vw, 1080px">
+          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/bieres-bouteilles-1280w.jpg"
                width="1280" height="1024"
                alt="Quatre bouteilles de la Brasserie du Château de Durbuy : Blonde, Bohemian Pilsner, IPA, Amber Ale"
                loading="lazy" decoding="async">
@@ -1253,7 +1280,11 @@
             srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/jardins-visites-720w.webp 720w,
                     https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/jardins-visites-1024w.webp 1024w"
             sizes="(max-width: 880px) 100vw, 50vw">
-          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/jardins-visites-1024w.webp"
+          <source type="image/jpeg"
+            srcset="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/jardins-visites-720w.jpg 720w,
+                    https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/jardins-visites-1024w.jpg 1024w"
+            sizes="(max-width: 880px) 100vw, 50vw">
+          <img src="https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/jardins-visites-1024w.jpg"
                width="1023" height="1537"
                alt="Tour, ruelle pavée et jardins du domaine du Château de Durbuy au crépuscule"
                loading="lazy" decoding="async">

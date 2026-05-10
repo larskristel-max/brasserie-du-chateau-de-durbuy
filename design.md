@@ -185,6 +185,47 @@ The hero gets a slightly stronger treatment (`brightness(0.74)`) because text ov
 
 **No other overlays.** No grain, no noise, no duotone, no scrim across an entire image.
 
+### 5.5 Format, resolutions, and CDN (shipped May 2026)
+
+**Format**: WebP for all photography. PNG masters retained in `src/assets/` for archival; WebP variants are what the site actually serves.
+
+**Resolution policy per photograph**:
+
+| Image | Variants | Why |
+|---|---|---|
+| `hero-chateau` | 720w / 1280w / 2560w | Full-bleed background — needs 3 sizes for mobile / desktop / retina |
+| `brasserie-production` | 720w / 1920w | Edge-to-edge in dark slab; one large + one mobile |
+| `bieres-bouteilles` | 720w / 1280w (q=80) | Centred max 1080px; quality bumped to 80 to preserve label detail |
+| `lieu-domaine` | 720w / 1024w | Portrait, half-bleed; two sizes cover the responsive range |
+| `jardins-visites` | 720w / 1024w | Same as `lieu-domaine` |
+
+**Quality**: 75 for the 720w mobile variants, 78 for desktop, 80 only for the bottle photo. Generated via Pillow with `method=6` (max compression effort).
+
+**Naming convention**: `{name}-{width}w.webp` (e.g. `hero-chateau-1280w.webp`). The width suffix is the actual pixel width; some files are capped at the original resolution if the source is smaller than the target.
+
+**Host**: **jsDelivr CDN** in front of the GitHub repo, no separate hosting required. URL pattern:
+
+```
+https://cdn.jsdelivr.net/gh/larskristel-max/brasserie-chateau-durbuy-2026@main/src/assets/{filename}
+```
+
+jsDelivr handles edge caching, geographic distribution, and `Cache-Control: public, max-age=604800` automatically. To bust the cache for a new version of a file, push a new commit (jsDelivr re-fetches after the cache TTL or via the `@{commit-sha}` URL pattern).
+
+**HTML implementation**: `<picture>` element with `<source type="image/webp" srcset="... 720w, ... 1024w" sizes="(max-width: 880px) 100vw, 50vw">` and a fallback `<img>` pointing at the largest WebP. For the hero background (a CSS background-image, not an `<img>`), we use CSS media queries to swap between 720w / 1280w / 2560w by viewport width + DPR.
+
+**Result**: total photography weight dropped from ~12 MB (PNG) to ~1 MB across all variants (90.8% reduction). Mobile loads ~500 KB of photography; desktop loads ~1.5 MB; Retina/4K loads ~2 MB.
+
+### 5.6 When adding new photography
+
+The workflow for adding a new photograph to the site:
+
+1. **Source**: a high-resolution real photograph in `src/assets/` as PNG or JPEG. Master file kept for the archive.
+2. **Variants**: generate WebP at appropriate widths (mobile + desktop minimum, plus retina for hero-equivalent images). Use Pillow with `method=6` and the quality presets above.
+3. **Naming**: `{descriptive-name}-{width}w.webp`.
+4. **Commit**: master + all WebP variants in the same commit.
+5. **HTML**: use `<picture>` with `<source srcset>` and explicit `width`/`height` on the fallback `<img>` to prevent CLS. Always `loading="lazy"` and `decoding="async"` for below-fold images.
+6. **Update this document** with the new image's resolution entry in §5.5.
+
 ---
 
 ## 6. Motion

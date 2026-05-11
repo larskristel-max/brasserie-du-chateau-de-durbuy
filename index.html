@@ -378,27 +378,21 @@
       .nav-cta { display: none; }
       .menu-toggle { display: block; }
 
-      /* Mobile nav layout: flex centring with absolute-positioned hamburger.
-         Grid was finicky here — the previous 2.4rem | 1fr | 2.4rem pattern
-         technically computes a centred middle column, but iOS Safari rendered
-         it off-axis (likely a layout-engine quirk around mixed inline-flex
-         children + safe-area padding). Flex + absolute is more reliable. */
+      /* Mobile nav layout: Aman/Margaux pattern — only the wordmark is
+         in the nav (small crest hidden, since it's already shown big in the
+         hero centre). Flex centres the wordmark text on the viewport axis;
+         the hamburger is absolutely-positioned at the right edge so it
+         doesn't bias the centring. Symmetric visual balance. */
+      .nav-mark .crest { display: none; }
       .nav {
         display: flex;
         justify-content: center;
         align-items: center;
       }
       .nav-mark {
-        /* Single visible flex item — centred by parent's justify-content */
         margin: 0;
       }
       .menu-toggle {
-        /* Absolute-positioned so it doesn't push the centred nav-mark off-axis.
-           top: 50% references the padding-box centre, but the nav has asymmetric
-           padding (safe-area-inset-top adds to top, nothing to bottom), so the
-           content-box centre is higher than the padding-box centre. Subtract
-           half the inset from top so the hamburger aligns with the centred
-           wordmark inside the content area. */
         position: absolute;
         top: calc(50% - env(safe-area-inset-top, 0px) / 2);
         right: calc(var(--gutter) + env(safe-area-inset-right, 0px));

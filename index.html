@@ -1098,6 +1098,28 @@
       .hero-crest { width: clamp(72px, 8vw, 96px); height: clamp(72px, 8vw, 96px); }
     }
 
+    /* ------------------------ Laptop tuning (1100–1440px) ------------------------ */
+
+    /* On typical laptop displays the default clamp ceilings (sized for ultrawide
+       monitors) produce headings and section heights that overflow the visible
+       viewport. This bridge softens typography and section heights for the laptop
+       range while leaving mobile, tablet, and large-desktop experiences untouched. */
+    @media (min-width: 1100px) and (max-width: 1440px) {
+      :root {
+        --display-xl: clamp(2.8rem, 4.6vw, 4.6rem);
+        --display-lg: clamp(2.4rem, 4vw, 4rem);
+        --section-y: clamp(5rem, 9vw, 9rem);
+      }
+      .hero { padding: 4rem var(--gutter) 3.5rem; }
+      .hero-stage { gap: clamp(1.2rem, 1.8vw, 1.8rem); }
+      .hero-crest { width: clamp(78px, 7vw, 100px); height: clamp(78px, 7vw, 100px); }
+      .lieu { min-height: 80vh; }
+      .lieu-image { min-height: 80vh; }
+      .visite { min-height: 84vh; }
+      .visite-image { min-height: 84vh; }
+      .brasserie-image { height: clamp(58vh, 68vh, 38rem); max-height: none; }
+    }
+
     /* ------------------------ Reveal animation ------------------------ */
 
     [data-reveal] {

@@ -1120,6 +1120,277 @@
       .brasserie-image { height: clamp(58vh, 68vh, 38rem); max-height: none; }
     }
 
+    /* ------------------------ Reservation modal ------------------------ */
+
+    .reservation-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      overflow-y: auto;
+      padding:
+        calc(clamp(2rem, 5vw, 4rem) + env(safe-area-inset-top, 0px))
+        clamp(1.4rem, 4vw, 3rem)
+        calc(clamp(2rem, 5vw, 4rem) + env(safe-area-inset-bottom, 0px))
+        clamp(1.4rem, 4vw, 3rem);
+      opacity: 0;
+      transition: opacity 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .reservation-modal[data-open="true"] {
+      display: flex;
+      opacity: 1;
+    }
+
+    .reservation-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 12, 10, 0.84);
+      backdrop-filter: blur(10px) saturate(1.2);
+      -webkit-backdrop-filter: blur(10px) saturate(1.2);
+      cursor: pointer;
+    }
+
+    .reservation-modal-content {
+      position: relative;
+      background: var(--cream);
+      width: min(100%, 640px);
+      padding: clamp(2rem, 4.5vw, 3.6rem);
+      border: 1px solid var(--line-soft);
+      animation: modal-rise 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    @keyframes modal-rise {
+      from { opacity: 0; transform: translateY(1.2rem); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reservation-modal-content { animation: none; }
+    }
+
+    .reservation-modal-close {
+      position: absolute;
+      top: clamp(0.8rem, 1.4vw, 1.2rem);
+      right: clamp(0.8rem, 1.4vw, 1.2rem);
+      width: 2.4rem;
+      height: 2.4rem;
+      padding: 0;
+      background: transparent;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: color 220ms ease, border-color 220ms ease;
+    }
+    .reservation-modal-close:hover, .reservation-modal-close:focus-visible {
+      color: var(--ink);
+    }
+
+    .reservation-modal-header {
+      margin-bottom: 2.4rem;
+      padding-right: 3rem; /* space for the close button */
+    }
+    .reservation-modal-header .kicker {
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin: 0 0 0.8rem;
+    }
+    .reservation-modal-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin: 0 0 1rem;
+      color: var(--ink);
+    }
+    .reservation-modal-header .lead {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0;
+      max-width: 32rem;
+    }
+
+    .reservation-form { display: grid; gap: 1.6rem; }
+
+    .form-row { display: grid; gap: 0.5rem; }
+    .form-row label,
+    .form-row legend {
+      font-family: var(--sans);
+      font-size: 0.66rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 400;
+    }
+    .form-row input,
+    .form-row textarea {
+      width: 100%;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      padding: 0.55rem 0;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      color: var(--ink);
+      transition: border-color 220ms ease;
+    }
+    .form-row textarea {
+      resize: vertical;
+      min-height: 4.5rem;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .form-row input:focus,
+    .form-row textarea:focus {
+      outline: none;
+      border-bottom-color: var(--copper);
+    }
+    .form-row input:invalid:not(:placeholder-shown) {
+      border-bottom-color: rgba(170, 50, 50, 0.6);
+    }
+
+    .form-row-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    @media (max-width: 540px) {
+      .form-row-split { grid-template-columns: 1fr; }
+    }
+
+    .form-hint {
+      font-family: var(--sans);
+      font-size: 0.74rem;
+      color: var(--ink-fade);
+      margin: 0;
+      line-height: 1.4;
+    }
+    .form-hint[hidden] { display: none; }
+
+    .form-radio-group {
+      display: grid;
+      gap: 0.55rem;
+      margin-top: 0.6rem;
+    }
+    .form-radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--serif);
+      font-size: 1rem;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--ink);
+      font-weight: 400;
+      cursor: pointer;
+    }
+    .form-radio-group input[type="radio"] {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--copper);
+      cursor: pointer;
+    }
+
+    .form-counter {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-fade);
+      text-align: right;
+      margin: 0.3rem 0 0;
+    }
+
+    .form-honeypot {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .form-actions {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .form-submit {
+      position: relative;
+      padding: 0.95rem 1.6rem;
+      background: var(--ink);
+      color: var(--cream);
+      border: 0;
+      font-family: var(--sans);
+      font-size: 0.74rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 220ms ease;
+    }
+    .form-submit:hover, .form-submit:focus-visible { background: var(--char); }
+    .form-submit:disabled { opacity: 0.6; cursor: wait; }
+
+    .form-status {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: var(--copper);
+      margin: 0;
+      min-height: 1.2em;
+    }
+    .form-status[data-state="error"] { color: rgba(170, 50, 50, 0.9); }
+
+    .reservation-success {
+      text-align: left;
+    }
+    .reservation-success .kicker {
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin: 0 0 0.8rem;
+    }
+    .reservation-success h3 {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0 0 1rem;
+      color: var(--ink);
+    }
+    .reservation-success p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 2rem;
+      max-width: 32rem;
+    }
+    .reservation-success button {
+      padding: 0.7rem 1.4rem;
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 220ms ease, color 220ms ease;
+    }
+    .reservation-success button:hover { background: var(--ink); color: var(--cream); }
+
+    body.modal-open { overflow: hidden; }
+
     /* ------------------------ Reveal animation ------------------------ */
 
     [data-reveal] {
@@ -1160,7 +1431,7 @@
       <span class="sep">·</span>
       <button type="button" data-lang="de" aria-pressed="false">DE</button>
     </div>
-    <a class="nav-cta" href="mailto:brasseurduchateau@gmail.com?subject=Demande%20de%20r%C3%A9servation" data-i18n="nav.reservations">Réservations</a>
+    <a class="nav-cta" href="mailto:brasseurduchateau@gmail.com?subject=Demande%20de%20r%C3%A9servation" data-open-reservation data-i18n="nav.reservations">Réservations</a>
     <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-controls="mobileMenu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -1172,7 +1443,7 @@
       <a href="#brasserie" data-i18n="nav.brasserie">La Brasserie</a>
       <a href="#bieres" data-i18n="nav.bieres">Les Bières</a>
       <a href="#visite" data-i18n="nav.visite">La Visite</a>
-      <a class="mobile-cta" href="mailto:brasseurduchateau@gmail.com" data-i18n="nav.reservations">Réservations</a>
+      <a class="mobile-cta" href="mailto:brasseurduchateau@gmail.com" data-open-reservation data-i18n="nav.reservations">Réservations</a>
       <div class="mobile-lang-switcher" role="group" aria-label="Choix de langue">
         <button type="button" data-lang="fr" aria-pressed="true">FR</button>
         <span class="sep">·</span>
@@ -1364,7 +1635,7 @@
           <li><h3 data-i18n="visite.item4.name">Événements privés</h3><p data-i18n="visite.item4.desc">Mariages, réceptions, dîners privés.</p></li>
           <li><h3 data-i18n="visite.item5.name">Bières du domaine</h3><p data-i18n="visite.item5.desc">Notre sélection, à emporter ou à offrir.</p></li>
         </ul>
-        <a class="text-cta" href="mailto:brasseurduchateau@gmail.com?subject=Demande%20de%20r%C3%A9servation"><span data-i18n="visite.cta">Informations &amp; réservations</span> <span aria-hidden="true">→</span></a>
+        <a class="text-cta" href="mailto:brasseurduchateau@gmail.com?subject=Demande%20de%20r%C3%A9servation" data-open-reservation><span data-i18n="visite.cta">Informations &amp; réservations</span> <span aria-hidden="true">→</span></a>
       </div>
     </section>
 
@@ -1394,6 +1665,94 @@
       <p data-i18n="footer.fine">Bière à consommer avec modération.</p>
     </div>
   </footer>
+
+  <!-- Reservation modal -->
+  <div class="reservation-modal" id="reservationModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="reservation-modal-title">
+    <div class="reservation-modal-overlay" data-close-modal></div>
+    <div class="reservation-modal-content" role="document">
+      <button type="button" class="reservation-modal-close" data-close-modal aria-label="Fermer" title="Fermer">×</button>
+
+      <!-- Form pane -->
+      <div class="reservation-pane" id="reservationPaneForm">
+        <header class="reservation-modal-header">
+          <p class="kicker" data-i18n="form.kicker">Sur réservation</p>
+          <h2 id="reservation-modal-title" data-i18n="form.heading">Demande de réservation</h2>
+          <p class="lead" data-i18n="form.lead">Le domaine n'ouvre ses portes que sur réservation. Indiquez vos préférences ci-dessous ; nous reviendrons vers vous sous 48 heures.</p>
+        </header>
+
+        <form class="reservation-form" id="reservationForm" novalidate>
+          <!-- Honeypot: bots fill this, humans don't -->
+          <div class="form-honeypot" aria-hidden="true">
+            <label for="resv-hp">Leave this field blank</label>
+            <input type="text" id="resv-hp" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="form-row">
+            <label for="resv-name" data-i18n="form.label.name">Nom complet *</label>
+            <input type="text" id="resv-name" name="name" required minlength="2" maxlength="100" autocomplete="name" placeholder=" ">
+          </div>
+
+          <div class="form-row">
+            <label for="resv-email" data-i18n="form.label.email">Adresse e-mail *</label>
+            <input type="email" id="resv-email" name="email" required maxlength="200" autocomplete="email" placeholder=" ">
+          </div>
+
+          <div class="form-row form-row-split">
+            <div>
+              <label for="resv-date" data-i18n="form.label.date">Date préférée *</label>
+              <input type="date" id="resv-date" name="date_preferred" required>
+            </div>
+            <div>
+              <label for="resv-date-alt" data-i18n="form.label.date_alt">Date alternative</label>
+              <input type="date" id="resv-date-alt" name="date_alternative">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="resv-party" data-i18n="form.label.party">Nombre d'invités *</label>
+            <input type="number" id="resv-party" name="party_size" required min="1" max="60" inputmode="numeric" placeholder="2">
+            <p class="form-hint" id="resv-party-hint" data-i18n="form.hint.party_split" hidden>Plus de 30 invités : votre groupe sera réparti sur deux visites parallèles.</p>
+          </div>
+
+          <div class="form-row">
+            <label for="resv-phone" data-i18n="form.label.phone">Téléphone (optionnel)</label>
+            <input type="tel" id="resv-phone" name="phone" maxlength="30" autocomplete="tel" placeholder=" ">
+          </div>
+
+          <div class="form-row">
+            <fieldset>
+              <legend data-i18n="form.label.visit_type">Type de visite</legend>
+              <div class="form-radio-group">
+                <label><input type="radio" name="visit_type" value="degustation"><span data-i18n="form.visit.degustation">Dégustation</span></label>
+                <label><input type="radio" name="visit_type" value="jardins"><span data-i18n="form.visit.jardins">Visite des jardins</span></label>
+                <label><input type="radio" name="visit_type" value="brasserie"><span data-i18n="form.visit.brasserie">Visite de la brasserie</span></label>
+                <label><input type="radio" name="visit_type" value="evenement"><span data-i18n="form.visit.evenement">Événement privé</span></label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="form-row">
+            <label for="resv-notes" data-i18n="form.label.notes">Demandes particulières (optionnel)</label>
+            <textarea id="resv-notes" name="notes" maxlength="500" rows="4" placeholder=" "></textarea>
+            <p class="form-counter"><span id="resv-notes-count">0</span> / 500</p>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="form-submit" id="resvSubmit" data-i18n="form.submit">Envoyer la demande</button>
+            <p class="form-status" id="resvStatus" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success pane (hidden until form submitted successfully) -->
+      <div class="reservation-pane reservation-success" id="reservationPaneSuccess" hidden>
+        <p class="kicker" data-i18n="form.success.kicker">Merci</p>
+        <h3 data-i18n="form.success.heading">Demande reçue</h3>
+        <p data-i18n="form.success.body">Nous avons bien reçu votre demande. Vous recevrez une réponse de notre part sous 48 heures, à l'adresse courriel que vous nous avez communiquée.</p>
+        <button type="button" data-close-modal data-i18n="form.success.close">Fermer</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     (function () {
@@ -1467,6 +1826,158 @@
         if (e.key === 'Escape' && menuOpen) setOpen(false);
       });
 
+      // ------------------------ Reservation modal ------------------------
+      // Placeholder URL — wire up to real Cloudflare Worker once deployed.
+      // Until then, submissions return a simulated success (no email sent).
+      const RESERVATION_ENDPOINT = '';  // empty = simulated success; set to Worker URL for production
+
+      const modal = document.getElementById('reservationModal');
+      const formPane = document.getElementById('reservationPaneForm');
+      const successPane = document.getElementById('reservationPaneSuccess');
+      const form = document.getElementById('reservationForm');
+      const submitBtn = document.getElementById('resvSubmit');
+      const statusEl = document.getElementById('resvStatus');
+      const partyInput = document.getElementById('resv-party');
+      const partyHint = document.getElementById('resv-party-hint');
+      const notesInput = document.getElementById('resv-notes');
+      const notesCount = document.getElementById('resv-notes-count');
+      let modalOpen = false;
+      let lastFocusedTrigger = null;
+
+      const setModalOpen = function (open, triggerEl) {
+        modalOpen = open;
+        modal.dataset.open = String(open);
+        modal.setAttribute('aria-hidden', String(!open));
+        document.body.classList.toggle('modal-open', open);
+        if (open) {
+          lastFocusedTrigger = triggerEl || null;
+          // Reset to form pane on open
+          formPane.hidden = false;
+          successPane.hidden = true;
+          // Reset form state
+          if (!triggerEl) form.reset();  // skip reset on programmatic re-open
+          submitBtn.disabled = false;
+          statusEl.textContent = '';
+          statusEl.removeAttribute('data-state');
+          partyHint.hidden = true;
+          notesCount.textContent = '0';
+          // Default date to tomorrow
+          const tomorrow = new Date();
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          document.getElementById('resv-date').min = tomorrow.toISOString().slice(0, 10);
+          document.getElementById('resv-date-alt').min = tomorrow.toISOString().slice(0, 10);
+          // Focus first field after the modal animation
+          setTimeout(function () { document.getElementById('resv-name').focus(); }, 200);
+        } else {
+          if (lastFocusedTrigger) lastFocusedTrigger.focus();
+        }
+      };
+
+      // Open triggers — every link with data-open-reservation
+      document.querySelectorAll('[data-open-reservation]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          // Close mobile menu first if open
+          if (menuOpen) setOpen(false);
+          setModalOpen(true, el);
+        });
+      });
+
+      // Close triggers
+      document.querySelectorAll('[data-close-modal]').forEach(function (el) {
+        el.addEventListener('click', function () { setModalOpen(false); });
+      });
+
+      // ESC to close
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modalOpen) setModalOpen(false);
+      });
+
+      // Focus trap: keep Tab cycling inside the modal
+      modal.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab' || !modalOpen) return;
+        const activePane = formPane.hidden ? successPane : formPane;
+        const focusables = Array.prototype.slice.call(
+          modal.querySelectorAll('button, [href], input:not([type="hidden"]):not([tabindex="-1"]), textarea, select')
+        ).filter(function (el) { return !el.hasAttribute('disabled') && el.offsetWidth > 0; });
+        if (!focusables.length) return;
+        const first = focusables[0], last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      });
+
+      // Party size dynamic hint
+      partyInput.addEventListener('input', function () {
+        const v = parseInt(partyInput.value, 10);
+        partyHint.hidden = !(v > 30);
+      });
+
+      // Notes character counter
+      notesInput.addEventListener('input', function () {
+        notesCount.textContent = String(notesInput.value.length);
+      });
+
+      // Form submission
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Honeypot check
+        if (form.elements['website'].value) {
+          // Pretend success — bot doesn't get to see the form result
+          formPane.hidden = true;
+          successPane.hidden = false;
+          return;
+        }
+
+        // HTML5 native validation
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        // Collect data
+        const data = Object.fromEntries(new FormData(form));
+        data.language = (document.documentElement.lang || 'fr').toLowerCase();
+
+        // Disable submit + show status
+        submitBtn.disabled = true;
+        const submitOriginal = submitBtn.textContent;
+        const lang = data.language || 'fr';
+        const submittingText = (translations[lang] && translations[lang]['form.submitting']) || 'Envoi en cours…';
+        submitBtn.textContent = submittingText;
+        statusEl.textContent = '';
+        statusEl.removeAttribute('data-state');
+
+        try {
+          if (RESERVATION_ENDPOINT) {
+            // Real submission to Cloudflare Worker
+            const res = await fetch(RESERVATION_ENDPOINT, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data)
+            });
+            if (!res.ok) throw new Error('worker_error_' + res.status);
+          } else {
+            // Simulated success for staging — small artificial delay so the
+            // submit-state UX is testable. Replace by setting RESERVATION_ENDPOINT.
+            await new Promise(function (r) { setTimeout(r, 800); });
+          }
+
+          // Success: swap to success pane
+          formPane.hidden = true;
+          successPane.hidden = false;
+          // Move focus to the success pane's close button for keyboard users
+          setTimeout(function () { successPane.querySelector('button').focus(); }, 100);
+        } catch (err) {
+          statusEl.textContent =
+            (translations[lang] && translations[lang]['form.error']) ||
+            "Une erreur est survenue. Veuillez réessayer ou nous écrire à brasseurduchateau@gmail.com.";
+          statusEl.setAttribute('data-state', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitOriginal;
+        }
+      });
+
       // ------------------------ Language switcher ------------------------
       // Translations are drafts. Native review required before launch.
       // See agent.md §14 and docs/heritage/research-findings.md.
@@ -1522,7 +2033,30 @@
           'footer.country': 'Belgique',
           'footer.label.reservation': 'Sur réservation',
           'footer.label.follow': 'Suivre',
-          'footer.fine': 'Bière à consommer avec modération.'
+          'footer.fine': 'Bière à consommer avec modération.',
+          'form.kicker': 'Sur réservation',
+          'form.heading': 'Demande de réservation',
+          'form.lead': "Le domaine n'ouvre ses portes que sur réservation. Indiquez vos préférences ci-dessous ; nous reviendrons vers vous sous 48 heures.",
+          'form.label.name': 'Nom complet *',
+          'form.label.email': 'Adresse e-mail *',
+          'form.label.date': 'Date préférée *',
+          'form.label.date_alt': 'Date alternative',
+          'form.label.party': "Nombre d'invités *",
+          'form.label.phone': 'Téléphone (optionnel)',
+          'form.label.visit_type': 'Type de visite',
+          'form.label.notes': 'Demandes particulières (optionnel)',
+          'form.visit.degustation': 'Dégustation',
+          'form.visit.jardins': 'Visite des jardins',
+          'form.visit.brasserie': 'Visite de la brasserie',
+          'form.visit.evenement': 'Événement privé',
+          'form.hint.party_split': 'Plus de 30 invités : votre groupe sera réparti sur deux visites parallèles.',
+          'form.submit': 'Envoyer la demande',
+          'form.submitting': 'Envoi en cours…',
+          'form.error': "Une erreur est survenue. Veuillez réessayer ou nous écrire à brasseurduchateau@gmail.com.",
+          'form.success.kicker': 'Merci',
+          'form.success.heading': 'Demande reçue',
+          'form.success.body': "Nous avons bien reçu votre demande. Vous recevrez une réponse de notre part sous 48 heures, à l'adresse courriel que vous nous avez communiquée.",
+          'form.success.close': 'Fermer'
         },
         nl: {
           'nav.domaine': 'Het Domein',
@@ -1575,7 +2109,30 @@
           'footer.country': 'België',
           'footer.label.reservation': 'Op afspraak',
           'footer.label.follow': 'Volgen',
-          'footer.fine': 'Bier met mate te consumeren.'
+          'footer.fine': 'Bier met mate te consumeren.',
+          'form.kicker': 'Op afspraak',
+          'form.heading': 'Reservatie-aanvraag',
+          'form.lead': 'Het domein opent zijn deuren enkel op afspraak. Geef hieronder uw voorkeuren door; wij nemen binnen 48 uur contact met u op.',
+          'form.label.name': 'Volledige naam *',
+          'form.label.email': 'E-mailadres *',
+          'form.label.date': 'Voorkeursdatum *',
+          'form.label.date_alt': 'Alternatieve datum',
+          'form.label.party': 'Aantal gasten *',
+          'form.label.phone': 'Telefoon (optioneel)',
+          'form.label.visit_type': 'Type bezoek',
+          'form.label.notes': 'Bijzondere wensen (optioneel)',
+          'form.visit.degustation': 'Proeverij',
+          'form.visit.jardins': 'Bezoek aan de tuinen',
+          'form.visit.brasserie': 'Bezoek aan de brouwerij',
+          'form.visit.evenement': 'Privé-evenement',
+          'form.hint.party_split': 'Meer dan 30 gasten: uw groep wordt over twee parallelle bezoeken verdeeld.',
+          'form.submit': 'Aanvraag versturen',
+          'form.submitting': 'Bezig met versturen…',
+          'form.error': 'Er is een fout opgetreden. Probeer het opnieuw of schrijf ons op brasseurduchateau@gmail.com.',
+          'form.success.kicker': 'Dank u',
+          'form.success.heading': 'Aanvraag ontvangen',
+          'form.success.body': 'We hebben uw aanvraag goed ontvangen. U ontvangt binnen 48 uur een antwoord van ons op het door u opgegeven e-mailadres.',
+          'form.success.close': 'Sluiten'
         },
         en: {
           'nav.domaine': 'The Estate',
@@ -1628,7 +2185,30 @@
           'footer.country': 'Belgium',
           'footer.label.reservation': 'By appointment',
           'footer.label.follow': 'Follow',
-          'footer.fine': 'Please drink responsibly.'
+          'footer.fine': 'Please drink responsibly.',
+          'form.kicker': 'By appointment',
+          'form.heading': 'Reservation request',
+          'form.lead': "The estate opens its doors by appointment only. Share your preferences below and we'll respond within 48 hours.",
+          'form.label.name': 'Full name *',
+          'form.label.email': 'Email address *',
+          'form.label.date': 'Preferred date *',
+          'form.label.date_alt': 'Alternative date',
+          'form.label.party': 'Number of guests *',
+          'form.label.phone': 'Phone (optional)',
+          'form.label.visit_type': 'Type of visit',
+          'form.label.notes': 'Special requests (optional)',
+          'form.visit.degustation': 'Tasting',
+          'form.visit.jardins': 'Garden visit',
+          'form.visit.brasserie': 'Brewery visit',
+          'form.visit.evenement': 'Private event',
+          'form.hint.party_split': 'Over 30 guests: your party will be split into two parallel tours.',
+          'form.submit': 'Send request',
+          'form.submitting': 'Sending…',
+          'form.error': 'Something went wrong. Please try again, or write to us at brasseurduchateau@gmail.com.',
+          'form.success.kicker': 'Thank you',
+          'form.success.heading': 'Request received',
+          'form.success.body': "We've received your request. You'll hear back from us within 48 hours at the email address you provided.",
+          'form.success.close': 'Close'
         },
         de: {
           'nav.domaine': 'Die Domäne',
@@ -1681,7 +2261,30 @@
           'footer.country': 'Belgien',
           'footer.label.reservation': 'Nur nach Vereinbarung',
           'footer.label.follow': 'Folgen',
-          'footer.fine': 'Bier in Maßen genießen.'
+          'footer.fine': 'Bier in Maßen genießen.',
+          'form.kicker': 'Nur nach Vereinbarung',
+          'form.heading': 'Reservierungsanfrage',
+          'form.lead': 'Die Domäne öffnet ihre Tore nur nach Vereinbarung. Teilen Sie uns unten Ihre Wünsche mit; wir melden uns innerhalb von 48 Stunden bei Ihnen.',
+          'form.label.name': 'Vollständiger Name *',
+          'form.label.email': 'E-Mail-Adresse *',
+          'form.label.date': 'Wunschdatum *',
+          'form.label.date_alt': 'Alternatives Datum',
+          'form.label.party': 'Anzahl der Gäste *',
+          'form.label.phone': 'Telefon (optional)',
+          'form.label.visit_type': 'Art des Besuchs',
+          'form.label.notes': 'Besondere Wünsche (optional)',
+          'form.visit.degustation': 'Verkostung',
+          'form.visit.jardins': 'Besuch der Gärten',
+          'form.visit.brasserie': 'Besuch der Brauerei',
+          'form.visit.evenement': 'Private Veranstaltung',
+          'form.hint.party_split': 'Über 30 Gäste: Ihre Gruppe wird auf zwei parallele Besuche aufgeteilt.',
+          'form.submit': 'Anfrage senden',
+          'form.submitting': 'Wird gesendet…',
+          'form.error': 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder schreiben Sie uns an brasseurduchateau@gmail.com.',
+          'form.success.kicker': 'Danke',
+          'form.success.heading': 'Anfrage erhalten',
+          'form.success.body': 'Wir haben Ihre Anfrage erhalten. Sie erhalten innerhalb von 48 Stunden eine Antwort von uns an die von Ihnen angegebene E-Mail-Adresse.',
+          'form.success.close': 'Schließen'
         }
       };
 

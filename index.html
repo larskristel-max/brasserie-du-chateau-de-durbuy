@@ -1102,8 +1102,10 @@
 
     /* On typical laptop displays the default clamp ceilings (sized for ultrawide
        monitors) produce headings and section heights that overflow the visible
-       viewport. This bridge softens typography and section heights for the laptop
-       range while leaving mobile, tablet, and large-desktop experiences untouched. */
+       viewport. This bridge softens typography and switches section/image sizing
+       from viewport-relative (vh) to absolute pixel caps — so images stay a
+       predictable size regardless of how tall the user's browser viewport
+       happens to be (short laptops + chrome heights vary widely). */
     @media (min-width: 1100px) and (max-width: 1440px) {
       :root {
         --display-xl: clamp(2.8rem, 4.6vw, 4.6rem);
@@ -1113,11 +1115,54 @@
       .hero { padding: 4rem var(--gutter) 3.5rem; }
       .hero-stage { gap: clamp(1.2rem, 1.8vw, 1.8rem); }
       .hero-crest { width: clamp(78px, 7vw, 100px); height: clamp(78px, 7vw, 100px); }
-      .lieu { min-height: 80vh; }
-      .lieu-image { min-height: 80vh; }
-      .visite { min-height: 84vh; }
-      .visite-image { min-height: 84vh; }
-      .brasserie-image { height: clamp(58vh, 68vh, 38rem); max-height: none; }
+
+      /* Sections are content-driven, no viewport-relative floor */
+      .lieu { min-height: auto; }
+      .visite { min-height: auto; }
+
+      /* Images get absolute caps — predictable on any viewport height.
+         object-fit: cover ensures they fill the column at the cap height,
+         showing a crop of the full image rather than a stretched thumbnail. */
+      .lieu-image {
+        min-height: 0;
+        height: 460px;
+        max-height: 460px;
+      }
+      .lieu-image picture,
+      .lieu-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .visite-image {
+        min-height: 0;
+        height: 520px;
+        max-height: 520px;
+      }
+      .visite-image picture,
+      .visite-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .brasserie-image {
+        height: 380px;
+        max-height: 380px;
+      }
+      .brasserie-image picture,
+      .brasserie-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .bieres-image img {
+        max-height: 360px;
+        width: auto;
+        margin: 0 auto;
+      }
     }
 
     /* ------------------------ Reveal animation ------------------------ */

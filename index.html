@@ -1188,6 +1188,75 @@
       color: var(--ink);
     }
 
+    .reservation-modal-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin: -0.5rem 0 1.6rem;
+      padding-right: 2.4rem; /* clear of the absolute-positioned × close button */
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .reservation-back {
+      background: transparent;
+      border: 0;
+      padding: 0.3rem 0;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      transition: color 220ms ease;
+    }
+    .reservation-back:hover, .reservation-back:focus-visible {
+      color: var(--ink);
+      outline: none;
+    }
+
+    .modal-lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+    }
+    .modal-lang-switcher button {
+      background: transparent;
+      border: 0;
+      padding: 0.3rem 0.5rem;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      opacity: 0.5;
+      transition: opacity 220ms ease, color 220ms ease;
+    }
+    .modal-lang-switcher button:hover, .modal-lang-switcher button:focus-visible {
+      opacity: 0.85;
+      outline: none;
+    }
+    .modal-lang-switcher button[aria-pressed="true"] {
+      opacity: 1;
+      color: var(--ink);
+    }
+    .modal-lang-switcher .sep {
+      opacity: 0.32;
+      pointer-events: none;
+      user-select: none;
+      color: var(--ink-soft);
+    }
+
+    @media (max-width: 540px) {
+      .reservation-modal-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+      }
+    }
+
     .reservation-modal-header {
       margin-bottom: 2.4rem;
       padding-right: 3rem; /* space for the close button */
@@ -1678,6 +1747,22 @@
     <div class="reservation-modal-content" role="document">
       <button type="button" class="reservation-modal-close" data-close-modal aria-label="Fermer" title="Fermer">×</button>
 
+      <!-- Toolbar: back link (left), language switcher (right) -->
+      <div class="reservation-modal-toolbar">
+        <button type="button" class="reservation-back" data-close-modal>
+          <span aria-hidden="true">←</span>&nbsp;<span data-i18n="form.back">Retour à l'accueil</span>
+        </button>
+        <div class="modal-lang-switcher" role="group" aria-label="Choix de langue">
+          <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+          <span class="sep">·</span>
+          <button type="button" data-lang="nl" aria-pressed="false">NL</button>
+          <span class="sep">·</span>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+          <span class="sep">·</span>
+          <button type="button" data-lang="de" aria-pressed="false">DE</button>
+        </div>
+      </div>
+
       <!-- Form pane -->
       <div class="reservation-pane" id="reservationPaneForm">
         <header class="reservation-modal-header">
@@ -2040,6 +2125,7 @@
           'footer.label.reservation': 'Sur réservation',
           'footer.label.follow': 'Suivre',
           'footer.fine': 'Bière à consommer avec modération.',
+          'form.back': "Retour à l'accueil",
           'form.kicker': 'Sur réservation',
           'form.heading': 'Demande de réservation',
           'form.lead': "Le domaine n'ouvre ses portes que sur réservation. Indiquez vos préférences ci-dessous ; nous reviendrons vers vous sous 48 heures.",
@@ -2116,6 +2202,7 @@
           'footer.label.reservation': 'Op afspraak',
           'footer.label.follow': 'Volgen',
           'footer.fine': 'Bier met mate te consumeren.',
+          'form.back': 'Terug naar de homepage',
           'form.kicker': 'Op afspraak',
           'form.heading': 'Reservatie-aanvraag',
           'form.lead': 'Het domein opent zijn deuren enkel op afspraak. Geef hieronder uw voorkeuren door; wij nemen binnen 48 uur contact met u op.',
@@ -2192,6 +2279,7 @@
           'footer.label.reservation': 'By appointment',
           'footer.label.follow': 'Follow',
           'footer.fine': 'Please drink responsibly.',
+          'form.back': 'Back to home',
           'form.kicker': 'By appointment',
           'form.heading': 'Reservation request',
           'form.lead': "The estate opens its doors by appointment only. Share your preferences below and we'll respond within 48 hours.",
@@ -2268,6 +2356,7 @@
           'footer.label.reservation': 'Nur nach Vereinbarung',
           'footer.label.follow': 'Folgen',
           'footer.fine': 'Bier in Maßen genießen.',
+          'form.back': 'Zurück zur Startseite',
           'form.kicker': 'Nur nach Vereinbarung',
           'form.heading': 'Reservierungsanfrage',
           'form.lead': 'Die Domäne öffnet ihre Tore nur nach Vereinbarung. Teilen Sie uns unten Ihre Wünsche mit; wir melden uns innerhalb von 48 Stunden bei Ihnen.',
@@ -2314,13 +2403,13 @@
           if (dict[key] != null) el.innerHTML = dict[key];
         });
         document.documentElement.setAttribute('lang', lang);
-        document.querySelectorAll('.lang-switcher button, .mobile-lang-switcher button').forEach(function (b) {
+        document.querySelectorAll('.lang-switcher button, .mobile-lang-switcher button, .modal-lang-switcher button').forEach(function (b) {
           b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false');
         });
         try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* noop */ }
       }
 
-      document.querySelectorAll('.lang-switcher button, .mobile-lang-switcher button').forEach(function (b) {
+      document.querySelectorAll('.lang-switcher button, .mobile-lang-switcher button, .modal-lang-switcher button').forEach(function (b) {
         b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
       });
 

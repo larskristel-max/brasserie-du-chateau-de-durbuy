@@ -1813,11 +1813,12 @@
           <div class="form-row">
             <fieldset>
               <legend data-i18n="form.label.visit_type">Type de visite</legend>
+              <p class="form-hint" data-i18n="form.hint.multiselect">Plusieurs choix possibles</p>
               <div class="form-radio-group">
-                <label><input type="radio" name="visit_type" value="degustation"><span data-i18n="form.visit.degustation">Dégustation</span></label>
-                <label><input type="radio" name="visit_type" value="jardins"><span data-i18n="form.visit.jardins">Visite des jardins</span></label>
-                <label><input type="radio" name="visit_type" value="brasserie"><span data-i18n="form.visit.brasserie">Visite de la brasserie</span></label>
-                <label><input type="radio" name="visit_type" value="evenement"><span data-i18n="form.visit.evenement">Événement privé</span></label>
+                <label><input type="checkbox" name="visit_type" value="degustation"><span data-i18n="form.visit.degustation">Dégustation</span></label>
+                <label><input type="checkbox" name="visit_type" value="jardins"><span data-i18n="form.visit.jardins">Visite des jardins</span></label>
+                <label><input type="checkbox" name="visit_type" value="brasserie"><span data-i18n="form.visit.brasserie">Visite de la brasserie</span></label>
+                <label><input type="checkbox" name="visit_type" value="evenement"><span data-i18n="form.visit.evenement">Événement privé</span></label>
               </div>
             </fieldset>
           </div>
@@ -2026,8 +2027,11 @@
           return;
         }
 
-        // Collect data
-        const data = Object.fromEntries(new FormData(form));
+        // Collect data — visit_type may have multiple values (checkboxes), so
+        // grab them as an array via formData.getAll() before flattening.
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        data.visit_type = formData.getAll('visit_type'); // array, possibly empty
         data.language = (document.documentElement.lang || 'fr').toLowerCase();
 
         // Disable submit + show status
@@ -2142,6 +2146,7 @@
           'form.visit.brasserie': 'Visite de la brasserie',
           'form.visit.evenement': 'Événement privé',
           'form.hint.party_split': 'Plus de 30 invités : votre groupe sera réparti sur deux visites parallèles.',
+          'form.hint.multiselect': 'Plusieurs choix possibles',
           'form.submit': 'Envoyer la demande',
           'form.submitting': 'Envoi en cours…',
           'form.error': "Une erreur est survenue. Veuillez réessayer ou nous écrire à brasseurduchateau@gmail.com.",
@@ -2219,6 +2224,7 @@
           'form.visit.brasserie': 'Bezoek aan de brouwerij',
           'form.visit.evenement': 'Privé-evenement',
           'form.hint.party_split': 'Meer dan 30 gasten: uw groep wordt over twee parallelle bezoeken verdeeld.',
+          'form.hint.multiselect': 'Meerdere keuzes mogelijk',
           'form.submit': 'Aanvraag versturen',
           'form.submitting': 'Bezig met versturen…',
           'form.error': 'Er is een fout opgetreden. Probeer het opnieuw of schrijf ons op brasseurduchateau@gmail.com.',
@@ -2296,6 +2302,7 @@
           'form.visit.brasserie': 'Brewery visit',
           'form.visit.evenement': 'Private event',
           'form.hint.party_split': 'Over 30 guests: your party will be split into two parallel tours.',
+          'form.hint.multiselect': 'Multiple selections possible',
           'form.submit': 'Send request',
           'form.submitting': 'Sending…',
           'form.error': 'Something went wrong. Please try again, or write to us at brasseurduchateau@gmail.com.',
@@ -2373,6 +2380,7 @@
           'form.visit.brasserie': 'Besuch der Brauerei',
           'form.visit.evenement': 'Private Veranstaltung',
           'form.hint.party_split': 'Über 30 Gäste: Ihre Gruppe wird auf zwei parallele Besuche aufgeteilt.',
+          'form.hint.multiselect': 'Mehrere Auswahl möglich',
           'form.submit': 'Anfrage senden',
           'form.submitting': 'Wird gesendet…',
           'form.error': 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder schreiben Sie uns an brasseurduchateau@gmail.com.',

@@ -1303,7 +1303,8 @@
       color: var(--ink-soft);
       font-weight: 400;
     }
-    .form-row input,
+    /* Text-style inputs only — checkboxes and radios stay native-sized */
+    .form-row input:not([type="checkbox"]):not([type="radio"]),
     .form-row textarea {
       width: 100%;
       border: 0;
@@ -1366,11 +1367,14 @@
       font-weight: 400;
       cursor: pointer;
     }
-    .form-radio-group input[type="radio"] {
+    .form-radio-group input[type="radio"],
+    .form-radio-group input[type="checkbox"] {
       width: 1rem;
       height: 1rem;
+      flex-shrink: 0;
       accent-color: var(--copper);
       cursor: pointer;
+      margin: 0;
     }
 
     .form-counter {

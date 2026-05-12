@@ -299,6 +299,7 @@ This is **deterministic by design.** IntersectionObserver was tried and rejected
 @media (max-width: 880px)   /* two-column sections become stacked */
 @media (max-width: 540px)   /* feature row and beer roster become single column */
 @media (min-width: 920px) and (max-width: 1100px)   /* tablet portrait bridge — keeps side-by-side */
+@media (min-width: 1100px) and (max-width: 1440px)  /* laptop bridge — softens type and section heights */
 @media (min-width: 1600px) /* ultrawide widening — Les Bières widens to 1280px */
 ```
 
@@ -327,7 +328,21 @@ Tablet portrait used to fall into the mobile bucket. **Now** a `@media (min-widt
 
 Verify on a real iPad / Pixel Tablet before changing these values further. The side-by-side layouts of Le Lieu and La Visite are *preserved* through this range, which was the entire point — tablets have horizontal real estate, and the editorial reading rhythm depends on the two-column composition.
 
-### 8.5 Ultrawide (≥1600px) — widening (shipped May 2026)
+### 8.5 Laptop (1100–1440px) — bridge breakpoint (shipped May 2026)
+
+The default `clamp()` ceilings on typography and section min-heights are sized for **ultrawide monitors (1920px+)**. At typical laptop CSS widths (1280–1440px), the `vw` formulas compute values too aggressive for the visible viewport — hero title overflows below the fold, Le Lieu prose gets cropped against tall section min-heights, image columns extend visually past their text counterparts. A `@media (min-width: 1100px) and (max-width: 1440px)` rule fixes this:
+
+- Tightens `--display-xl` to `clamp(2.8rem, 4.6vw, 4.6rem)` (down from `clamp(3.4rem, 7.4vw, 8.6rem)`) so the hero title fits comfortably inside `100svh` on laptop screens.
+- Tightens `--display-lg` to `clamp(2.4rem, 4vw, 4rem)` so section headings (Le Lieu, La Brasserie, etc.) read elegant rather than dominant.
+- Tightens `--section-y` to `clamp(5rem, 9vw, 9rem)` so vertical rhythm between sections feels balanced.
+- Reduces `.hero` padding from `6rem var(--gutter) 5rem` to `4rem var(--gutter) 3.5rem`, freeing more vertical room for content.
+- Reduces `.hero-stage` gap to `clamp(1.2rem, 1.8vw, 1.8rem)` and crest to `clamp(78px, 7vw, 100px)`.
+- Reduces `.lieu` / `.lieu-image` to `min-height: 80vh` and `.visite` / `.visite-image` to `min-height: 84vh` (down from 92/96vh) so columns balance.
+- Reduces `.brasserie-image` to `clamp(58vh, 68vh, 38rem)`.
+
+This range sits cleanly between the tablet bridge (920–1100px) and the ultrawide widening (1600px+) — graceful continuity with no overlap.
+
+### 8.6 Ultrawide (≥1600px) — widening (shipped May 2026)
 
 At desktop widths above ~1600px, `min(100% - 2*gutter, 1080px)` constraints make the design feel small and float-y on 27"+ monitors. The shipped rule:
 

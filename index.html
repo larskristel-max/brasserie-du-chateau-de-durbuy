@@ -1927,7 +1927,7 @@
       // ------------------------ Reservation modal ------------------------
       // Placeholder URL — wire up to real Cloudflare Worker once deployed.
       // Until then, submissions return a simulated success (no email sent).
-      const RESERVATION_ENDPOINT = '';  // empty = simulated success; set to Worker URL for production
+      const RESERVATION_ENDPOINT = 'https://brasserie-reservations.brasseurduchateau.workers.dev';  // empty = simulated success; set to Worker URL for production
 
       const modal = document.getElementById('reservationModal');
       const formPane = document.getElementById('reservationPaneForm');

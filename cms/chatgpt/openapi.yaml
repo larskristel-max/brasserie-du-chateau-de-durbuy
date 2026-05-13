@@ -1,0 +1,196 @@
+openapi: 3.1.0
+info:
+  title: Carnet du brasseur — Sanity draft API
+  version: "1.0.0"
+  description: |
+    Posts a new article to the Carnet du brasseur (the maître brasseur's
+    journal) as a DRAFT. The article will not appear publicly on
+    brasseriechateaudurbuy.be until Lars reviews it in Sanity Studio and
+    clicks Publish.
+
+    Replace PROJECT_ID with the brewery's Sanity project ID before importing
+    this spec into ChatGPT.
+
+# The URL pattern: https://PROJECT_ID.api.sanity.io
+# Replace PROJECT_ID with your actual Sanity project ID (8-char alphanumeric).
+servers:
+  - url: https://PROJECT_ID.api.sanity.io
+    description: Sanity mutation API for the brewery's project
+
+paths:
+  /v2024-01-01/data/mutate/production:
+    post:
+      operationId: createDraftArticle
+      summary: Create a new draft article in the Carnet
+      description: |
+        Creates a draft article that will appear in Sanity Studio's draft state.
+        Lars must manually publish it from Studio for it to appear on the public
+        site. The `_id` MUST begin with "drafts." to ensure the document lands
+        in the draft state (this is Sanity's convention for drafts).
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - mutations
+              properties:
+                mutations:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      create:
+                        type: object
+                        required:
+                          - _id
+                          - _type
+                          - title
+                          - date
+                          - language
+                          - slug
+                          - body
+                        properties:
+                          _id:
+                            type: string
+                            description: |
+                              MUST start with "drafts." to create a draft.
+                              Use the slug as the suffix, e.g.
+                              "drafts.le-premier-brassin-de-mai-2026-05".
+                            example: drafts.le-premier-brassin-de-mai-2026-05
+                          _type:
+                            type: string
+                            enum: [article]
+                            description: Always "article" for journal entries.
+                          title:
+                            type: string
+                            description: The article's title in the chosen language.
+                            example: Le premier brassin de mai
+                          date:
+                            type: string
+                            format: date
+                            description: Publication date (ISO YYYY-MM-DD).
+                            example: "2026-05-11"
+                          language:
+                            type: string
+                            enum: [fr, nl, en, de]
+                            description: |
+                              Single language. To publish in multiple
+                              languages, create separate articles.
+                          slug:
+                            type: object
+                            properties:
+                              _type:
+                                type: string
+                                enum: [slug]
+                              current:
+                                type: string
+                                description: URL-safe slug, lowercase, dashes-not-spaces.
+                                example: le-premier-brassin-de-mai
+                          lede:
+                            type: string
+                            description: 1-2 sentence introduction shown below the title in italic.
+                          body:
+                            type: array
+                            description: |
+                              Portable text blocks. Each paragraph is one block.
+                              Each block has _type "block" and a "children" array
+                              of spans. For italic, add a "marks" array with "em".
+                            items:
+                              type: object
+                              properties:
+                                _type:
+                                  type: string
+                                  enum: [block]
+                                _key:
+                                  type: string
+                                  description: A short unique string (8 chars OK).
+                                style:
+                                  type: string
+                                  enum: [normal, h3, blockquote]
+                                  default: normal
+                                children:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      _type:
+                                        type: string
+                                        enum: [span]
+                                      _key:
+                                        type: string
+                                      text:
+                                        type: string
+                                      marks:
+                                        type: array
+                                        items:
+                                          type: string
+                                          enum: [em, strong]
+                          author:
+                            type: string
+                            default: Lars Kristel
+                          tags:
+                            type: array
+                            items:
+                              type: string
+            example:
+              mutations:
+                - create:
+                    _id: drafts.le-premier-brassin-de-mai-2026-05
+                    _type: article
+                    title: Le premier brassin de mai
+                    date: "2026-05-11"
+                    language: fr
+                    slug:
+                      _type: slug
+                      current: le-premier-brassin-de-mai
+                    lede: Trois jours après la mise en cuve. La fermentation se calme.
+                    author: Lars Kristel
+                    body:
+                      - _type: block
+                        _key: a1b2c3d4
+                        style: normal
+                        children:
+                          - _type: span
+                            _key: s1
+                            text: Trois jours après la mise en cuve. La fermentation se calme; le krausen retombe lentement, formant cette couche brune et stable qui annonce une bière en train de se rassembler.
+                      - _type: block
+                        _key: e5f6g7h8
+                        style: normal
+                        children:
+                          - _type: span
+                            _key: s2
+                            text: Ce matin la lumière entrait par l'oculus à l'est. J'étais venu mesurer la densité — 1.014, comme prévu.
+      responses:
+        '200':
+          description: Article created as draft. Visible in Sanity Studio under "Drafts".
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactionId:
+                    type: string
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        operation:
+                          type: string
+        '400':
+          description: Validation error or malformed body.
+        '401':
+          description: Invalid or missing API token.
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Sanity API Token

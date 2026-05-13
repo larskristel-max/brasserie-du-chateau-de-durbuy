@@ -288,6 +288,7 @@
       font-weight: 500;
     }
     .form-row input[type="text"],
+    .form-row input[type="file"],
     .form-row input[type="date"],
     .form-row select,
     .form-row textarea {
@@ -304,6 +305,11 @@
       line-height: 1.55;
       resize: vertical;
       min-height: 4rem;
+    }
+    .form-row input[type="file"] {
+      font-family: var(--sans);
+      font-size: 0.86rem;
+      color: var(--ink-soft);
     }
     .form-row input:focus,
     .form-row select:focus,
@@ -325,6 +331,36 @@
       font-size: 0.74rem;
       color: var(--ink-fade);
       margin: 0;
+    }
+
+    .image-preview {
+      display: grid;
+      gap: 0.6rem;
+      margin-top: 0.4rem;
+    }
+    .image-preview figure {
+      margin: 0;
+      border: 1px solid var(--line-soft);
+      background: rgba(14, 12, 10, 0.025);
+    }
+    .image-preview img {
+      width: 100%;
+      max-height: 18rem;
+      object-fit: cover;
+      display: block;
+    }
+    .image-preview figcaption {
+      padding: 0.6rem 0.8rem;
+      font-size: 0.72rem;
+      color: var(--ink-fade);
+      font-style: italic;
+    }
+    .checkbox-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
     }
 
     .body-paragraphs { display: grid; gap: 0.8rem; }
@@ -426,6 +462,24 @@
       </div>
 
       <div class="form-row">
+        <label for="heroImageInput">Image principale</label>
+        <input type="file" id="heroImageInput" accept="image/jpeg,image/png,image/webp">
+        <input type="hidden" id="currentHeroImage" value="">
+        <p class="form-hint">Format automatique en WebP, largeur maximale 1600 px.</p>
+        <div id="heroImagePreview" class="image-preview hidden"></div>
+      </div>
+
+      <div class="form-row">
+        <label for="heroImageCaptionInput">L&eacute;gende image (optionnel)</label>
+        <input type="text" id="heroImageCaptionInput" maxlength="180" placeholder="La salle de brassage, avant le premier brassin.">
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" id="removeHeroImageInput">
+        Retirer l'image principale
+      </label>
+
+      <div class="form-row">
         <label>Corps de l'article (un bloc par paragraphe)</label>
         <div id="bodyParagraphs" class="body-paragraphs">
           <!-- Paragraphs added dynamically -->
@@ -472,6 +526,9 @@
   const FILE_PATH = 'content/journal/articles.json';
   const BRANCH = 'main';
   const STORAGE_KEY = 'brewery-journal-pat';
+  const IMAGE_ASSET_DIR = 'src/assets/journal';
+  const IMAGE_MAX_WIDTH = 1600;
+  const IMAGE_QUALITY = 0.84;
 
   // ────────────────────────────────────────────────────────
   // State
@@ -491,6 +548,11 @@
   const articleList = document.getElementById('articleList');
   const articleForm = document.getElementById('articleForm');
   const bodyParagraphs = document.getElementById('bodyParagraphs');
+  const heroImageInput = document.getElementById('heroImageInput');
+  const currentHeroImage = document.getElementById('currentHeroImage');
+  const heroImageCaptionInput = document.getElementById('heroImageCaptionInput');
+  const removeHeroImageInput = document.getElementById('removeHeroImageInput');
+  const heroImagePreview = document.getElementById('heroImagePreview');
   const toastEl = document.getElementById('toast');
 
   // ────────────────────────────────────────────────────────
@@ -507,7 +569,8 @@
   // ────────────────────────────────────────────────────────
   // GitHub API helpers
   // ────────────────────────────────────────────────────────
-  const API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
+  const API_ROOT = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`;
+  const API_BASE = API_ROOT + FILE_PATH;
 
   async function fetchArticles() {
     const res = await fetch(API_BASE + '?ref=' + BRANCH, {
@@ -562,6 +625,27 @@
     }
     const result = await res.json();
     return result.content.sha;
+  }
+
+  async function saveAsset(path, base64Content, message) {
+    const res = await fetch(API_ROOT + path.split('/').map(encodeURIComponent).join('/'), {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + pat,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message,
+        content: base64Content,
+        branch: BRANCH,
+      }),
+    });
+    if (!res.ok) {
+      const errorBody = await res.text();
+      throw new Error(`GitHub API ${res.status}: ${errorBody}`);
+    }
+    return res.json();
   }
 
   async function validatePat(token) {
@@ -670,6 +754,11 @@
     document.getElementById('statusInput').value = 'draft';
     document.getElementById('languageInput').value = 'fr';
     document.getElementById('authorInput').value = 'Lars Kristel';
+    currentHeroImage.value = '';
+    heroImageCaptionInput.value = '';
+    removeHeroImageInput.checked = false;
+    heroImageInput.value = '';
+    updateHeroImagePreview('', '');
     bodyParagraphs.innerHTML = '';
     addParagraphRow('');
     document.getElementById('deleteBtn').classList.add('hidden');
@@ -693,6 +782,11 @@
     document.getElementById('ledeInput').value = article.lede || '';
     document.getElementById('authorInput').value = article.author || 'Lars Kristel';
     document.getElementById('tagsInput').value = (article.tags || []).join(', ');
+    currentHeroImage.value = article.heroImage || '';
+    heroImageCaptionInput.value = article.heroImageCaption || '';
+    removeHeroImageInput.checked = false;
+    heroImageInput.value = '';
+    updateHeroImagePreview(article.heroImage || '', article.heroImageCaption || '');
     bodyParagraphs.innerHTML = '';
     (article.body || ['']).forEach(p => addParagraphRow(p));
     document.getElementById('deleteBtn').classList.remove('hidden');
@@ -734,6 +828,92 @@
       .filter(t => t.length > 0);
   }
 
+  function updateHeroImagePreview(src, caption) {
+    if (!src) {
+      heroImagePreview.classList.add('hidden');
+      heroImagePreview.innerHTML = '';
+      return;
+    }
+    heroImagePreview.classList.remove('hidden');
+    heroImagePreview.innerHTML = `
+      <figure>
+        <img src="${escapeHtml(src)}" alt="">
+        ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ''}
+      </figure>
+    `;
+  }
+
+  function readFileAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function loadImage(dataUrl) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error('Image illisible'));
+      img.src = dataUrl;
+    });
+  }
+
+  function canvasToWebp(canvas) {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => {
+        if (!blob) reject(new Error('Conversion WebP impossible dans ce navigateur'));
+        else resolve(blob);
+      }, 'image/webp', IMAGE_QUALITY);
+    });
+  }
+
+  function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const value = String(reader.result || '');
+        resolve(value.split(',')[1] || '');
+      };
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async function prepareHeroImage(file) {
+    if (!file) return null;
+    if (!file.type || !file.type.startsWith('image/')) {
+      throw new Error('Le fichier choisi doit etre une image');
+    }
+
+    const dataUrl = await readFileAsDataUrl(file);
+    const img = await loadImage(dataUrl);
+    const scale = Math.min(1, IMAGE_MAX_WIDTH / img.naturalWidth);
+    const width = Math.max(1, Math.round(img.naturalWidth * scale));
+    const height = Math.max(1, Math.round(img.naturalHeight * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, width, height);
+
+    const blob = await canvasToWebp(canvas);
+    const base64 = await blobToBase64(blob);
+    return { base64, previewUrl: URL.createObjectURL(blob) };
+  }
+
+  async function uploadHeroImage(file, title, date) {
+    const prepared = await prepareHeroImage(file);
+    if (!prepared) return null;
+    const stamp = Date.now().toString(36);
+    const filename = `${slugify(title)}-${date}-${stamp}.webp`;
+    const path = `${IMAGE_ASSET_DIR}/${filename}`;
+    await saveAsset(path, prepared.base64, `Ajouter image journal : ${title}`);
+    return '/' + path;
+  }
+
   async function saveArticle(e) {
     e.preventDefault();
     const saveBtn = document.getElementById('saveBtn');
@@ -747,6 +927,9 @@
     const author = document.getElementById('authorInput').value.trim() || 'Lars Kristel';
     const tagsRaw = document.getElementById('tagsInput').value.trim();
     const body = collectBodyParagraphs();
+    const selectedHeroFile = heroImageInput.files && heroImageInput.files[0] ? heroImageInput.files[0] : null;
+    const removeHeroImage = removeHeroImageInput.checked;
+    const heroImageCaption = heroImageCaptionInput.value.trim();
 
     if (!title || !date || body.length === 0) {
       toast('Titre, date, et au moins un paragraphe sont requis', 'error');
@@ -756,6 +939,16 @@
 
     const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
     const now = new Date().toISOString();
+    let heroImage = removeHeroImage ? null : (currentHeroImage.value || null);
+    if (selectedHeroFile) {
+      try {
+        heroImage = await uploadHeroImage(selectedHeroFile, title, date);
+      } catch (err) {
+        toast('Erreur image: ' + err.message, 'error');
+        saveBtn.disabled = false;
+        return;
+      }
+    }
 
     let article;
     if (editingId) {
@@ -763,6 +956,8 @@
       article = {
         ...existing,
         title, date, language, status, lede, author, tags, body,
+        heroImage,
+        heroImageCaption: heroImage ? heroImageCaption : '',
         updatedAt: now,
       };
       const idx = articlesData.articles.findIndex(a => a.id === editingId);
@@ -777,7 +972,8 @@
       }
       article = {
         id, title, date, language, status, lede, author, tags, body,
-        heroImage: null,
+        heroImage,
+        heroImageCaption: heroImage ? heroImageCaption : '',
         createdAt: now,
         updatedAt: now,
       };
@@ -897,6 +1093,29 @@
   document.getElementById('cancelBtn').addEventListener('click', closeForm);
   document.getElementById('addParagraphBtn').addEventListener('click', () => addParagraphRow(''));
   document.getElementById('deleteBtn').addEventListener('click', deleteArticle);
+  heroImageInput.addEventListener('change', async () => {
+    const file = heroImageInput.files && heroImageInput.files[0] ? heroImageInput.files[0] : null;
+    if (!file) {
+      updateHeroImagePreview(currentHeroImage.value, heroImageCaptionInput.value.trim());
+      return;
+    }
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      updateHeroImagePreview(dataUrl, heroImageCaptionInput.value.trim());
+      removeHeroImageInput.checked = false;
+    } catch (err) {
+      toast('Image illisible', 'error');
+    }
+  });
+  heroImageCaptionInput.addEventListener('input', () => {
+    if (removeHeroImageInput.checked) return;
+    const previewImg = heroImagePreview.querySelector('img');
+    updateHeroImagePreview(previewImg ? previewImg.getAttribute('src') : currentHeroImage.value, heroImageCaptionInput.value.trim());
+  });
+  removeHeroImageInput.addEventListener('change', () => {
+    if (removeHeroImageInput.checked) updateHeroImagePreview('', '');
+    else updateHeroImagePreview(currentHeroImage.value, heroImageCaptionInput.value.trim());
+  });
   articleForm.addEventListener('submit', saveArticle);
 
   // Auto-login if PAT in localStorage

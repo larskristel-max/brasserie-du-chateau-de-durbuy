@@ -327,14 +327,21 @@
 
     .article-image {
       width: calc(100% + 2 * var(--gutter));
-      margin-left: calc(-1 * var(--gutter));
-      margin-bottom: 2.6rem;
+      margin: 0 0 2.6rem calc(-1 * var(--gutter));
       overflow: hidden;
     }
     .article-image img {
       width: 100%;
       height: auto;
       filter: brightness(0.96) saturate(0.94) contrast(1.04);
+    }
+    .article-image figcaption {
+      padding: 0.7rem var(--gutter) 0;
+      font-size: 0.74rem;
+      line-height: 1.5;
+      color: var(--ink-fade);
+      font-style: italic;
+      text-align: center;
     }
 
     .article-body {
@@ -689,10 +696,12 @@
     }
     const html = articles.map(a => {
       const dateLabel = formatDate(a.date);
+      const caption = a.heroImageCaption || '';
       const imageBlock = a.heroImage
-        ? `<div class="article-image">
+        ? `<figure class="article-image">
              <img src="${escapeHtml(a.heroImage)}" alt="${escapeHtml(a.title)}" loading="lazy" />
-           </div>`
+             ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ''}
+           </figure>`
         : '';
       const bodyBlock = (a.body || [])
         .filter(p => p && p.trim())

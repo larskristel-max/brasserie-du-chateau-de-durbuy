@@ -15,7 +15,10 @@
         "Il y a quelque chose de profondément rassurant dans le retour de ce rythme. La Blonde du Château commence à être ce qu'elle doit être. Elle sera prête début juin, peut-être un peu plus tôt."
       ],
       "heroImage": null,
-      "tags": ["fermentation", "blonde"],
+      "tags": [
+        "fermentation",
+        "blonde"
+      ],
       "createdAt": "2026-05-11T10:00:00.000Z",
       "updatedAt": "2026-05-11T10:00:00.000Z"
     },
@@ -33,7 +36,11 @@
         "Quatre kilos partiront dans la prochaine IPA. Une tension fraîche, herbacée. Le reste, je garderai pour un brassin spécial à l'automne — peut-être une saison houblonnée, on verra."
       ],
       "heroImage": null,
-      "tags": ["houblon", "sorachi", "ipa"],
+      "tags": [
+        "houblon",
+        "sorachi",
+        "ipa"
+      ],
       "createdAt": "2025-09-22T09:00:00.000Z",
       "updatedAt": "2025-09-22T09:00:00.000Z"
     },
@@ -42,7 +49,7 @@
       "title": "Marckloff, et nous",
       "date": "2025-03-06",
       "language": "fr",
-      "status": "draft",
+      "status": "published",
       "author": "Lars Kristel",
       "lede": "Pourquoi nommer une bière après un homme dont on ne sait presque rien.",
       "body": [
@@ -52,9 +59,13 @@
         "Il ne s'agit pas de prétendre que nous brassons comme lui — nous n'en savons rien. Mais nous brassons ici. Et c'est, peut-être, suffisant."
       ],
       "heroImage": null,
-      "tags": ["heritage", "marckloff", "histoire"],
+      "tags": [
+        "heritage",
+        "marckloff",
+        "histoire"
+      ],
       "createdAt": "2025-03-06T16:00:00.000Z",
-      "updatedAt": "2025-03-06T16:00:00.000Z"
+      "updatedAt": "2026-05-13T09:35:50.603Z"
     }
   ]
 }

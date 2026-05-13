@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin — Carnet du brasseur</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0E0C0A;
+      --ink-soft: rgba(14, 12, 10, 0.74);
+      --ink-fade: rgba(14, 12, 10, 0.50);
+      --cream: #F2EBDD;
+      --cream-soft: #EDE5D2;
+      --copper: #8C5E33;
+      --copper-light: #A87E4F;
+      --line: rgba(14, 12, 10, 0.16);
+      --line-soft: rgba(14, 12, 10, 0.08);
+      --error: #B84536;
+      --success: #4A7C3E;
+      --serif: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --gutter: clamp(1.2rem, 4vw, 3rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--ink);
+      background: var(--cream);
+    }
+
+    button { font-family: inherit; cursor: pointer; }
+    input, textarea, select { font-family: inherit; color: inherit; }
+
+    /* ─── Layout ────────────────────────────────────────── */
+
+    .admin {
+      max-width: 56rem;
+      margin: 0 auto;
+      padding: 2.4rem var(--gutter) 6rem;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--line-soft);
+      margin-bottom: 2.4rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .admin-header h1 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.6rem;
+      margin: 0;
+    }
+    .admin-header h1 small {
+      display: block;
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--copper);
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+    .admin-header .actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    /* ─── Buttons ───────────────────────────────────────── */
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      border: 1px solid currentColor;
+      background: transparent;
+      color: var(--ink-soft);
+      transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease;
+    }
+    .btn:hover { color: var(--ink); border-color: var(--ink); }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
+    .btn-primary:hover { background: var(--copper); border-color: var(--copper); color: var(--cream); }
+    .btn-danger { color: var(--error); border-color: var(--error); }
+    .btn-danger:hover { background: var(--error); color: var(--cream); border-color: var(--error); }
+    .btn-link {
+      border: 0;
+      padding: 0.3rem 0;
+      color: var(--copper);
+      text-transform: none;
+      letter-spacing: 0.06em;
+      font-size: 0.8rem;
+      background: transparent;
+    }
+    .btn-link:hover { color: var(--ink); }
+    .btn:disabled { opacity: 0.5; cursor: wait; }
+
+    /* ─── Toast / status messages ───────────────────────── */
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 0.9rem 1.4rem;
+      background: var(--ink);
+      color: var(--cream);
+      font-size: 0.8rem;
+      max-width: 24rem;
+      box-shadow: 0 8px 24px rgba(14, 12, 10, 0.24);
+      opacity: 0;
+      transform: translateY(1rem);
+      pointer-events: none;
+      transition: opacity 240ms ease, transform 240ms ease;
+      z-index: 1000;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--error); }
+
+    /* ─── Login screen ──────────────────────────────────── */
+
+    .login {
+      max-width: 28rem;
+      margin: 6rem auto;
+      padding: 0 var(--gutter);
+    }
+    .login h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.8rem;
+      margin: 0 0 1rem;
+    }
+    .login p {
+      color: var(--ink-soft);
+      margin: 0 0 2rem;
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+    .login a { color: var(--copper); }
+    .login a:hover { color: var(--ink); }
+
+    .login-form {
+      display: grid;
+      gap: 1.2rem;
+    }
+    .login-form input {
+      width: 100%;
+      padding: 0.7rem 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      font-family: 'Menlo', 'Monaco', monospace;
+      font-size: 0.85rem;
+    }
+    .login-form input:focus {
+      outline: none;
+      border-bottom-color: var(--copper);
+    }
+    .login-help {
+      font-size: 0.78rem;
+      color: var(--ink-fade);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .login-help code {
+      background: rgba(140, 94, 51, 0.1);
+      padding: 0.1rem 0.4rem;
+      font-size: 0.72rem;
+      border-radius: 2px;
+    }
+
+    /* ─── Article list ──────────────────────────────────── */
+
+    .article-list { display: grid; gap: 0; }
+    .article-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .article-row:last-child { border-bottom: 0; }
+
+    .article-row-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      margin-bottom: 0.3rem;
+      flex-wrap: wrap;
+    }
+    .article-date {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-fade);
+    }
+    .article-lang {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--copper);
+      border: 1px solid currentColor;
+      padding: 0.08rem 0.4rem;
+      border-radius: 2px;
+    }
+    .article-status {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.08rem 0.5rem;
+      border-radius: 2px;
+    }
+    .status-draft { color: var(--copper); background: rgba(140, 94, 51, 0.12); }
+    .status-published { color: var(--success); background: rgba(74, 124, 62, 0.12); }
+
+    .article-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.2rem;
+      line-height: 1.2;
+      margin: 0;
+      color: var(--ink);
+    }
+    .article-row-actions {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .empty-state {
+      padding: 4rem var(--gutter);
+      text-align: center;
+      color: var(--ink-fade);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+
+    /* ─── Edit form ─────────────────────────────────────── */
+
+    .form-screen {
+      display: grid;
+      gap: 1.6rem;
+    }
+    .form-screen-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line-soft);
+    }
+    .form-screen-actions-right {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .form-row { display: grid; gap: 0.4rem; }
+    .form-row label {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-fade);
+      font-weight: 500;
+    }
+    .form-row input[type="text"],
+    .form-row input[type="date"],
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      padding: 0.6rem 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+    }
+    .form-row textarea {
+      font-family: var(--serif);
+      line-height: 1.55;
+      resize: vertical;
+      min-height: 4rem;
+    }
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus {
+      outline: none;
+      border-bottom-color: var(--copper);
+    }
+
+    .form-row-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.2rem;
+    }
+    @media (max-width: 540px) {
+      .form-row-split { grid-template-columns: 1fr; }
+    }
+
+    .form-hint {
+      font-size: 0.74rem;
+      color: var(--ink-fade);
+      margin: 0;
+    }
+
+    .body-paragraphs { display: grid; gap: 0.8rem; }
+    .body-paragraphs textarea {
+      min-height: 5rem;
+    }
+    .paragraph-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.6rem;
+      align-items: start;
+    }
+    .paragraph-row .btn-remove {
+      align-self: start;
+      margin-top: 0.4rem;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.65rem;
+    }
+
+    /* ─── Hidden ────────────────────────────────────────── */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<!-- Login screen -->
+<div id="loginScreen" class="login">
+  <h2>Admin du Carnet</h2>
+  <p>Accès réservé à l'auteur du carnet. Collez votre token GitHub fine-grained ci-dessous pour vous connecter. Il sera enregistré dans ce navigateur uniquement.</p>
+  <form class="login-form" id="loginForm">
+    <div class="form-row">
+      <label for="patInput">GitHub Personal Access Token</label>
+      <input type="password" id="patInput" placeholder="github_pat_..." autocomplete="off" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Se connecter</button>
+    <p class="login-help">
+      Pas encore de token ?
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Créez-en un sur GitHub</a>
+      avec la permission <code>Contents: Read and write</code>, limitée au repo <code>brasserie-chateau-durbuy-2026</code>.
+    </p>
+  </form>
+</div>
+
+<!-- Admin screen -->
+<div id="adminScreen" class="admin hidden">
+
+  <header class="admin-header">
+    <h1>
+      <small>— Admin —</small>
+      Carnet du brasseur
+    </h1>
+    <div class="actions">
+      <button id="newArticleBtn" class="btn btn-primary">+ Nouvelle entrée</button>
+      <button id="logoutBtn" class="btn">Se déconnecter</button>
+    </div>
+  </header>
+
+  <main id="listView">
+    <div id="articleList" class="article-list">
+      <div class="empty-state">Chargement…</div>
+    </div>
+  </main>
+
+  <main id="formView" class="hidden">
+    <form class="form-screen" id="articleForm">
+      <input type="hidden" id="articleId" value="">
+
+      <div class="form-row">
+        <label for="titleInput">Titre</label>
+        <input type="text" id="titleInput" required minlength="2" maxlength="200" placeholder="Le premier brassin de mai">
+      </div>
+
+      <div class="form-row-split">
+        <div class="form-row">
+          <label for="dateInput">Date</label>
+          <input type="date" id="dateInput" required>
+        </div>
+        <div class="form-row">
+          <label for="languageInput">Langue</label>
+          <select id="languageInput" required>
+            <option value="fr">Français</option>
+            <option value="nl">Nederlands</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="statusInput">État</label>
+          <select id="statusInput" required>
+            <option value="draft">Brouillon</option>
+            <option value="published">Publié</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="ledeInput">Chapeau (1–2 phrases, en italique)</label>
+        <textarea id="ledeInput" rows="2" maxlength="280" placeholder="Trois jours après la mise en cuve. La fermentation se calme."></textarea>
+      </div>
+
+      <div class="form-row">
+        <label>Corps de l'article (un bloc par paragraphe)</label>
+        <div id="bodyParagraphs" class="body-paragraphs">
+          <!-- Paragraphs added dynamically -->
+        </div>
+        <p class="form-hint">
+          <button type="button" id="addParagraphBtn" class="btn-link">+ Ajouter un paragraphe</button>
+        </p>
+      </div>
+
+      <div class="form-row">
+        <label for="authorInput">Auteur</label>
+        <input type="text" id="authorInput" value="Lars Kristel" maxlength="80">
+      </div>
+
+      <div class="form-row">
+        <label for="tagsInput">Mots-clés (séparés par des virgules)</label>
+        <input type="text" id="tagsInput" placeholder="fermentation, blonde, mai">
+      </div>
+
+      <div class="form-screen-actions">
+        <button type="button" id="deleteBtn" class="btn btn-danger hidden">Supprimer</button>
+        <div class="form-screen-actions-right">
+          <button type="button" id="cancelBtn" class="btn">Annuler</button>
+          <button type="submit" class="btn btn-primary" id="saveBtn">Enregistrer</button>
+        </div>
+      </div>
+    </form>
+  </main>
+
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ────────────────────────────────────────────────────────
+  // Configuration
+  // ────────────────────────────────────────────────────────
+  const REPO_OWNER = 'larskristel-max';
+  const REPO_NAME = 'brasserie-chateau-durbuy-2026';
+  const FILE_PATH = 'content/journal/articles.json';
+  const BRANCH = 'main';
+  const STORAGE_KEY = 'brewery-journal-pat';
+
+  // ────────────────────────────────────────────────────────
+  // State
+  // ────────────────────────────────────────────────────────
+  let pat = null;
+  let articlesData = { version: 1, articles: [] };
+  let currentFileSha = null;
+  let editingId = null;
+
+  // ────────────────────────────────────────────────────────
+  // DOM refs
+  // ────────────────────────────────────────────────────────
+  const loginScreen = document.getElementById('loginScreen');
+  const adminScreen = document.getElementById('adminScreen');
+  const listView = document.getElementById('listView');
+  const formView = document.getElementById('formView');
+  const articleList = document.getElementById('articleList');
+  const articleForm = document.getElementById('articleForm');
+  const bodyParagraphs = document.getElementById('bodyParagraphs');
+  const toastEl = document.getElementById('toast');
+
+  // ────────────────────────────────────────────────────────
+  // Toast notifications
+  // ────────────────────────────────────────────────────────
+  let toastTimeout = null;
+  function toast(message, type) {
+    toastEl.textContent = message;
+    toastEl.className = 'toast ' + (type || '') + ' show';
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => toastEl.classList.remove('show'), 3500);
+  }
+
+  // ────────────────────────────────────────────────────────
+  // GitHub API helpers
+  // ────────────────────────────────────────────────────────
+  const API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
+
+  async function fetchArticles() {
+    const res = await fetch(API_BASE + '?ref=' + BRANCH, {
+      headers: {
+        'Authorization': 'Bearer ' + pat,
+        'Accept': 'application/vnd.github+json',
+      },
+    });
+    if (res.status === 404) {
+      // File doesn't exist yet
+      return { data: { version: 1, articles: [] }, sha: null };
+    }
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`GitHub API ${res.status}: ${body}`);
+    }
+    const file = await res.json();
+    const content = atob(file.content.replace(/\n/g, ''));
+    const text = new TextDecoder('utf-8').decode(
+      new Uint8Array([...content].map(c => c.charCodeAt(0)))
+    );
+    return { data: JSON.parse(text), sha: file.sha };
+  }
+
+  async function saveArticles(newData, sha, message) {
+    const text = JSON.stringify(newData, null, 2) + '\n';
+    // UTF-8 safe base64
+    const bytes = new TextEncoder().encode(text);
+    let binary = '';
+    bytes.forEach(b => { binary += String.fromCharCode(b); });
+    const content = btoa(binary);
+
+    const body = {
+      message: message,
+      content: content,
+      branch: BRANCH,
+    };
+    if (sha) body.sha = sha;
+
+    const res = await fetch(API_BASE, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + pat,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const errorBody = await res.text();
+      throw new Error(`GitHub API ${res.status}: ${errorBody}`);
+    }
+    const result = await res.json();
+    return result.content.sha;
+  }
+
+  async function validatePat(token) {
+    const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/vnd.github+json',
+      },
+    });
+    return res.ok;
+  }
+
+  // ────────────────────────────────────────────────────────
+  // Auth flow
+  // ────────────────────────────────────────────────────────
+  async function tryAuth(token) {
+    const valid = await validatePat(token);
+    if (valid) {
+      pat = token;
+      localStorage.setItem(STORAGE_KEY, token);
+      loginScreen.classList.add('hidden');
+      adminScreen.classList.remove('hidden');
+      await loadAndRenderList();
+      return true;
+    }
+    return false;
+  }
+
+  function logout() {
+    pat = null;
+    localStorage.removeItem(STORAGE_KEY);
+    adminScreen.classList.add('hidden');
+    loginScreen.classList.remove('hidden');
+    document.getElementById('patInput').value = '';
+    toast('Déconnecté');
+  }
+
+  // ────────────────────────────────────────────────────────
+  // List view
+  // ────────────────────────────────────────────────────────
+  async function loadAndRenderList() {
+    articleList.innerHTML = '<div class="empty-state">Chargement…</div>';
+    try {
+      const { data, sha } = await fetchArticles();
+      articlesData = data;
+      currentFileSha = sha;
+      renderList();
+    } catch (err) {
+      articleList.innerHTML = '<div class="empty-state">Erreur de chargement. Vérifiez votre token.</div>';
+      toast('Erreur: ' + err.message, 'error');
+      console.error(err);
+    }
+  }
+
+  function renderList() {
+    if (!articlesData.articles || articlesData.articles.length === 0) {
+      articleList.innerHTML = '<div class="empty-state">Aucune entrée pour le moment. Cliquez sur "+ Nouvelle entrée" pour commencer.</div>';
+      return;
+    }
+    // Sort by date desc
+    const sorted = [...articlesData.articles].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    articleList.innerHTML = sorted.map(article => {
+      const formattedDate = formatFrenchDate(article.date);
+      const status = article.status === 'published' ? 'Publié' : 'Brouillon';
+      const statusClass = article.status === 'published' ? 'status-published' : 'status-draft';
+      return `
+        <div class="article-row" data-id="${escapeHtml(article.id)}">
+          <div>
+            <div class="article-row-meta">
+              <span class="article-date">${escapeHtml(formattedDate)}</span>
+              <span class="article-lang">${escapeHtml(article.language || 'fr')}</span>
+              <span class="article-status ${statusClass}">${status}</span>
+            </div>
+            <h3 class="article-title">${escapeHtml(article.title)}</h3>
+          </div>
+          <div class="article-row-actions">
+            <button class="btn" data-action="edit" data-id="${escapeHtml(article.id)}">Modifier</button>
+            ${article.status === 'draft'
+              ? `<button class="btn" data-action="publish" data-id="${escapeHtml(article.id)}">Publier</button>`
+              : `<button class="btn" data-action="unpublish" data-id="${escapeHtml(article.id)}">Mettre en brouillon</button>`}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Wire up action buttons
+    articleList.querySelectorAll('button[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.getAttribute('data-action');
+        const id = btn.getAttribute('data-id');
+        if (action === 'edit') openEditForm(id);
+        else if (action === 'publish') toggleStatus(id, 'published');
+        else if (action === 'unpublish') toggleStatus(id, 'draft');
+      });
+    });
+  }
+
+  // ────────────────────────────────────────────────────────
+  // Form view
+  // ────────────────────────────────────────────────────────
+  function openNewForm() {
+    editingId = null;
+    articleForm.reset();
+    document.getElementById('articleId').value = '';
+    document.getElementById('dateInput').value = new Date().toISOString().slice(0, 10);
+    document.getElementById('statusInput').value = 'draft';
+    document.getElementById('languageInput').value = 'fr';
+    document.getElementById('authorInput').value = 'Lars Kristel';
+    bodyParagraphs.innerHTML = '';
+    addParagraphRow('');
+    document.getElementById('deleteBtn').classList.add('hidden');
+    listView.classList.add('hidden');
+    formView.classList.remove('hidden');
+    document.getElementById('titleInput').focus();
+  }
+
+  function openEditForm(id) {
+    const article = articlesData.articles.find(a => a.id === id);
+    if (!article) {
+      toast('Article introuvable', 'error');
+      return;
+    }
+    editingId = id;
+    document.getElementById('articleId').value = id;
+    document.getElementById('titleInput').value = article.title || '';
+    document.getElementById('dateInput').value = article.date || '';
+    document.getElementById('languageInput').value = article.language || 'fr';
+    document.getElementById('statusInput').value = article.status || 'draft';
+    document.getElementById('ledeInput').value = article.lede || '';
+    document.getElementById('authorInput').value = article.author || 'Lars Kristel';
+    document.getElementById('tagsInput').value = (article.tags || []).join(', ');
+    bodyParagraphs.innerHTML = '';
+    (article.body || ['']).forEach(p => addParagraphRow(p));
+    document.getElementById('deleteBtn').classList.remove('hidden');
+    listView.classList.add('hidden');
+    formView.classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+
+  function closeForm() {
+    listView.classList.remove('hidden');
+    formView.classList.add('hidden');
+    editingId = null;
+  }
+
+  function addParagraphRow(text) {
+    const row = document.createElement('div');
+    row.className = 'paragraph-row';
+    const textarea = document.createElement('textarea');
+    textarea.rows = 3;
+    textarea.value = text || '';
+    textarea.placeholder = 'Paragraphe…';
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'btn btn-remove';
+    removeBtn.textContent = '−';
+    removeBtn.title = 'Supprimer ce paragraphe';
+    removeBtn.addEventListener('click', () => {
+      if (bodyParagraphs.children.length > 1) row.remove();
+      else toast('Au moins un paragraphe requis', 'error');
+    });
+    row.appendChild(textarea);
+    row.appendChild(removeBtn);
+    bodyParagraphs.appendChild(row);
+  }
+
+  function collectBodyParagraphs() {
+    return Array.from(bodyParagraphs.querySelectorAll('textarea'))
+      .map(t => t.value.trim())
+      .filter(t => t.length > 0);
+  }
+
+  async function saveArticle(e) {
+    e.preventDefault();
+    const saveBtn = document.getElementById('saveBtn');
+    saveBtn.disabled = true;
+
+    const title = document.getElementById('titleInput').value.trim();
+    const date = document.getElementById('dateInput').value;
+    const language = document.getElementById('languageInput').value;
+    const status = document.getElementById('statusInput').value;
+    const lede = document.getElementById('ledeInput').value.trim();
+    const author = document.getElementById('authorInput').value.trim() || 'Lars Kristel';
+    const tagsRaw = document.getElementById('tagsInput').value.trim();
+    const body = collectBodyParagraphs();
+
+    if (!title || !date || body.length === 0) {
+      toast('Titre, date, et au moins un paragraphe sont requis', 'error');
+      saveBtn.disabled = false;
+      return;
+    }
+
+    const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+    const now = new Date().toISOString();
+
+    let article;
+    if (editingId) {
+      const existing = articlesData.articles.find(a => a.id === editingId);
+      article = {
+        ...existing,
+        title, date, language, status, lede, author, tags, body,
+        updatedAt: now,
+      };
+      const idx = articlesData.articles.findIndex(a => a.id === editingId);
+      articlesData.articles[idx] = article;
+    } else {
+      const id = slugify(title) + '-' + date;
+      // Avoid duplicate IDs
+      if (articlesData.articles.some(a => a.id === id)) {
+        toast('Un article avec ce titre et cette date existe déjà', 'error');
+        saveBtn.disabled = false;
+        return;
+      }
+      article = {
+        id, title, date, language, status, lede, author, tags, body,
+        heroImage: null,
+        createdAt: now,
+        updatedAt: now,
+      };
+      articlesData.articles.unshift(article);
+    }
+
+    try {
+      const newSha = await saveArticles(
+        articlesData,
+        currentFileSha,
+        (editingId ? 'Modifier' : 'Créer') + ` : ${title}`
+      );
+      currentFileSha = newSha;
+      toast(editingId ? 'Article modifié' : 'Article créé', 'success');
+      closeForm();
+      renderList();
+    } catch (err) {
+      toast('Erreur: ' + err.message, 'error');
+      console.error(err);
+      // Revert local change on failure
+      if (!editingId) {
+        articlesData.articles.shift();
+      }
+    } finally {
+      saveBtn.disabled = false;
+    }
+  }
+
+  async function deleteArticle() {
+    if (!editingId) return;
+    const article = articlesData.articles.find(a => a.id === editingId);
+    if (!confirm(`Supprimer définitivement "${article.title}" ? Cette action est irréversible.`)) return;
+    const idx = articlesData.articles.findIndex(a => a.id === editingId);
+    if (idx < 0) return;
+    const removed = articlesData.articles.splice(idx, 1)[0];
+    try {
+      const newSha = await saveArticles(articlesData, currentFileSha, `Supprimer : ${removed.title}`);
+      currentFileSha = newSha;
+      toast('Article supprimé', 'success');
+      closeForm();
+      renderList();
+    } catch (err) {
+      // Revert
+      articlesData.articles.splice(idx, 0, removed);
+      toast('Erreur: ' + err.message, 'error');
+    }
+  }
+
+  async function toggleStatus(id, newStatus) {
+    const article = articlesData.articles.find(a => a.id === id);
+    if (!article) return;
+    const prevStatus = article.status;
+    article.status = newStatus;
+    article.updatedAt = new Date().toISOString();
+    try {
+      const newSha = await saveArticles(
+        articlesData,
+        currentFileSha,
+        `${newStatus === 'published' ? 'Publier' : 'Mettre en brouillon'} : ${article.title}`
+      );
+      currentFileSha = newSha;
+      toast(newStatus === 'published' ? 'Publié' : 'Mis en brouillon', 'success');
+      renderList();
+    } catch (err) {
+      article.status = prevStatus; // revert
+      toast('Erreur: ' + err.message, 'error');
+    }
+  }
+
+  // ────────────────────────────────────────────────────────
+  // Helpers
+  // ────────────────────────────────────────────────────────
+  function escapeHtml(str) {
+    if (str == null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function slugify(text) {
+    return text.toLowerCase()
+      .replace(/[àáâäãå]/g, 'a')
+      .replace(/[èéêë]/g, 'e')
+      .replace(/[ìíîï]/g, 'i')
+      .replace(/[òóôöõ]/g, 'o')
+      .replace(/[ùúûü]/g, 'u')
+      .replace(/[ç]/g, 'c')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 80);
+  }
+
+  function formatFrenchDate(iso) {
+    if (!iso) return '';
+    const months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+                    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    const d = new Date(iso + 'T12:00:00Z');
+    return `${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+  }
+
+  // ────────────────────────────────────────────────────────
+  // Wire up
+  // ────────────────────────────────────────────────────────
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const token = document.getElementById('patInput').value.trim();
+    if (!token) return;
+    const ok = await tryAuth(token);
+    if (!ok) toast('Token invalide ou sans accès au repo', 'error');
+  });
+
+  document.getElementById('newArticleBtn').addEventListener('click', openNewForm);
+  document.getElementById('logoutBtn').addEventListener('click', logout);
+  document.getElementById('cancelBtn').addEventListener('click', closeForm);
+  document.getElementById('addParagraphBtn').addEventListener('click', () => addParagraphRow(''));
+  document.getElementById('deleteBtn').addEventListener('click', deleteArticle);
+  articleForm.addEventListener('submit', saveArticle);
+
+  // Auto-login if PAT in localStorage
+  const storedPat = localStorage.getItem(STORAGE_KEY);
+  if (storedPat) {
+    pat = storedPat;
+    tryAuth(storedPat).then(ok => {
+      if (!ok) {
+        pat = null;
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

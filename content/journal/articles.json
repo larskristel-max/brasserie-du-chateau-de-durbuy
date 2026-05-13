@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "articles": [
+    {
+      "id": "le-premier-brassin-de-mai-2026-05-11",
+      "title": "Le premier brassin de mai",
+      "date": "2026-05-11",
+      "language": "fr",
+      "status": "draft",
+      "author": "Lars Kristel",
+      "lede": "Trois jours après la mise en cuve. La fermentation se calme.",
+      "body": [
+        "Trois jours après la mise en cuve. La fermentation se calme; le krausen retombe lentement, formant cette couche brune et stable qui annonce une bière en train de se rassembler.",
+        "Ce matin la lumière entrait par l'oculus à l'est. J'étais venu mesurer la densité — 1.014, comme prévu — et je suis resté un moment dans le silence de la salle, à regarder l'écume s'épaissir au bord de la cuve. La pierre du sol était fraîche. L'odeur, ronde, fruitée, presque chaude.",
+        "Il y a quelque chose de profondément rassurant dans le retour de ce rythme. La Blonde du Château commence à être ce qu'elle doit être. Elle sera prête début juin, peut-être un peu plus tôt."
+      ],
+      "heroImage": null,
+      "tags": ["fermentation", "blonde"],
+      "createdAt": "2026-05-11T10:00:00.000Z",
+      "updatedAt": "2026-05-11T10:00:00.000Z"
+    },
+    {
+      "id": "larrivee-des-houblons-2025-09-22",
+      "title": "L'arrivée des houblons",
+      "date": "2025-09-22",
+      "language": "fr",
+      "status": "draft",
+      "author": "Lars Kristel",
+      "lede": "Une livraison annuelle qui dit quelque chose de la saison.",
+      "body": [
+        "La livraison de cette année est arrivée hier. Sorachi Ace, pellet, conditionné sous vide. J'ai ouvert un sac dans l'arrière-salle — j'attends toujours ce moment.",
+        "L'odeur de citron vert frais, de feuille de noyer, presque iodée. Aucune autre variété ne fait ce profil. Et chaque année, légèrement différent: 2025 me semble plus végétal, moins agrume, comme si la saison de récolte avait été plus humide. Ce n'est pas désagréable; c'est simplement différent.",
+        "Quatre kilos partiront dans la prochaine IPA. Une tension fraîche, herbacée. Le reste, je garderai pour un brassin spécial à l'automne — peut-être une saison houblonnée, on verra."
+      ],
+      "heroImage": null,
+      "tags": ["houblon", "sorachi", "ipa"],
+      "createdAt": "2025-09-22T09:00:00.000Z",
+      "updatedAt": "2025-09-22T09:00:00.000Z"
+    },
+    {
+      "id": "marckloff-et-nous-2025-03-06",
+      "title": "Marckloff, et nous",
+      "date": "2025-03-06",
+      "language": "fr",
+      "status": "draft",
+      "author": "Lars Kristel",
+      "lede": "Pourquoi nommer une bière après un homme dont on ne sait presque rien.",
+      "body": [
+        "Une question m'a été posée l'autre jour: pourquoi nommer une bière après quelqu'un dont on ne sait presque rien?",
+        "Philippe Marckloff brassait à Durbuy en 1560. Il vivait à la Ferme au Chêne, à l'entrée de la ville. Les archives sont minces — un nom, une date, un lieu. Pas de portrait, pas de recettes, pas de témoignage. Juste l'attestation qu'il a existé.",
+        "C'est précisément cette discrétion qui m'attache à lui. Il a brassé ici, dans cette même vallée, sous la même lumière. Quatre siècles plus tard, je remplis des cuves à cent mètres de l'endroit où il avait les siennes. La Marckloff, notre ambrée à 6,5°, est moins un hommage qu'une continuation. Un fil qui ne s'est jamais vraiment rompu.",
+        "Il ne s'agit pas de prétendre que nous brassons comme lui — nous n'en savons rien. Mais nous brassons ici. Et c'est, peut-être, suffisant."
+      ],
+      "heroImage": null,
+      "tags": ["heritage", "marckloff", "histoire"],
+      "createdAt": "2025-03-06T16:00:00.000Z",
+      "updatedAt": "2025-03-06T16:00:00.000Z"
+    }
+  ]
+}

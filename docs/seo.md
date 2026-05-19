@@ -11,6 +11,7 @@ Last updated: 2026-05-19
 - No public opening hours are published until access policy is confirmed.
 - No `hreflang` is published yet. Add it only after translation review and only for pages with real translated equivalents.
 - Journal articles currently publish in their original language only.
+- Cloudflare Managed `robots.txt` is currently active on the zone and prepends its own AI-crawler rules. The repo `robots.txt` explicitly allows AI search / assistant retrieval agents while keeping `ai-train=no`.
 
 ## Metadata Policy
 
@@ -18,6 +19,7 @@ Last updated: 2026-05-19
 - Structured data should stay factual: name, description, address, public email, site URL, logo/image, and Instagram.
 - Do not add `openingHours`, reservation URLs, telephone numbers, product offers, beer names, ABVs, tasting notes, or event details until approved for public release.
 - Keep `index.html` and `redesign-template.html` byte-identical after metadata edits.
+- Keep `robots.txt` aligned with the visibility goal: allow ordinary search, AI search, and assistant retrieval; avoid training permission unless explicitly approved.
 
 ## Search Themes
 

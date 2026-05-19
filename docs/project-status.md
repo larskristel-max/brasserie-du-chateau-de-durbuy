@@ -163,6 +163,7 @@ Last updated: 2026-05-19
 - Updated Open Graph and Twitter metadata to use permanent-domain URLs.
 - Cleaned homepage JSON-LD to use factual business/address/contact/social data only.
 - Added `robots.txt` with `/admin/` disallowed and sitemap discovery.
+- Added explicit `robots.txt` allowances for AI search / assistant retrieval agents while keeping training opt-out.
 - Added `sitemap.xml` for the homepage and journal index.
 - Updated the GitHub Pages deploy workflow to copy `robots.txt` and `sitemap.xml`.
 - Added `docs/seo.md` with metadata decisions, search themes, content principles, and local SEO tasks.

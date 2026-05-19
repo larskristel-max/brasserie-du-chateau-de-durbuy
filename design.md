@@ -144,19 +144,19 @@ If a section feels designed, you've added too much. Remove the most assertive el
 ### 4.4 Les Bières (Chapter III)
 
 - Stacked layout, centred.
-- Sequence: heading → bottle photograph (`min(100% - 2*gutter, 1080px)`) → 4-column beer roster aligning under the bottles → italic transition line.
-- **The list aligns column-by-column to the bottles in the photo above.** Beer order in the markup matches bottle order in the photo (left to right: Blonde, Bohemian Pilsner, IPA, Amber Ale).
+- Sequence: heading → teaser bottle photograph (`min(100% - 2*gutter, 1080px)`) → blurred 4-column teaser roster → italic transition line.
+- **Until public announcement, the labels and roster stay unreadable.** Do not print beer names, ABVs, or tasting notes in the visible markup or translations object until launch approval.
 - Bottle photograph uses `filter: brightness(0.93) contrast(1.05) saturate(0.93)` to belong to the unified atmospheric world.
 - **Kicker copy (shipped May 2026):** "Quatre. Brassées au château." in FR / "Vier. In het kasteel gebrouwen." in NL / "Four. Brewed at the château." in EN / "Vier. Im Schloss gebraut." in DE. The previous "Bières du domaine" was rejected because it echoed the "Les Bières" heading directly below it — a kicker's job is to *introduce a fact the heading doesn't*, not to paraphrase.
 - **Lead copy (shipped May 2026):** "Chacune dans son propre tempo. Petites séries, fermentation traditionnelle." The brewing fact moved from the kicker (which now states the count + architectural fact) down to the lead, where it can breathe.
-- **Tasting-note voice (canonical, May 2026):** Sense-based, domain-anchored sensory metaphor. Each note is *flavour signal + atmospheric moment*. Example pattern: "Pain frais, miel pâle, finale sèche. La lumière d'une fin d'après-midi." This is the voice. Do not regress to abstract descriptors ("ronde et lumineuse", "amertume délicate") — they are correct in a sommelier checklist and wrong here.
+- **Tasting-note voice (canonical after public reveal):** Sense-based, domain-anchored sensory metaphor. Each note should be *flavour signal + atmospheric moment*. Do not regress to abstract descriptors ("ronde et lumineuse", "amertume délicate") — they are correct in a sommelier checklist and wrong here.
 - **Ultrawide widening (shipped May 2026):** at `min-width: 1600px`, both `.bieres-image` and `.beer-list` widen from `min(100% - 2*gutter, 1080px)` to `min(100% - 2*gutter, 1280px)`, and `.beer-list` gap increases to `clamp(1.8rem, 2.4vw, 3rem)`. Brings Les Bières into the same horizontal envelope as the hero on 27"+ displays.
 - Mobile: single-column beer list at 880px (skipping the 2-column intermediate). Name and ABV on the same baseline at the top of each row, notes underneath. The bottle-to-list column rhyme is lost on mobile anyway as soon as the layout stacks, so a 2-column intermediate would be a false economy.
 
 ### 4.5 La Visite (Chapter IV)
 
 - Two-column grid, min-height 96vh — same dimensions as Le Lieu, but **deliberately opposite reading order**.
-- **Left column: full-bleed gardens image** with the right-edge cream fade where it meets the copy panel.
+- **Left column: full-bleed domaine/château image** with the right-edge cream fade where it meets the copy panel.
 - **Right column: copy** + visit grid (2 columns) + private note + reservation CTA.
 - **Reading order: image first, then text** — opposite of Le Lieu. This is intentional: at the end of the page the eye is winding down, and leading with the gardens photograph creates a slower, more contemplative entry into the final section. The functional content (what to book, what's private, what's offered) sits after the photograph rather than competing with it.
 - The asymmetry between Le Lieu (text→image, opening) and La Visite (image→text, closing) is **the page's editorial rhythm**: the page opens reading-led and closes image-led. Do not unify them.
@@ -211,7 +211,7 @@ The hero gets a slightly stronger treatment (`brightness(0.74)`) because text ov
 | `brasserie-production` | 720w / 1920w | Edge-to-edge in dark slab; one large + one mobile |
 | `bieres-bouteilles` | 720w / 1280w (q=80) | Centred max 1080px; quality bumped to 80 to preserve label detail |
 | `lieu-domaine` | 720w / 1024w | Portrait, half-bleed; two sizes cover the responsive range |
-| `jardins-visites` | 720w / 1024w | Same as `lieu-domaine` |
+| `visite-gate` | 720w / 1024w | Domaine/château gate image for La Visite |
 
 **Quality**: 75 for the 720w mobile variants, 78 for desktop, 80 only for the bottle photo. Generated via Pillow with `method=6` (max compression effort).
 

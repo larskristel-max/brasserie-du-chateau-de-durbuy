@@ -28,7 +28,7 @@
       "addressLocality": "Durbuy",
       "addressCountry": "BE"
     },
-    "email": "brasseurduchateau@gmail.com",
+    "email": "info@brasseriechateaudurbuy.be",
     "url": "https://brasseriechateaudurbuy.be",
     "image": "https://larskristel-max.github.io/brasserie-chateau-durbuy-2026/src/assets/hero-chateau-1280w.jpg",
     "servesCuisine": "Bière artisanale belge",
@@ -772,11 +772,13 @@
     .bieres-image {
       margin: 0 auto;
       width: min(100% - calc(var(--gutter) * 2), 1080px);
+      overflow: hidden;
     }
     .bieres-image img {
       width: 100%;
       height: auto;
-      filter: brightness(0.93) contrast(1.05) saturate(0.93);
+      transform: scale(1.025);
+      filter: blur(9px) brightness(0.93) contrast(1.05) saturate(0.88);
     }
 
     .beer-list {
@@ -815,6 +817,40 @@
       line-height: 1.5;
       color: var(--ink-soft);
       margin: 0;
+    }
+    .beer-teaser {
+      position: relative;
+      margin: 0 auto;
+      padding-inline: var(--gutter);
+      width: min(100% - calc(var(--gutter) * 2), 1080px);
+    }
+    .beer-teaser .beer-list {
+      width: 100%;
+      padding-inline: 0;
+      filter: blur(5px);
+      opacity: 0.46;
+      user-select: none;
+      pointer-events: none;
+    }
+    .beer-teaser-note {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      width: min(100% - 2rem, 22rem);
+      padding: 1rem 1.2rem;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(242, 235, 221, 0.86);
+      color: var(--copper);
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      line-height: 1.7;
+      letter-spacing: 0.2em;
+      text-align: center;
+      text-transform: uppercase;
     }
 
     .transition {
@@ -857,6 +893,10 @@
         grid-column: 1 / -1;
         margin: 0.45rem 0 0;
       }
+      .beer-teaser-note {
+        width: min(100% - 2rem, 20rem);
+        padding-inline: 0.95rem;
+      }
     }
 
     /* Ultrawide displays — let Les Bières breathe at the same width as the hero */
@@ -867,6 +907,9 @@
       .beer-list {
         width: min(100% - calc(var(--gutter) * 2), 1280px);
         gap: clamp(1.8rem, 2.4vw, 3rem);
+      }
+      .beer-teaser {
+        width: min(100% - calc(var(--gutter) * 2), 1280px);
       }
     }
 
@@ -1138,7 +1181,8 @@
       opacity: 0;
       transition: opacity 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
     }
-    .reservation-modal[data-open="true"] {
+    .reservation-modal[data-open="true"],
+    .reservation-modal:target {
       display: flex;
       opacity: 1;
     }
@@ -1427,6 +1471,43 @@
     }
     .form-status[data-state="error"] { color: rgba(170, 50, 50, 0.9); }
 
+    .reservation-teaser {
+      display: grid;
+      gap: 1.6rem;
+      max-width: 33rem;
+      padding-top: 0.4rem;
+    }
+    .reservation-teaser-line {
+      height: 1px;
+      width: 100%;
+      background: var(--line);
+    }
+    .reservation-teaser p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.96rem;
+      line-height: 1.7;
+    }
+    .reservation-teaser-contact {
+      display: inline-flex;
+      width: fit-content;
+      border-bottom: 1px solid var(--ink);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      line-height: 1.8;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 220ms ease, border-color 220ms ease;
+    }
+    .reservation-teaser-contact:hover,
+    .reservation-teaser-contact:focus-visible {
+      border-color: var(--copper);
+      color: var(--copper);
+      outline: none;
+    }
+
     .reservation-success {
       text-align: left;
     }
@@ -1511,7 +1592,7 @@
       <span class="sep">·</span>
       <button type="button" data-lang="de" aria-pressed="false">DE</button>
     </div>
-    <a class="nav-cta" href="mailto:brasseurduchateau@gmail.com?subject=Demande%20de%20r%C3%A9servation" data-open-reservation data-i18n="nav.reservations">Réservations</a>
+    <a class="nav-cta" href="#reservationModal" data-open-reservation data-i18n="nav.reservations">Réservations</a>
     <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-controls="mobileMenu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -1524,7 +1605,7 @@
       <a href="#bieres" data-i18n="nav.bieres">Les Bières</a>
       <a href="#visite" data-i18n="nav.visite">La Visite</a>
       <a href="/journal/" data-i18n="nav.carnet">Carnet</a>
-      <a class="mobile-cta" href="mailto:brasseurduchateau@gmail.com" data-open-reservation data-i18n="nav.reservations">Réservations</a>
+      <a class="mobile-cta" href="#reservationModal" data-open-reservation data-i18n="nav.reservations">Réservations</a>
       <div class="mobile-lang-switcher" role="group" aria-label="Choix de langue">
         <button type="button" data-lang="fr" aria-pressed="true">FR</button>
         <span class="sep">·</span>
@@ -1654,32 +1735,35 @@
             sizes="(max-width: 1280px) 100vw, 1080px">
           <img src="src/assets/bieres-bouteilles-1280w.jpg"
                width="1280" height="1024"
-               alt="Quatre bouteilles de la Brasserie du Château de Durbuy : Blonde, Bohemian Pilsner, IPA, Amber Ale"
+               alt="Quatre bouteilles de la Brasserie du Château de Durbuy, présentées en avant-première"
                loading="lazy" decoding="async">
         </picture>
       </figure>
-      <ul class="beer-list">
-        <li>
-          <h3>Blonde du Château</h3>
-          <p class="beer-abv">6,4°</p>
-          <p class="beer-notes" data-i18n="bieres.note1">Pain frais, miel pâle, finale sèche. La lumière d'une fin d'après-midi.</p>
-        </li>
-        <li>
-          <h3>Bohemian Pilsner</h3>
-          <p class="beer-abv">4,6°</p>
-          <p class="beer-notes" data-i18n="bieres.note2">Cristal et céréale, amertume franche. La précision tchèque, prise en estate.</p>
-        </li>
-        <li>
-          <h3>IPA</h3>
-          <p class="beer-abv">5,3°</p>
-          <p class="beer-notes" data-i18n="bieres.note3">Sorachi Ace : citron vert, herbes coupées. Tension fraîche, jamais bruyante.</p>
-        </li>
-        <li>
-          <h3>Amber Ale</h3>
-          <p class="beer-abv">6,2°</p>
-          <p class="beer-notes" data-i18n="bieres.note4">Caramel, écorce, foin sec. La couleur d'un soir d'automne sur l'Ourthe.</p>
-        </li>
-      </ul>
+      <div class="beer-teaser">
+        <ul class="beer-list" aria-hidden="true">
+          <li>
+            <h3>Bière I</h3>
+            <p class="beer-abv">—,—°</p>
+            <p class="beer-notes">Profil de dégustation réservé au lancement.</p>
+          </li>
+          <li>
+            <h3>Bière II</h3>
+            <p class="beer-abv">—,—°</p>
+            <p class="beer-notes">Profil de dégustation réservé au lancement.</p>
+          </li>
+          <li>
+            <h3>Bière III</h3>
+            <p class="beer-abv">—,—°</p>
+            <p class="beer-notes">Profil de dégustation réservé au lancement.</p>
+          </li>
+          <li>
+            <h3>Bière IV</h3>
+            <p class="beer-abv">—,—°</p>
+            <p class="beer-notes">Profil de dégustation réservé au lancement.</p>
+          </li>
+        </ul>
+        <p class="beer-teaser-note" data-i18n="bieres.teaser">La gamme sera révélée prochainement.</p>
+      </div>
       <p class="transition" data-i18n="bieres.transition">Le domaine continue après le brassage.</p>
     </section>
 
@@ -1687,16 +1771,16 @@
       <figure class="visite-image">
         <picture>
           <source type="image/webp"
-            srcset="src/assets/jardins-visites-720w.webp 720w,
-                    src/assets/jardins-visites-1024w.webp 1024w"
+            srcset="src/assets/visite-gate-720w.webp 720w,
+                    src/assets/visite-gate-1024w.webp 1024w"
             sizes="(max-width: 880px) 100vw, 50vw">
           <source type="image/jpeg"
-            srcset="src/assets/jardins-visites-720w.jpg 720w,
-                    src/assets/jardins-visites-1024w.jpg 1024w"
+            srcset="src/assets/visite-gate-720w.jpg 720w,
+                    src/assets/visite-gate-1024w.jpg 1024w"
             sizes="(max-width: 880px) 100vw, 50vw">
-          <img src="src/assets/jardins-visites-1024w.jpg"
-               width="1023" height="1537"
-               alt="Tour, ruelle pavée et jardins du domaine du Château de Durbuy au crépuscule"
+          <img src="src/assets/visite-gate-1024w.jpg"
+               width="1024" height="1365"
+               alt="Portail du domaine du Château de Durbuy au crépuscule"
                loading="lazy" decoding="async">
         </picture>
       </figure>
@@ -1716,7 +1800,7 @@
           <li><h3 data-i18n="visite.item4.name">Événements privés</h3><p data-i18n="visite.item4.desc">Mariages, réceptions, dîners privés.</p></li>
           <li><h3 data-i18n="visite.item5.name">Bières du domaine</h3><p data-i18n="visite.item5.desc">Notre sélection, à emporter ou à offrir.</p></li>
         </ul>
-        <a class="text-cta" href="mailto:brasseurduchateau@gmail.com?subject=Demande%20de%20r%C3%A9servation" data-open-reservation><span data-i18n="visite.cta">Informations &amp; réservations</span> <span aria-hidden="true">→</span></a>
+        <a class="text-cta" href="#reservationModal" data-open-reservation><span data-i18n="visite.cta">Informations &amp; réservations</span> <span aria-hidden="true">→</span></a>
       </div>
     </section>
 
@@ -1734,7 +1818,7 @@
       </div>
       <div class="footer-info">
         <p class="footer-label" data-i18n="footer.label.reservation">Sur réservation</p>
-        <p><a href="mailto:brasseurduchateau@gmail.com">brasseurduchateau@gmail.com</a></p>
+        <p><a href="mailto:info@brasseriechateaudurbuy.be">info@brasseriechateaudurbuy.be</a></p>
       </div>
       <div class="footer-info">
         <p class="footer-label" data-i18n="footer.label.follow">Suivre</p>
@@ -1769,75 +1853,19 @@
         </div>
       </div>
 
-      <!-- Form pane -->
+      <!-- Teaser pane -->
       <div class="reservation-pane" id="reservationPaneForm">
         <header class="reservation-modal-header">
           <p class="kicker" data-i18n="form.kicker">Sur réservation</p>
-          <h2 id="reservation-modal-title" data-i18n="form.heading">Demande de réservation</h2>
-          <p class="lead" data-i18n="form.lead">Le domaine n'ouvre ses portes que sur réservation. Indiquez vos préférences ci-dessous ; nous reviendrons vers vous sous 48 heures.</p>
+          <h2 id="reservation-modal-title" data-i18n="form.heading">Visites en préparation</h2>
+          <p class="lead" data-i18n="form.lead">Les visites privées du domaine seront annoncées prochainement. Les demandes se font encore directement, en toute discrétion.</p>
         </header>
 
-        <form class="reservation-form" id="reservationForm" novalidate>
-          <!-- Honeypot: bots fill this, humans don't -->
-          <div class="form-honeypot" aria-hidden="true">
-            <label for="resv-hp">Leave this field blank</label>
-            <input type="text" id="resv-hp" name="website" tabindex="-1" autocomplete="off">
-          </div>
-
-          <div class="form-row">
-            <label for="resv-name" data-i18n="form.label.name">Nom complet *</label>
-            <input type="text" id="resv-name" name="name" required minlength="2" maxlength="100" autocomplete="name" placeholder=" ">
-          </div>
-
-          <div class="form-row">
-            <label for="resv-email" data-i18n="form.label.email">Adresse e-mail *</label>
-            <input type="email" id="resv-email" name="email" required maxlength="200" autocomplete="email" placeholder=" ">
-          </div>
-
-          <div class="form-row form-row-split">
-            <div>
-              <label for="resv-date" data-i18n="form.label.date">Date préférée *</label>
-              <input type="date" id="resv-date" name="date_preferred" required>
-            </div>
-            <div>
-              <label for="resv-date-alt" data-i18n="form.label.date_alt">Date alternative</label>
-              <input type="date" id="resv-date-alt" name="date_alternative">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <label for="resv-party" data-i18n="form.label.party">Nombre d'invités *</label>
-            <input type="number" id="resv-party" name="party_size" required min="1" max="60" inputmode="numeric" placeholder="2">
-            <p class="form-hint" id="resv-party-hint" data-i18n="form.hint.party_split" hidden>Plus de 30 invités : votre groupe sera réparti sur deux visites parallèles.</p>
-          </div>
-
-          <div class="form-row">
-            <label for="resv-phone" data-i18n="form.label.phone">Téléphone *</label>
-            <input type="tel" id="resv-phone" name="phone" required minlength="6" maxlength="30" autocomplete="tel" placeholder=" ">
-          </div>
-
-          <div class="form-row">
-            <fieldset>
-              <legend data-i18n="form.label.visit_type">Type de visite</legend>
-              <p class="form-hint" data-i18n="form.hint.multiselect">Plusieurs choix possibles</p>
-              <div class="form-radio-group">
-                <label><input type="checkbox" name="visit_type" value="brasserie"><span data-i18n="form.visit.brasserie">Visite de la brasserie</span></label>
-                <label><input type="checkbox" name="visit_type" value="evenement"><span data-i18n="form.visit.evenement">Événement privé</span></label>
-              </div>
-            </fieldset>
-          </div>
-
-          <div class="form-row">
-            <label for="resv-notes" data-i18n="form.label.notes">Demandes particulières (optionnel)</label>
-            <textarea id="resv-notes" name="notes" maxlength="500" rows="4" placeholder=" "></textarea>
-            <p class="form-counter"><span id="resv-notes-count">0</span> / 500</p>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="form-submit" id="resvSubmit" data-i18n="form.submit">Envoyer la demande</button>
-            <p class="form-status" id="resvStatus" aria-live="polite"></p>
-          </div>
-        </form>
+        <div class="reservation-teaser">
+          <div class="reservation-teaser-line" aria-hidden="true"></div>
+          <p data-i18n="form.teaser.body">Le calendrier n'est pas encore ouvert au public. Pour une demande privée ou professionnelle, écrivez-nous à l'adresse du domaine.</p>
+          <a class="reservation-teaser-contact" href="mailto:info@brasseriechateaudurbuy.be?subject=Demande%20d'information" data-i18n="form.teaser.contact">Écrire au domaine</a>
+        </div>
       </div>
 
       <!-- Success pane (hidden until form submitted successfully) -->
@@ -1923,20 +1951,9 @@
       });
 
       // ------------------------ Reservation modal ------------------------
-      // Placeholder URL — wire up to real Cloudflare Worker once deployed.
-      // Until then, submissions return a simulated success (no email sent).
-      const RESERVATION_ENDPOINT = 'https://brasserie-reservations.brasseurduchateau.workers.dev';  // empty = simulated success; set to Worker URL for production
-
       const modal = document.getElementById('reservationModal');
       const formPane = document.getElementById('reservationPaneForm');
       const successPane = document.getElementById('reservationPaneSuccess');
-      const form = document.getElementById('reservationForm');
-      const submitBtn = document.getElementById('resvSubmit');
-      const statusEl = document.getElementById('resvStatus');
-      const partyInput = document.getElementById('resv-party');
-      const partyHint = document.getElementById('resv-party-hint');
-      const notesInput = document.getElementById('resv-notes');
-      const notesCount = document.getElementById('resv-notes-count');
       let modalOpen = false;
       let lastFocusedTrigger = null;
 
@@ -1947,36 +1964,24 @@
         document.body.classList.toggle('modal-open', open);
         if (open) {
           lastFocusedTrigger = triggerEl || null;
-          // Reset to form pane on open
           formPane.hidden = false;
           successPane.hidden = true;
-          // Reset form state
-          if (!triggerEl) form.reset();  // skip reset on programmatic re-open
-          submitBtn.disabled = false;
-          statusEl.textContent = '';
-          statusEl.removeAttribute('data-state');
-          partyHint.hidden = true;
-          notesCount.textContent = '0';
-          // Default date to tomorrow
-          const tomorrow = new Date();
-          tomorrow.setDate(tomorrow.getDate() + 1);
-          document.getElementById('resv-date').min = tomorrow.toISOString().slice(0, 10);
-          document.getElementById('resv-date-alt').min = tomorrow.toISOString().slice(0, 10);
-          // Focus first field after the modal animation
-          setTimeout(function () { document.getElementById('resv-name').focus(); }, 200);
+          setTimeout(function () {
+            const firstLink = formPane.querySelector('a, button');
+            if (firstLink) firstLink.focus();
+          }, 200);
         } else {
           if (lastFocusedTrigger) lastFocusedTrigger.focus();
         }
       };
 
-      // Open triggers — every link with data-open-reservation
-      document.querySelectorAll('[data-open-reservation]').forEach(function (el) {
-        el.addEventListener('click', function (e) {
-          e.preventDefault();
-          // Close mobile menu first if open
-          if (menuOpen) setOpen(false);
-          setModalOpen(true, el);
-        });
+      // Open triggers — delegated so translated/nested link text stays reliable.
+      document.addEventListener('click', function (e) {
+        const trigger = e.target.closest('[data-open-reservation]');
+        if (!trigger) return;
+        e.preventDefault();
+        if (menuOpen) setOpen(false);
+        setModalOpen(true, trigger);
       });
 
       // Close triggers
@@ -2000,81 +2005,6 @@
         const first = focusables[0], last = focusables[focusables.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-      });
-
-      // Party size dynamic hint
-      partyInput.addEventListener('input', function () {
-        const v = parseInt(partyInput.value, 10);
-        partyHint.hidden = !(v > 30);
-      });
-
-      // Notes character counter
-      notesInput.addEventListener('input', function () {
-        notesCount.textContent = String(notesInput.value.length);
-      });
-
-      // Form submission
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-
-        // Honeypot check
-        if (form.elements['website'].value) {
-          // Pretend success — bot doesn't get to see the form result
-          formPane.hidden = true;
-          successPane.hidden = false;
-          return;
-        }
-
-        // HTML5 native validation
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
-
-        // Collect data — visit_type may have multiple values (checkboxes), so
-        // grab them as an array via formData.getAll() before flattening.
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
-        data.visit_type = formData.getAll('visit_type'); // array, possibly empty
-        data.language = (document.documentElement.lang || 'fr').toLowerCase();
-
-        // Disable submit + show status
-        submitBtn.disabled = true;
-        const submitOriginal = submitBtn.textContent;
-        const lang = data.language || 'fr';
-        const submittingText = (translations[lang] && translations[lang]['form.submitting']) || 'Envoi en cours…';
-        submitBtn.textContent = submittingText;
-        statusEl.textContent = '';
-        statusEl.removeAttribute('data-state');
-
-        try {
-          if (RESERVATION_ENDPOINT) {
-            // Real submission to Cloudflare Worker
-            const res = await fetch(RESERVATION_ENDPOINT, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(data)
-            });
-            if (!res.ok) throw new Error('worker_error_' + res.status);
-          } else {
-            // Simulated success for staging — small artificial delay so the
-            // submit-state UX is testable. Replace by setting RESERVATION_ENDPOINT.
-            await new Promise(function (r) { setTimeout(r, 800); });
-          }
-
-          // Success: swap to success pane
-          formPane.hidden = true;
-          successPane.hidden = false;
-          // Move focus to the success pane's close button for keyboard users
-          setTimeout(function () { successPane.querySelector('button').focus(); }, 100);
-        } catch (err) {
-          statusEl.textContent =
-            (translations[lang] && translations[lang]['form.error']) ||
-            "Une erreur est survenue. Veuillez réessayer ou nous écrire à brasseurduchateau@gmail.com.";
-          statusEl.setAttribute('data-state', 'error');
-          submitBtn.disabled = false;
-          submitBtn.textContent = submitOriginal;
-        }
       });
 
       // ------------------------ Language switcher ------------------------
@@ -2107,10 +2037,7 @@
           'bieres.kicker': 'Quatre. Brassées au château.',
           'bieres.heading': 'Les Bières',
           'bieres.lead': 'Chacune dans son propre tempo. Petites séries, fermentation traditionnelle.',
-          'bieres.note1': "Pain frais, miel pâle, finale sèche. La lumière d'une fin d'après-midi.",
-          'bieres.note2': 'Cristal et céréale, amertume franche. La précision tchèque, prise en estate.',
-          'bieres.note3': 'Sorachi Ace : citron vert, herbes coupées. Tension fraîche, jamais bruyante.',
-          'bieres.note4': "Caramel, écorce, foin sec. La couleur d'un soir d'automne sur l'Ourthe.",
+          'bieres.teaser': 'La gamme sera révélée prochainement.',
           'bieres.transition': 'Le domaine continue après le brassage.',
           'visite.chapter': '— Chapitre IV —',
           'visite.kicker': 'Sur réservation',
@@ -2136,25 +2063,10 @@
           'footer.fine': 'Bière à consommer avec modération.',
           'form.back': "Retour à l'accueil",
           'form.kicker': 'Sur réservation',
-          'form.heading': 'Demande de réservation',
-          'form.lead': "Le domaine n'ouvre ses portes que sur réservation. Indiquez vos préférences ci-dessous ; nous reviendrons vers vous sous 48 heures.",
-          'form.label.name': 'Nom complet *',
-          'form.label.email': 'Adresse e-mail *',
-          'form.label.date': 'Date préférée *',
-          'form.label.date_alt': 'Date alternative',
-          'form.label.party': "Nombre d'invités *",
-          'form.label.phone': 'Téléphone *',
-          'form.label.visit_type': 'Type de visite',
-          'form.label.notes': 'Demandes particulières (optionnel)',
-          'form.visit.degustation': 'Dégustation',
-          'form.visit.jardins': 'Visite des jardins',
-          'form.visit.brasserie': 'Visite de la brasserie avec dégustation',
-          'form.visit.evenement': 'Événement privé',
-          'form.hint.party_split': 'Plus de 30 invités : votre groupe sera réparti sur deux visites parallèles.',
-          'form.hint.multiselect': 'Plusieurs choix possibles',
-          'form.submit': 'Envoyer la demande',
-          'form.submitting': 'Envoi en cours…',
-          'form.error': "Une erreur est survenue. Veuillez réessayer ou nous écrire à brasseurduchateau@gmail.com.",
+          'form.heading': 'Visites en préparation',
+          'form.lead': 'Les visites privées du domaine seront annoncées prochainement. Les demandes se font encore directement, en toute discrétion.',
+          'form.teaser.body': "Le calendrier n'est pas encore ouvert au public. Pour une demande privée ou professionnelle, écrivez-nous à l'adresse du domaine.",
+          'form.teaser.contact': 'Écrire au domaine',
           'form.success.kicker': 'Merci',
           'form.success.heading': 'Demande reçue',
           'form.success.body': "Nous avons bien reçu votre demande. Vous recevrez une réponse de notre part sous 48 heures, à l'adresse courriel que vous nous avez communiquée.",
@@ -2186,10 +2098,7 @@
           'bieres.kicker': 'Vier. In het kasteel gebrouwen.',
           'bieres.heading': 'De Bieren',
           'bieres.lead': 'Elk in zijn eigen tempo. Kleine reeksen, traditionele gisting.',
-          'bieres.note1': 'Vers brood, bleke honing, droge afdronk. Het licht van een late middag.',
-          'bieres.note2': 'Kristal en graan, eerlijke bitterheid. Tsjechische precisie, op het domein gebrouwen.',
-          'bieres.note3': 'Sorachi Ace: limoen, vers gemaaide kruiden. Frisse spanning, nooit luidruchtig.',
-          'bieres.note4': 'Karamel, schors, droog hooi. De kleur van een herfstavond aan de Ourthe.',
+          'bieres.teaser': 'De reeks wordt binnenkort onthuld.',
           'bieres.transition': 'Het domein gaat door, ook na het brouwen.',
           'visite.chapter': '— Hoofdstuk IV —',
           'visite.kicker': 'Op afspraak',
@@ -2215,25 +2124,10 @@
           'footer.fine': 'Bier met mate te consumeren.',
           'form.back': 'Terug naar de homepage',
           'form.kicker': 'Op afspraak',
-          'form.heading': 'Reservatie-aanvraag',
-          'form.lead': 'Het domein opent zijn deuren enkel op afspraak. Geef hieronder uw voorkeuren door; wij nemen binnen 48 uur contact met u op.',
-          'form.label.name': 'Volledige naam *',
-          'form.label.email': 'E-mailadres *',
-          'form.label.date': 'Voorkeursdatum *',
-          'form.label.date_alt': 'Alternatieve datum',
-          'form.label.party': 'Aantal gasten *',
-          'form.label.phone': 'Telefoon *',
-          'form.label.visit_type': 'Type bezoek',
-          'form.label.notes': 'Bijzondere wensen (optioneel)',
-          'form.visit.degustation': 'Proeverij',
-          'form.visit.jardins': 'Bezoek aan de tuinen',
-          'form.visit.brasserie': 'Brouwerijbezoek met proeverij',
-          'form.visit.evenement': 'Privé-evenement',
-          'form.hint.party_split': 'Meer dan 30 gasten: uw groep wordt over twee parallelle bezoeken verdeeld.',
-          'form.hint.multiselect': 'Meerdere keuzes mogelijk',
-          'form.submit': 'Aanvraag versturen',
-          'form.submitting': 'Bezig met versturen…',
-          'form.error': 'Er is een fout opgetreden. Probeer het opnieuw of schrijf ons op brasseurduchateau@gmail.com.',
+          'form.heading': 'Bezoeken in voorbereiding',
+          'form.lead': 'De privébezoeken aan het domein worden binnenkort aangekondigd. Aanvragen gebeuren voorlopig rechtstreeks, in alle discretie.',
+          'form.teaser.body': 'De kalender is nog niet publiek geopend. Voor een private of professionele aanvraag kunt u ons schrijven op het adres van het domein.',
+          'form.teaser.contact': 'Schrijf naar het domein',
           'form.success.kicker': 'Dank u',
           'form.success.heading': 'Aanvraag ontvangen',
           'form.success.body': 'We hebben uw aanvraag goed ontvangen. U ontvangt binnen 48 uur een antwoord van ons op het door u opgegeven e-mailadres.',
@@ -2265,10 +2159,7 @@
           'bieres.kicker': 'Four. Brewed at the château.',
           'bieres.heading': 'The Beers',
           'bieres.lead': 'Each in its own tempo. Small batches, traditional fermentation.',
-          'bieres.note1': 'Fresh bread, pale honey, dry finish. The light of a late afternoon.',
-          'bieres.note2': 'Crystal and grain, honest bitterness. Czech precision, taken on estate.',
-          'bieres.note3': 'Sorachi Ace: lime zest, cut herbs. Fresh tension — never loud.',
-          'bieres.note4': 'Caramel, bark, dry hay. The colour of an autumn evening on the Ourthe.',
+          'bieres.teaser': 'The range will be revealed soon.',
           'bieres.transition': 'The estate continues, beyond the brew.',
           'visite.chapter': '— Chapter IV —',
           'visite.kicker': 'By appointment',
@@ -2294,25 +2185,10 @@
           'footer.fine': 'Please drink responsibly.',
           'form.back': 'Back to home',
           'form.kicker': 'By appointment',
-          'form.heading': 'Reservation request',
-          'form.lead': "The estate opens its doors by appointment only. Share your preferences below and we'll respond within 48 hours.",
-          'form.label.name': 'Full name *',
-          'form.label.email': 'Email address *',
-          'form.label.date': 'Preferred date *',
-          'form.label.date_alt': 'Alternative date',
-          'form.label.party': 'Number of guests *',
-          'form.label.phone': 'Phone *',
-          'form.label.visit_type': 'Type of visit',
-          'form.label.notes': 'Special requests (optional)',
-          'form.visit.degustation': 'Tasting',
-          'form.visit.jardins': 'Garden visit',
-          'form.visit.brasserie': 'Brewery visit with tasting',
-          'form.visit.evenement': 'Private event',
-          'form.hint.party_split': 'Over 30 guests: your party will be split into two parallel tours.',
-          'form.hint.multiselect': 'Multiple selections possible',
-          'form.submit': 'Send request',
-          'form.submitting': 'Sending…',
-          'form.error': 'Something went wrong. Please try again, or write to us at brasseurduchateau@gmail.com.',
+          'form.heading': 'Visits in preparation',
+          'form.lead': 'Private visits to the estate will be announced soon. Requests are still handled directly, with discretion.',
+          'form.teaser.body': 'The calendar is not yet open to the public. For a private or professional request, write to us at the estate address.',
+          'form.teaser.contact': 'Write to the estate',
           'form.success.kicker': 'Thank you',
           'form.success.heading': 'Request received',
           'form.success.body': "We've received your request. You'll hear back from us within 48 hours at the email address you provided.",
@@ -2344,10 +2220,7 @@
           'bieres.kicker': 'Vier. Im Schloss gebraut.',
           'bieres.heading': 'Die Biere',
           'bieres.lead': 'Jedes in seinem eigenen Rhythmus. Kleine Chargen, traditionelle Gärung.',
-          'bieres.note1': 'Frisches Brot, heller Honig, trockenes Finale. Das Licht eines späten Nachmittags.',
-          'bieres.note2': 'Kristall und Korn, ehrliche Bittere. Böhmische Präzision, auf der Domäne gebraut.',
-          'bieres.note3': 'Sorachi Ace: Limette, frisch geschnittene Kräuter. Frische Spannung, niemals laut.',
-          'bieres.note4': 'Karamell, Rinde, trockenes Heu. Die Farbe eines Herbstabends an der Ourthe.',
+          'bieres.teaser': 'Die Reihe wird bald vorgestellt.',
           'bieres.transition': 'Die Domäne reicht über den Sud hinaus.',
           'visite.chapter': '— Kapitel IV —',
           'visite.kicker': 'Nur nach Vereinbarung',
@@ -2373,25 +2246,10 @@
           'footer.fine': 'Bier in Maßen genießen.',
           'form.back': 'Zurück zur Startseite',
           'form.kicker': 'Nur nach Vereinbarung',
-          'form.heading': 'Reservierungsanfrage',
-          'form.lead': 'Die Domäne öffnet ihre Tore nur nach Vereinbarung. Teilen Sie uns unten Ihre Wünsche mit; wir melden uns innerhalb von 48 Stunden bei Ihnen.',
-          'form.label.name': 'Vollständiger Name *',
-          'form.label.email': 'E-Mail-Adresse *',
-          'form.label.date': 'Wunschdatum *',
-          'form.label.date_alt': 'Alternatives Datum',
-          'form.label.party': 'Anzahl der Gäste *',
-          'form.label.phone': 'Telefon *',
-          'form.label.visit_type': 'Art des Besuchs',
-          'form.label.notes': 'Besondere Wünsche (optional)',
-          'form.visit.degustation': 'Verkostung',
-          'form.visit.jardins': 'Besuch der Gärten',
-          'form.visit.brasserie': 'Brauereibesuch mit Verkostung',
-          'form.visit.evenement': 'Private Veranstaltung',
-          'form.hint.party_split': 'Über 30 Gäste: Ihre Gruppe wird auf zwei parallele Besuche aufgeteilt.',
-          'form.hint.multiselect': 'Mehrere Auswahl möglich',
-          'form.submit': 'Anfrage senden',
-          'form.submitting': 'Wird gesendet…',
-          'form.error': 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder schreiben Sie uns an brasseurduchateau@gmail.com.',
+          'form.heading': 'Besuche in Vorbereitung',
+          'form.lead': 'Private Besuche der Domäne werden bald angekündigt. Anfragen werden vorerst direkt und diskret bearbeitet.',
+          'form.teaser.body': 'Der Kalender ist noch nicht öffentlich geöffnet. Für eine private oder berufliche Anfrage schreiben Sie uns an die Adresse der Domäne.',
+          'form.teaser.contact': 'An die Domäne schreiben',
           'form.success.kicker': 'Danke',
           'form.success.heading': 'Anfrage erhalten',
           'form.success.body': 'Wir haben Ihre Anfrage erhalten. Sie erhalten innerhalb von 48 Stunden eine Antwort von uns an die von Ihnen angegebene E-Mail-Adresse.',

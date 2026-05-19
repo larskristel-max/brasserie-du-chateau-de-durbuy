@@ -24,6 +24,9 @@ jobs:
         run: |
           mkdir -p dist/src/assets
           cp index.html dist/
+          cp -R journal dist/ 2>/dev/null || true
+          cp -R admin dist/ 2>/dev/null || true
+          cp -R content dist/ 2>/dev/null || true
           # Copy only assets actually referenced by the site (favicons + WebP + JPG + crest)
           cp src/assets/favicon.ico             dist/src/assets/ 2>/dev/null || true
           cp src/assets/favicon-16.png          dist/src/assets/ 2>/dev/null || true

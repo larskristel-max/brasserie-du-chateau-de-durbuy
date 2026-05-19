@@ -156,3 +156,14 @@ Last updated: 2026-05-19
 - Consider renaming the custom-domain Worker from `brasserie-under-construction` to a production name such as `brasserie-site-proxy`.
 - Consider moving from GitHub Pages proxying to Cloudflare Pages later if the project needs tighter Cloudflare integration.
 - Continue reviewing public copy for any premature product, beer-name, ABV, label, opening-hours, or reservation claims.
+
+## SEO Pass Completed - 2026-05-19
+
+- Added homepage canonical metadata for `https://brasseriechateaudurbuy.be/`.
+- Updated Open Graph and Twitter metadata to use permanent-domain URLs.
+- Cleaned homepage JSON-LD to use factual business/address/contact/social data only.
+- Added `robots.txt` with `/admin/` disallowed and sitemap discovery.
+- Added `sitemap.xml` for the homepage and journal index.
+- Updated the GitHub Pages deploy workflow to copy `robots.txt` and `sitemap.xml`.
+- Added `docs/seo.md` with metadata decisions, search themes, content principles, and local SEO tasks.
+- Kept `index.html` and `redesign-template.html` in sync after metadata changes.

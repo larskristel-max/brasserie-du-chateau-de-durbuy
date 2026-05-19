@@ -131,6 +131,27 @@ Last updated: 2026-05-19
 - Consider adding a small admin status panel showing whether the GitHub write API is connected.
 - Rotate the temporary/simple admin password to a stronger password before broader use.
 - Confirm Cloudflare Web Analytics is enabled and document where visitor stats are read.
+- Add basic SEO infrastructure:
+  - `robots.txt`,
+  - `sitemap.xml`,
+  - canonical URL metadata for the permanent domain,
+  - Open Graph/Twitter metadata using permanent-domain assets,
+  - clean structured data for the business/address/contact.
+- Do a local SEO pass:
+  - create or claim Google Business Profile,
+  - keep appointment-only status accurate,
+  - keep naming consistent across site, Instagram, Google, and domain.
+- Build a restrained content SEO plan around defensible themes:
+  - Brasserie du Château de Durbuy,
+  - Durbuy,
+  - Château de Durbuy,
+  - brewing heritage since the 16th century,
+  - former stables of the château,
+  - journal articles on estate and brewing notes.
+- Add multilingual SEO only after translation review:
+  - review FR/NL/EN/DE homepage translations,
+  - decide journal translation policy,
+  - add `hreflang` only for pages that actually have translated equivalents.
 - Review mobile layouts on the permanent domain after real-world browser caching settles.
 - Consider renaming the custom-domain Worker from `brasserie-under-construction` to a production name such as `brasserie-site-proxy`.
 - Consider moving from GitHub Pages proxying to Cloudflare Pages later if the project needs tighter Cloudflare integration.

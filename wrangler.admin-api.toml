@@ -1,0 +1,8 @@
+name = "brasserie-admin-api"
+main = "workers/admin-api.js"
+compatibility_date = "2026-05-19"
+workers_dev = true
+
+[vars]
+ADMIN_EMAIL = "brasseurduchateau@gmail.com"
+ALLOWED_ORIGINS = "http://127.0.0.1:4188,http://localhost:4188,https://larskristel-max.github.io,https://brasseriechateaudurbuy.be,https://www.brasseriechateaudurbuy.be"

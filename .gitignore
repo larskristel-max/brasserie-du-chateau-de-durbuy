@@ -2,4 +2,6 @@ node_modules/
 dist/
 .env
 .env.*
+.dev.vars
+.dev.vars.*
 .DS_Store

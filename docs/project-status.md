@@ -82,6 +82,7 @@ Last updated: 2026-05-20
 - Added a restrained `Où trouver nos bières` section with confirmed local sales points only:
   - Établissements Dispas
   - L'Épicerie de Durbuy
+  - Confiturerie Saint-Amour
 - Added an email-based order request teaser for private/professional requests. This is not ecommerce: no prices, payment, stock guarantee, or backend order handling.
 - Kept `index.html` and `redesign-template.html` identical after edits.
 
@@ -123,7 +124,7 @@ Last updated: 2026-05-20
 ## To Do
 
 - Use `docs/website-thread-handoff-boss-requests-2026-05-20.md` as the current handoff for Jean-Michel's latest website requests: points de vente first, open brasserie later, no public ecommerce/prices yet.
-- Confirm whether Saint-Amour and the librairie should be added later to `Où trouver nos bières`, including exact public names and stocking locations.
+- Confirm whether the librairie should be added later to `Où trouver nos bières`, including exact public name and stocking location.
 - Review all homepage translations in NL/EN/DE, especially tone and heritage phrasing.
 - Decide and document the journal translation policy.
 - Add manual translation support to journal content if multilingual journal publishing is required.

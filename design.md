@@ -157,8 +157,9 @@ If a section feels designed, you've added too much. Remove the most assertive el
 
 - Two-column grid, min-height 96vh — same dimensions as Le Lieu, but **deliberately opposite reading order**.
 - **Left column: full-bleed domaine/château image** with the right-edge cream fade where it meets the copy panel.
-- **Right column: copy** + visit grid (2 columns) + private note + reservation CTA.
-- **Reading order: image first, then text** — opposite of Le Lieu. This is intentional: at the end of the page the eye is winding down, and leading with the gardens photograph creates a slower, more contemplative entry into the final section. The functional content (what to book, what's private, what's offered) sits after the photograph rather than competing with it.
+- **Right column: copy** + brewery-visit grid + private note + reservation CTA.
+- **Reading order: image first, then text** — opposite of Le Lieu. This is intentional: at the end of the page the eye is winding down, and leading with the domaine photograph creates a slower, more contemplative entry into the final section. The functional content sits after the photograph rather than competing with it.
+- Current visit offer is brewery visits only. Do not mention garden access, private events, weddings, dinners, or take-home beers unless the business explicitly re-approves those offers.
 - The asymmetry between Le Lieu (text→image, opening) and La Visite (image→text, closing) is **the page's editorial rhythm**: the page opens reading-led and closes image-led. Do not unify them.
 - Mobile: image first, then text (stacks naturally in HTML order).
 
@@ -432,7 +433,7 @@ Three is not the magic number of elements. One is, when one is right.
 
 ```html
 <title>Brasserie du Château de Durbuy</title>
-<meta name="description" content="Domaine du Château de Durbuy. Brasserie de fermentation traditionnelle, en petites séries. Jardins et dégustations sur réservation. Rue du Comte Théodule d'Ursel, 2 — 6940 Durbuy, Belgique." />
+<meta name="description" content="Domaine du Château de Durbuy. Brasserie de fermentation traditionnelle, en petites séries. Visites de la brasserie sur réservation. Rue du Comte Théodule d'Ursel, 2 — 6940 Durbuy, Belgique." />
 <meta property="og:title" content="Brasserie du Château de Durbuy" />
 <meta property="og:description" content="Le brassage a son rythme, entre tradition et précision. Sans bruit." />
 <meta property="og:type" content="website" />

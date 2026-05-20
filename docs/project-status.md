@@ -1,6 +1,6 @@
 # Brasserie du Chateau de Durbuy - Project Status
 
-Last updated: 2026-05-19
+Last updated: 2026-05-20
 
 ## Current Live State
 
@@ -79,6 +79,10 @@ Last updated: 2026-05-19
 - Added teaser copy for the beer range in FR/NL/EN/DE.
 - Converted the reservation modal into a teaser rather than a functioning reservation form.
 - Removed public Gmail references from homepage metadata/footer and replaced public contact with `info@brasseriechateaudurbuy.be`.
+- Added a restrained `Où trouver nos bières` section with confirmed local sales points only:
+  - Établissements Dispas
+  - L'Épicerie de Durbuy
+- Added an email-based order request teaser for private/professional requests. This is not ecommerce: no prices, payment, stock guarantee, or backend order handling.
 - Kept `index.html` and `redesign-template.html` identical after edits.
 
 ## Journal And Admin
@@ -118,6 +122,8 @@ Last updated: 2026-05-19
 
 ## To Do
 
+- Use `docs/website-thread-handoff-boss-requests-2026-05-20.md` as the current handoff for Jean-Michel's latest website requests: points de vente first, open brasserie later, no public ecommerce/prices yet.
+- Confirm whether Saint-Amour and the librairie should be added later to `Où trouver nos bières`, including exact public names and stocking locations.
 - Review all homepage translations in NL/EN/DE, especially tone and heritage phrasing.
 - Decide and document the journal translation policy.
 - Add manual translation support to journal content if multilingual journal publishing is required.

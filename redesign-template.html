@@ -928,6 +928,100 @@
       }
     }
 
+    /* ------------------------ Points de vente ------------------------ */
+
+    .points-vente {
+      padding: var(--section-y-tight) var(--gutter);
+      background: var(--cream-soft);
+    }
+    .points-vente-inner {
+      width: min(100%, 1080px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: clamp(3rem, 7vw, 6rem);
+      align-items: start;
+    }
+    .points-vente-copy h2 {
+      font-size: var(--display-md);
+      line-height: 1.08;
+      margin-bottom: 1.2rem;
+    }
+    .points-vente-copy .lead,
+    .order-request-copy {
+      font-size: var(--body);
+      line-height: 1.65;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+    .sales-points {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+    .sales-point {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 1.4rem;
+      padding: 1.45rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .sales-point h3 {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin: 0;
+      color: var(--ink);
+    }
+    .sales-point address {
+      margin: 0;
+      font-style: normal;
+      font-size: 0.96rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+    .order-request {
+      margin-top: clamp(2rem, 4vw, 3rem);
+      padding-top: 1.6rem;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 1.2rem;
+    }
+    .order-request-panel {
+      margin-top: 1.4rem;
+      padding-top: 1.6rem;
+      border-top: 1px solid var(--line);
+    }
+    .order-request-panel[hidden] { display: none; }
+    .form-row select {
+      width: 100%;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      padding: 0.55rem 0;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      color: var(--ink);
+      border-radius: 0;
+    }
+    .form-row select:focus {
+      outline: none;
+      border-bottom-color: var(--copper);
+    }
+
+    @media (max-width: 880px) {
+      .points-vente-inner {
+        grid-template-columns: 1fr;
+        gap: 2.6rem;
+      }
+      .sales-point {
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
+      }
+    }
+
     /* ------------------------ La Visite ------------------------ */
 
     .visite {
@@ -1782,6 +1876,78 @@
       <p class="transition" data-i18n="bieres.transition">Le domaine continue après le brassage.</p>
     </section>
 
+    <section id="points-de-vente" class="points-vente" data-reveal>
+      <div class="points-vente-inner">
+        <div class="points-vente-copy">
+          <p class="chapter" data-i18n="points.chapter">— Chapitre IV —</p>
+          <p class="kicker" data-i18n="points.kicker">Selon arrivage</p>
+          <h2 data-i18n="points.heading">Où trouver nos bières</h2>
+          <p class="lead" data-i18n="points.lead">Une sélection de nos bières est disponible chez plusieurs partenaires locaux, selon arrivage.</p>
+        </div>
+
+        <div class="points-vente-list">
+          <div class="sales-points" aria-label="Points de vente">
+            <article class="sales-point">
+              <h3>Établissements Dispas</h3>
+              <address>Route de Bomal 42/A<br>6940 Barvaux-sur-Ourthe</address>
+            </article>
+            <article class="sales-point">
+              <h3>L’Épicerie de Durbuy</h3>
+              <address>Rue du Comte Théodule d’Ursel 39<br>6940 Durbuy</address>
+            </article>
+          </div>
+
+          <div class="order-request">
+            <p class="order-request-copy" data-i18n="points.request.copy">Pour une demande privée ou professionnelle, écrivez-nous. Les disponibilités sont confirmées au cas par cas.</p>
+            <button type="button" class="text-cta" data-open-order aria-controls="orderRequestPanel" aria-expanded="false">
+              <span data-i18n="points.request.cta">Demande de commande</span> <span aria-hidden="true">→</span>
+            </button>
+
+            <div class="order-request-panel" id="orderRequestPanel" hidden>
+              <form class="reservation-form" id="orderRequestForm">
+                <div class="form-row">
+                  <label for="orderType" data-i18n="order.type.label">Type de demande</label>
+                  <select id="orderType" name="type">
+                    <option value="Particulier" data-i18n="order.type.private">Particulier</option>
+                    <option value="Professionnel" data-i18n="order.type.professional">Professionnel</option>
+                  </select>
+                </div>
+                <div class="form-row-split">
+                  <div class="form-row">
+                    <label for="orderName" data-i18n="order.name">Nom</label>
+                    <input id="orderName" name="name" autocomplete="name" required>
+                  </div>
+                  <div class="form-row">
+                    <label for="orderEmail" data-i18n="order.email">Adresse e-mail</label>
+                    <input id="orderEmail" name="email" type="email" autocomplete="email" required>
+                  </div>
+                </div>
+                <div class="form-row-split">
+                  <div class="form-row">
+                    <label for="orderPhone" data-i18n="order.phone">Téléphone</label>
+                    <input id="orderPhone" name="phone" type="tel" autocomplete="tel">
+                  </div>
+                  <div class="form-row" id="orderVatRow" hidden>
+                    <label for="orderVat" data-i18n="order.vat">Numéro de TVA</label>
+                    <input id="orderVat" name="vat" autocomplete="organization">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label for="orderMessage" data-i18n="order.message">Quantité souhaitée / message</label>
+                  <textarea id="orderMessage" name="message" required></textarea>
+                  <p class="form-hint" data-i18n="order.hint">Aucun prix ni disponibilité ne sont confirmés automatiquement.</p>
+                </div>
+                <div class="form-actions">
+                  <button class="form-submit" type="submit" data-i18n="order.submit">Préparer l'e-mail</button>
+                  <p class="form-status" id="orderRequestStatus" aria-live="polite"></p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="visite" class="visite" data-reveal>
       <figure class="visite-image">
         <picture>
@@ -1800,7 +1966,7 @@
         </picture>
       </figure>
       <div class="visite-copy">
-        <p class="chapter" data-i18n="visite.chapter">— Chapitre IV —</p>
+        <p class="chapter" data-i18n="visite.chapter">— Chapitre V —</p>
         <p class="kicker" data-i18n="visite.kicker">Sur réservation</p>
         <h2>
           <span data-i18n="visite.heading1">La Brasserie</span>
@@ -2018,6 +2184,77 @@
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       });
 
+      // ------------------------ Order request email panel ------------------------
+      const orderPanel = document.getElementById('orderRequestPanel');
+      const orderForm = document.getElementById('orderRequestForm');
+      const orderType = document.getElementById('orderType');
+      const orderVatRow = document.getElementById('orderVatRow');
+      const orderStatus = document.getElementById('orderRequestStatus');
+
+      function updateOrderVat() {
+        const isProfessional = orderType && orderType.value === 'Professionnel';
+        if (orderVatRow) orderVatRow.hidden = !isProfessional;
+      }
+
+      document.addEventListener('click', function (e) {
+        const trigger = e.target.closest('[data-open-order]');
+        if (!trigger || !orderPanel) return;
+        e.preventDefault();
+        orderPanel.hidden = false;
+        trigger.setAttribute('aria-expanded', 'true');
+        setTimeout(function () {
+          const firstField = orderPanel.querySelector('select, input, textarea, button');
+          if (firstField) firstField.focus();
+        }, 80);
+      });
+
+      if (orderType) orderType.addEventListener('change', updateOrderVat);
+      updateOrderVat();
+
+      if (orderForm) {
+        orderForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!orderForm.checkValidity()) {
+            orderForm.reportValidity();
+            if (orderStatus) {
+              const dict = translations[document.documentElement.lang] || translations.fr;
+              orderStatus.dataset.state = 'error';
+              orderStatus.textContent = dict['order.error'];
+            }
+            return;
+          }
+
+          const dict = translations[document.documentElement.lang] || translations.fr;
+          const selectedType = orderType.options[orderType.selectedIndex].textContent.trim();
+          const name = document.getElementById('orderName').value.trim();
+          const email = document.getElementById('orderEmail').value.trim();
+          const phone = document.getElementById('orderPhone').value.trim();
+          const vat = document.getElementById('orderVat').value.trim();
+          const message = document.getElementById('orderMessage').value.trim();
+          const lines = [
+            'Type de demande: ' + selectedType,
+            'Nom: ' + name,
+            'Adresse e-mail: ' + email,
+            phone ? 'Téléphone: ' + phone : '',
+            vat ? 'Numéro de TVA: ' + vat : '',
+            '',
+            'Quantité souhaitée / message:',
+            message,
+            '',
+            'Note: demande sans confirmation automatique de prix ou de disponibilité.'
+          ].filter(Boolean);
+
+          window.location.href = 'mailto:info@brasseriechateaudurbuy.be'
+            + '?subject=' + encodeURIComponent('Demande de commande - Brasserie du Château de Durbuy')
+            + '&body=' + encodeURIComponent(lines.join('\n'));
+
+          if (orderStatus) {
+            orderStatus.removeAttribute('data-state');
+            orderStatus.textContent = dict['order.status'];
+          }
+        });
+      }
+
       // ------------------------ Language switcher ------------------------
       // Translations are drafts. Native review required before launch.
       // See agent.md §14 and docs/heritage/research-findings.md.
@@ -2050,7 +2287,25 @@
           'bieres.lead': 'Chacune dans son propre tempo. Petites séries, fermentation traditionnelle.',
           'bieres.teaser': 'La gamme sera révélée prochainement.',
           'bieres.transition': 'Le domaine continue après le brassage.',
-          'visite.chapter': '— Chapitre IV —',
+          'points.chapter': '— Chapitre IV —',
+          'points.kicker': 'Selon arrivage',
+          'points.heading': 'Où trouver nos bières',
+          'points.lead': 'Une sélection de nos bières est disponible chez plusieurs partenaires locaux, selon arrivage.',
+          'points.request.copy': 'Pour une demande privée ou professionnelle, écrivez-nous. Les disponibilités sont confirmées au cas par cas.',
+          'points.request.cta': 'Demande de commande',
+          'order.type.label': 'Type de demande',
+          'order.type.private': 'Particulier',
+          'order.type.professional': 'Professionnel',
+          'order.name': 'Nom',
+          'order.email': 'Adresse e-mail',
+          'order.phone': 'Téléphone',
+          'order.vat': 'Numéro de TVA',
+          'order.message': 'Quantité souhaitée / message',
+          'order.hint': 'Aucun prix ni disponibilité ne sont confirmés automatiquement.',
+          'order.submit': "Préparer l'e-mail",
+          'order.status': "Votre e-mail est prêt dans votre messagerie.",
+          'order.error': 'Veuillez compléter les champs requis.',
+          'visite.chapter': '— Chapitre V —',
           'visite.kicker': 'Sur réservation',
           'visite.heading1': 'La Brasserie',
           'visite.lead': 'La brasserie se visite uniquement sur réservation, à partir de 10 personnes.',
@@ -2104,7 +2359,25 @@
           'bieres.lead': 'Elk in zijn eigen tempo. Kleine reeksen, traditionele gisting.',
           'bieres.teaser': 'De reeks wordt binnenkort onthuld.',
           'bieres.transition': 'Het domein gaat door, ook na het brouwen.',
-          'visite.chapter': '— Hoofdstuk IV —',
+          'points.chapter': '— Hoofdstuk IV —',
+          'points.kicker': 'Volgens beschikbaarheid',
+          'points.heading': 'Waar vindt u onze bieren',
+          'points.lead': 'Een selectie van onze bieren is verkrijgbaar bij enkele lokale partners, volgens beschikbaarheid.',
+          'points.request.copy': 'Voor een private of professionele aanvraag kunt u ons schrijven. Beschikbaarheid wordt per geval bevestigd.',
+          'points.request.cta': 'Aanvraag tot bestelling',
+          'order.type.label': 'Type aanvraag',
+          'order.type.private': 'Particulier',
+          'order.type.professional': 'Professioneel',
+          'order.name': 'Naam',
+          'order.email': 'E-mailadres',
+          'order.phone': 'Telefoon',
+          'order.vat': 'Btw-nummer',
+          'order.message': 'Gewenste hoeveelheid / bericht',
+          'order.hint': 'Prijzen en beschikbaarheid worden niet automatisch bevestigd.',
+          'order.submit': 'E-mail voorbereiden',
+          'order.status': 'Uw e-mail staat klaar in uw mailprogramma.',
+          'order.error': 'Vul de verplichte velden in.',
+          'visite.chapter': '— Hoofdstuk V —',
           'visite.kicker': 'Op afspraak',
           'visite.heading1': 'De Brouwerij',
           'visite.lead': 'De brouwerij kan enkel op afspraak bezocht worden, vanaf 10 personen.',
@@ -2158,7 +2431,25 @@
           'bieres.lead': 'Each in its own tempo. Small batches, traditional fermentation.',
           'bieres.teaser': 'The range will be revealed soon.',
           'bieres.transition': 'The estate continues, beyond the brew.',
-          'visite.chapter': '— Chapter IV —',
+          'points.chapter': '— Chapter IV —',
+          'points.kicker': 'Subject to arrival',
+          'points.heading': 'Where to find our beers',
+          'points.lead': 'A selection of our beers is available through several local partners, subject to arrival.',
+          'points.request.copy': 'For a private or professional request, write to us. Availability is confirmed case by case.',
+          'points.request.cta': 'Order request',
+          'order.type.label': 'Request type',
+          'order.type.private': 'Private',
+          'order.type.professional': 'Professional',
+          'order.name': 'Name',
+          'order.email': 'Email address',
+          'order.phone': 'Phone',
+          'order.vat': 'VAT number',
+          'order.message': 'Requested quantity / message',
+          'order.hint': 'No price or availability is confirmed automatically.',
+          'order.submit': 'Prepare email',
+          'order.status': 'Your email is ready in your mail application.',
+          'order.error': 'Please complete the required fields.',
+          'visite.chapter': '— Chapter V —',
           'visite.kicker': 'By appointment',
           'visite.heading1': 'The Brewery',
           'visite.lead': 'The brewery can be visited by appointment only, from 10 people.',
@@ -2212,7 +2503,25 @@
           'bieres.lead': 'Jedes in seinem eigenen Rhythmus. Kleine Chargen, traditionelle Gärung.',
           'bieres.teaser': 'Die Reihe wird bald vorgestellt.',
           'bieres.transition': 'Die Domäne reicht über den Sud hinaus.',
-          'visite.chapter': '— Kapitel IV —',
+          'points.chapter': '— Kapitel IV —',
+          'points.kicker': 'Je nach Eingang',
+          'points.heading': 'Wo Sie unsere Biere finden',
+          'points.lead': 'Eine Auswahl unserer Biere ist bei mehreren lokalen Partnern erhältlich, je nach Eingang.',
+          'points.request.copy': 'Für eine private oder berufliche Anfrage schreiben Sie uns. Die Verfügbarkeit wird im Einzelfall bestätigt.',
+          'points.request.cta': 'Bestellanfrage',
+          'order.type.label': 'Art der Anfrage',
+          'order.type.private': 'Privat',
+          'order.type.professional': 'Beruflich',
+          'order.name': 'Name',
+          'order.email': 'E-Mail-Adresse',
+          'order.phone': 'Telefon',
+          'order.vat': 'USt-IdNr.',
+          'order.message': 'Gewünschte Menge / Nachricht',
+          'order.hint': 'Preise und Verfügbarkeit werden nicht automatisch bestätigt.',
+          'order.submit': 'E-Mail vorbereiten',
+          'order.status': 'Ihre E-Mail ist in Ihrem Mailprogramm vorbereitet.',
+          'order.error': 'Bitte füllen Sie die Pflichtfelder aus.',
+          'visite.chapter': '— Kapitel V —',
           'visite.kicker': 'Nur nach Vereinbarung',
           'visite.heading1': 'Die Brauerei',
           'visite.lead': 'Die Brauerei kann nur nach Vereinbarung ab 10 Personen besucht werden.',

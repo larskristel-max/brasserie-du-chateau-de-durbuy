@@ -6,6 +6,4 @@ workers_dev = true
 
 [vars]
 ADMIN_EMAIL = "brasseurduchateau@gmail.com"
-ORDER_TO_EMAIL = "info@brasseriechateaudurbuy.be"
-ORDER_FROM_EMAIL = "Brasserie du Château de Durbuy <send@send.brasseriechateaudurbuy.be>"
 ALLOWED_ORIGINS = "http://127.0.0.1:4188,http://localhost:4188,https://larskristel-max.github.io,https://brasseriechateaudurbuy.be,https://www.brasseriechateaudurbuy.be"

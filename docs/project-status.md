@@ -43,13 +43,16 @@ Last updated: 2026-05-20
 - Admin API Worker:
   - Script: `brasserie-admin-api`
   - URL: `https://brasserie-admin-api.brasseurduchateau.workers.dev`
-  - Purpose: handle journal admin login and GitHub writes without exposing the GitHub token in the browser.
+  - Purpose: handle journal admin login, GitHub writes, and public order-request email forwarding without exposing secrets in the browser.
   - Secrets configured in Cloudflare:
     - `ADMIN_PASSWORD`
     - `ADMIN_SESSION_SECRET`
     - `GITHUB_TOKEN`
+    - `RESEND_API_KEY` is required before direct website order-request emails can be sent.
   - Public config:
     - `ADMIN_EMAIL = brasseurduchateau@gmail.com`
+    - `ORDER_TO_EMAIL = info@brasseriechateaudurbuy.be`
+    - `ORDER_FROM_EMAIL = Brasserie du Château de Durbuy <send@send.brasseriechateaudurbuy.be>`
 
 ## Domain And Email
 
@@ -84,7 +87,7 @@ Last updated: 2026-05-20
   - L'Épicerie de Durbuy
   - Confiturerie Saint-Amour
   - La Librairie
-- Added an email-based order request teaser for private/professional requests. This is not ecommerce: no prices, payment, stock guarantee, or backend order handling.
+- Reworked the order request form to submit directly to the Cloudflare Worker endpoint `/api/order-request`, with `mailto:` fallback if the backend is unavailable. This is not ecommerce: no prices, payment, stock guarantee, or backend order handling.
 - Added the points-de-vente section to desktop and mobile navigation.
 - Tightened homepage navigation labels after the first points-de-vente nav label wrapped poorly.
 - Kept `index.html` and `redesign-template.html` identical after edits.
@@ -125,6 +128,10 @@ Last updated: 2026-05-20
   - the Cloudflare Worker remaining deployed,
   - `GITHUB_TOKEN` staying valid,
   - the GitHub token retaining `Contents: Read and write` on the repo.
+- Direct website order-request sending depends on:
+  - the Cloudflare Worker remaining deployed,
+  - `RESEND_API_KEY` staying valid,
+  - `ORDER_FROM_EMAIL` remaining verified for sending.
 - The admin password currently exists as a Cloudflare secret. Rotate it if it has been shared too broadly.
 - The admin API uses a simple email/password login. For stronger protection, consider Cloudflare Access.
 - Web analytics/RUM status still needs to be reviewed in Cloudflare.

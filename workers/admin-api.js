@@ -4,6 +4,8 @@ const BRANCH = 'main';
 const ARTICLES_PATH = 'content/journal/articles.json';
 const IMAGE_ASSET_DIR = 'src/assets/journal/';
 const SESSION_TTL_SECONDS = 8 * 60 * 60;
+const RESEND_EMAILS_URL = 'https://api.resend.com/emails';
+const MAX_ORDER_FIELD_LENGTH = 2000;
 
 const DEFAULT_ALLOWED_ORIGINS = [
   'http://127.0.0.1:4188',
@@ -26,6 +28,10 @@ export default {
       const url = new URL(request.url);
       if (url.pathname === '/api/login' && request.method === 'POST') {
         return json(await login(request, env), 200, cors);
+      }
+
+      if (url.pathname === '/api/order-request' && request.method === 'POST') {
+        return json(await sendOrderRequest(request, env), 200, cors);
       }
 
       const session = await requireSession(request, env);
@@ -68,6 +74,87 @@ async function login(request, env) {
   const payload = base64UrlEncode(JSON.stringify({ sub: expectedEmail, exp }));
   const signature = await sign(payload, env.ADMIN_SESSION_SECRET);
   return { token: `${payload}.${signature}`, expiresAt: exp };
+}
+
+async function sendOrderRequest(request, env) {
+  const payload = await readJson(request);
+  const honeypot = String(payload.website || '').trim();
+  if (honeypot) return { ok: true };
+
+  const type = cleanOrderField(payload.type, 40);
+  const name = cleanOrderField(payload.name, 120);
+  const email = cleanOrderField(payload.email, 180);
+  const phone = cleanOrderField(payload.phone, 80);
+  const vat = cleanOrderField(payload.vat, 80);
+  const message = cleanOrderField(payload.message, MAX_ORDER_FIELD_LENGTH);
+  const language = cleanOrderField(payload.language, 12);
+
+  if (!name || !email || !message) throw httpError(400, 'missing_required_fields');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw httpError(400, 'invalid_email');
+  if (!env.RESEND_API_KEY || !env.ORDER_TO_EMAIL || !env.ORDER_FROM_EMAIL) {
+    throw httpError(500, 'order_email_not_configured');
+  }
+
+  const subject = `Demande de commande - ${name}`;
+  const text = [
+    'Nouvelle demande de commande depuis le site.',
+    '',
+    `Type de demande: ${type || 'Non précisé'}`,
+    `Nom: ${name}`,
+    `Adresse e-mail: ${email}`,
+    phone ? `Téléphone: ${phone}` : '',
+    vat ? `Numéro de TVA: ${vat}` : '',
+    language ? `Langue du site: ${language}` : '',
+    '',
+    'Quantité souhaitée / message:',
+    message,
+    '',
+    'Note: demande sans confirmation automatique de prix ou de disponibilité.'
+  ].filter(Boolean).join('\n');
+
+  const html = [
+    '<p>Nouvelle demande de commande depuis le site.</p>',
+    '<dl>',
+    `<dt>Type de demande</dt><dd>${escapeHtml(type || 'Non précisé')}</dd>`,
+    `<dt>Nom</dt><dd>${escapeHtml(name)}</dd>`,
+    `<dt>Adresse e-mail</dt><dd>${escapeHtml(email)}</dd>`,
+    phone ? `<dt>Téléphone</dt><dd>${escapeHtml(phone)}</dd>` : '',
+    vat ? `<dt>Numéro de TVA</dt><dd>${escapeHtml(vat)}</dd>` : '',
+    language ? `<dt>Langue du site</dt><dd>${escapeHtml(language)}</dd>` : '',
+    '</dl>',
+    '<p><strong>Quantité souhaitée / message</strong></p>',
+    `<p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>`,
+    '<p><em>Demande sans confirmation automatique de prix ou de disponibilité.</em></p>'
+  ].filter(Boolean).join('');
+
+  const response = await fetch(RESEND_EMAILS_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+      'Idempotency-Key': crypto.randomUUID()
+    },
+    body: JSON.stringify({
+      from: env.ORDER_FROM_EMAIL,
+      to: [env.ORDER_TO_EMAIL],
+      reply_to: email,
+      subject,
+      text,
+      html
+    })
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw httpError(response.status, `resend_${response.status}: ${body.slice(0, 300)}`);
+  }
+
+  const result = await response.json();
+  return { ok: true, id: result.id || null };
+}
+
+function cleanOrderField(value, maxLength) {
+  return String(value || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim().slice(0, maxLength);
 }
 
 async function requireSession(request, env) {
@@ -231,6 +318,16 @@ function encodeBase64Utf8(value) {
 function decodeBase64Utf8(value) {
   const binary = atob(value);
   return new TextDecoder().decode(Uint8Array.from(binary, char => char.charCodeAt(0)));
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
 }
 
 function base64UrlEncode(value) {

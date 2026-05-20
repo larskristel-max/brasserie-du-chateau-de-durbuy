@@ -1932,6 +1932,10 @@
 
             <div class="order-request-panel" id="orderRequestPanel" hidden>
               <form class="reservation-form" id="orderRequestForm">
+                <div class="form-honeypot" aria-hidden="true">
+                  <label for="orderWebsite">Site web</label>
+                  <input id="orderWebsite" name="website" tabindex="-1" autocomplete="off">
+                </div>
                 <div class="form-row">
                   <label for="orderType" data-i18n="order.type.label">Type de demande</label>
                   <select id="orderType" name="type">
@@ -1965,7 +1969,7 @@
                   <p class="form-hint" data-i18n="order.hint">Aucun prix ni disponibilité ne sont confirmés automatiquement.</p>
                 </div>
                 <div class="form-actions">
-                  <button class="form-submit" type="submit" data-i18n="order.submit">Préparer l'e-mail</button>
+                  <button class="form-submit" type="submit" data-i18n="order.submit">Envoyer la demande</button>
                   <p class="form-status" id="orderRequestStatus" aria-live="polite"></p>
                 </div>
               </form>
@@ -2217,6 +2221,7 @@
       const orderType = document.getElementById('orderType');
       const orderVatRow = document.getElementById('orderVatRow');
       const orderStatus = document.getElementById('orderRequestStatus');
+      const ORDER_API_URL = 'https://brasserie-admin-api.brasseurduchateau.workers.dev/api/order-request';
 
       function updateOrderVat() {
         const isProfessional = orderType && orderType.value === 'Professionnel';
@@ -2239,25 +2244,25 @@
       updateOrderVat();
 
       if (orderForm) {
-        orderForm.addEventListener('submit', function (e) {
+        orderForm.addEventListener('submit', async function (e) {
           e.preventDefault();
+          const dict = translations[document.documentElement.lang] || translations.fr;
           if (!orderForm.checkValidity()) {
             orderForm.reportValidity();
             if (orderStatus) {
-              const dict = translations[document.documentElement.lang] || translations.fr;
               orderStatus.dataset.state = 'error';
               orderStatus.textContent = dict['order.error'];
             }
             return;
           }
 
-          const dict = translations[document.documentElement.lang] || translations.fr;
           const selectedType = orderType.options[orderType.selectedIndex].textContent.trim();
           const name = document.getElementById('orderName').value.trim();
           const email = document.getElementById('orderEmail').value.trim();
           const phone = document.getElementById('orderPhone').value.trim();
           const vat = document.getElementById('orderVat').value.trim();
           const message = document.getElementById('orderMessage').value.trim();
+          const website = document.getElementById('orderWebsite').value.trim();
           const lines = [
             'Type de demande: ' + selectedType,
             'Nom: ' + name,
@@ -2271,13 +2276,46 @@
             'Note: demande sans confirmation automatique de prix ou de disponibilité.'
           ].filter(Boolean);
 
-          window.location.href = 'mailto:info@brasseriechateaudurbuy.be'
-            + '?subject=' + encodeURIComponent('Demande de commande - Brasserie du Château de Durbuy')
-            + '&body=' + encodeURIComponent(lines.join('\n'));
-
+          const submitButton = orderForm.querySelector('[type="submit"]');
+          if (submitButton) submitButton.disabled = true;
           if (orderStatus) {
             orderStatus.removeAttribute('data-state');
-            orderStatus.textContent = dict['order.status'];
+            orderStatus.textContent = dict['order.sending'];
+          }
+
+          try {
+            const response = await fetch(ORDER_API_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                type: selectedType,
+                name,
+                email,
+                phone,
+                vat,
+                message,
+                website,
+                language: document.documentElement.lang || 'fr'
+              })
+            });
+            if (!response.ok) throw new Error('order_api_' + response.status);
+
+            orderForm.reset();
+            updateOrderVat();
+            if (orderStatus) {
+              orderStatus.removeAttribute('data-state');
+              orderStatus.textContent = dict['order.status'];
+            }
+          } catch (error) {
+            if (orderStatus) {
+              orderStatus.dataset.state = 'error';
+              orderStatus.innerHTML = dict['order.fallback'];
+            }
+            window.location.href = 'mailto:info@brasseriechateaudurbuy.be'
+              + '?subject=' + encodeURIComponent('Demande de commande - Brasserie du Château de Durbuy')
+              + '&body=' + encodeURIComponent(lines.join('\n'));
+          } finally {
+            if (submitButton) submitButton.disabled = false;
           }
         });
       }
@@ -2330,8 +2368,10 @@
           'order.vat': 'Numéro de TVA',
           'order.message': 'Quantité souhaitée / message',
           'order.hint': 'Aucun prix ni disponibilité ne sont confirmés automatiquement.',
-          'order.submit': "Préparer l'e-mail",
-          'order.status': "Votre e-mail est prêt dans votre messagerie.",
+          'order.submit': 'Envoyer la demande',
+          'order.sending': 'Envoi en cours…',
+          'order.status': 'Votre demande a bien été envoyée. Nous vous répondrons directement par e-mail.',
+          'order.fallback': "L'envoi direct n'est pas disponible pour l'instant. Votre messagerie va s'ouvrir pour terminer la demande.",
           'order.error': 'Veuillez compléter les champs requis.',
           'visite.chapter': '— Chapitre V —',
           'visite.kicker': 'Sur réservation',
@@ -2403,8 +2443,10 @@
           'order.vat': 'Btw-nummer',
           'order.message': 'Gewenste hoeveelheid / bericht',
           'order.hint': 'Prijzen en beschikbaarheid worden niet automatisch bevestigd.',
-          'order.submit': 'E-mail voorbereiden',
-          'order.status': 'Uw e-mail staat klaar in uw mailprogramma.',
+          'order.submit': 'Aanvraag versturen',
+          'order.sending': 'Bezig met verzenden…',
+          'order.status': 'Uw aanvraag is verzonden. We antwoorden u rechtstreeks per e-mail.',
+          'order.fallback': 'Rechtstreeks verzenden is momenteel niet beschikbaar. Uw mailprogramma wordt geopend om de aanvraag af te ronden.',
           'order.error': 'Vul de verplichte velden in.',
           'visite.chapter': '— Hoofdstuk V —',
           'visite.kicker': 'Op afspraak',
@@ -2476,8 +2518,10 @@
           'order.vat': 'VAT number',
           'order.message': 'Requested quantity / message',
           'order.hint': 'No price or availability is confirmed automatically.',
-          'order.submit': 'Prepare email',
-          'order.status': 'Your email is ready in your mail application.',
+          'order.submit': 'Send request',
+          'order.sending': 'Sending…',
+          'order.status': 'Your request has been sent. We will reply directly by email.',
+          'order.fallback': 'Direct sending is not available right now. Your mail application will open to complete the request.',
           'order.error': 'Please complete the required fields.',
           'visite.chapter': '— Chapter V —',
           'visite.kicker': 'By appointment',
@@ -2549,8 +2593,10 @@
           'order.vat': 'USt-IdNr.',
           'order.message': 'Gewünschte Menge / Nachricht',
           'order.hint': 'Preise und Verfügbarkeit werden nicht automatisch bestätigt.',
-          'order.submit': 'E-Mail vorbereiten',
-          'order.status': 'Ihre E-Mail ist in Ihrem Mailprogramm vorbereitet.',
+          'order.submit': 'Anfrage senden',
+          'order.sending': 'Wird gesendet…',
+          'order.status': 'Ihre Anfrage wurde gesendet. Wir antworten Ihnen direkt per E-Mail.',
+          'order.fallback': 'Direktes Senden ist momentan nicht verfügbar. Ihr Mailprogramm wird geöffnet, um die Anfrage abzuschließen.',
           'order.error': 'Bitte füllen Sie die Pflichtfelder aus.',
           'visite.chapter': '— Kapitel V —',
           'visite.kicker': 'Nur nach Vereinbarung',

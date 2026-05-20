@@ -10,12 +10,18 @@
   - La Librairie - Rue du Comte Théodule d'Ursel 20, 6940 Durbuy.
 - Added restrained wording:
   - "Une sélection de nos bières est disponible chez plusieurs partenaires locaux, selon arrivage."
-- Added an email-based `Demande de commande` teaser.
+- Reworked the `Demande de commande` form so it can submit directly through the Cloudflare Worker backend.
+- The form keeps a `mailto:` fallback if the backend is unavailable or not fully configured.
 - Important: this is not ecommerce:
   - no prices;
   - no payment;
   - no stock guarantee;
   - no backend order handling.
+- Backend requirement before direct sending works:
+  - deploy updated `brasserie-admin-api` Worker;
+  - configure `RESEND_API_KEY`;
+  - keep `ORDER_TO_EMAIL = info@brasseriechateaudurbuy.be`;
+  - keep `ORDER_FROM_EMAIL` on the verified sending domain.
 - Added the section to desktop and mobile navigation.
 - Refined the top navigation because the first version wrapped poorly.
 - Current FR nav labels:

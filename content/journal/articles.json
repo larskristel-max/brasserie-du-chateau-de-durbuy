@@ -44,6 +44,29 @@
       "updatedAt": "2025-09-22T09:00:00.000Z"
     },
     {
+      "id": "une-biere-dici-2026-05-20",
+      "title": "Une bière d'ici",
+      "date": "2026-05-20",
+      "language": "fr",
+      "status": "published",
+      "author": "Lars Kristel",
+      "lede": "À Durbuy, le mot local doit rester simple.",
+      "body": [
+        "Je me méfie un peu des grands mots. Une bière locale n'a pas besoin de raconter toute une région à chaque gorgée. Elle doit d'abord être faite ici, avec attention, dans le rythme réel du lieu.",
+        "À Durbuy, ce rythme est particulier. La ville est dense, minérale, resserrée entre la pierre et l'Ourthe. On y travaille près des murs, près de l'eau, avec une lumière qui change vite selon les saisons.",
+        "Brasser ici, ce n'est pas fabriquer un souvenir. C'est accepter une échelle: de petites séries, des gestes suivis de près, une présence quotidienne dans les anciennes dépendances du domaine.",
+        "Le reste vient ensuite. Le nom du château, la ville, l'histoire. Ils ne remplacent pas le travail; ils l'obligent."
+      ],
+      "heroImage": null,
+      "tags": [
+        "durbuy",
+        "local",
+        "domaine"
+      ],
+      "createdAt": "2026-05-20T15:40:00.000+02:00",
+      "updatedAt": "2026-05-20T15:40:00.000+02:00"
+    },
+    {
       "id": "marckloff-et-nous-2026-05-19",
       "title": "Marckloff, et nous",
       "date": "2026-05-19",

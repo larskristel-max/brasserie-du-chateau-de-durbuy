@@ -67,6 +67,29 @@
       "updatedAt": "2026-05-20T15:40:00.000+02:00"
     },
     {
+      "id": "les-anciennes-ecuries-2026-05-18",
+      "title": "Les anciennes écuries",
+      "date": "2026-05-18",
+      "language": "fr",
+      "status": "published",
+      "author": "Lars Kristel",
+      "lede": "La brasserie occupe un bâtiment qui n'a pas été conçu pour le bruit des cuves.",
+      "body": [
+        "Les anciennes écuries du Château de Durbuy n'ont rien d'un décor. Ce sont des murs de service, faits pour tenir, abriter, porter le passage des jours.",
+        "La brasserie s'y est installée sans chercher à effacer ce que le bâtiment était avant elle. On y sent encore la logique des dépendances: la proximité du château, la pierre, les ouvertures mesurées, le rapport direct au travail.",
+        "J'aime cette idée d'un lieu qui change d'usage sans perdre sa fonction profonde. Autrefois on y gardait les chevaux du domaine. Aujourd'hui on y surveille des fermentations, des températures, des brassins qui demandent la même régularité discrète.",
+        "Ce n'est pas le château lui-même qui brasse. C'est l'une de ses anciennes pièces de vie pratique. Pour une brasserie, c'est peut-être le bon endroit."
+      ],
+      "heroImage": null,
+      "tags": [
+        "chateau",
+        "ecuries",
+        "brasserie"
+      ],
+      "createdAt": "2026-05-18T10:00:00.000+02:00",
+      "updatedAt": "2026-05-18T10:00:00.000+02:00"
+    },
+    {
       "id": "marckloff-et-nous-2026-05-19",
       "title": "Marckloff, et nous",
       "date": "2026-05-19",

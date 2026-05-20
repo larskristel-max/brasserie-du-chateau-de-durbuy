@@ -84,6 +84,8 @@ Last updated: 2026-05-20
   - L'Épicerie de Durbuy
   - Confiturerie Saint-Amour
 - Added an email-based order request teaser for private/professional requests. This is not ecommerce: no prices, payment, stock guarantee, or backend order handling.
+- Added the points-de-vente section to desktop and mobile navigation.
+- Tightened homepage navigation labels after the first points-de-vente nav label wrapped poorly.
 - Kept `index.html` and `redesign-template.html` identical after edits.
 
 ## Journal And Admin
@@ -97,6 +99,11 @@ Last updated: 2026-05-20
 - Admin page now calls the Cloudflare Worker API.
 - GitHub token is stored server-side as a Cloudflare secret, not in the browser.
 - Live admin URL: `https://brasseriechateaudurbuy.be/admin/`
+- French-only published Carnet entries now include:
+  - `Avant l'étiquette finale` - 2026-05-20
+  - `Marckloff, et nous` - 2026-05-19
+  - `Les anciennes écuries` - 2026-05-18
+  - `Une bière d'ici` - 2026-05-17
 
 ## Important Translation Status
 
@@ -123,7 +130,7 @@ Last updated: 2026-05-20
 
 ## To Do
 
-- Use `docs/website-thread-handoff-boss-requests-2026-05-20.md` as the current handoff for Jean-Michel's latest website requests: points de vente first, open brasserie later, no public ecommerce/prices yet.
+- Use `docs/website-thread-handoff-boss-requests-2026-05-20.md` as the current handoff for Jean-Michel's latest website requests. Also use `docs/daily-ops-website-carnet-2026-05-20.md` for the published website/Carnet state on 20/05/2026.
 - Confirm whether the librairie should be added later to `Où trouver nos bières`, including exact public name and stocking location.
 - Review all homepage translations in NL/EN/DE, especially tone and heritage phrasing.
 - Decide and document the journal translation policy.
@@ -138,12 +145,6 @@ Last updated: 2026-05-20
 - Consider adding a small admin status panel showing whether the GitHub write API is connected.
 - Rotate the temporary/simple admin password to a stronger password before broader use.
 - Confirm Cloudflare Web Analytics is enabled and document where visitor stats are read.
-- Add basic SEO infrastructure:
-  - `robots.txt`,
-  - `sitemap.xml`,
-  - canonical URL metadata for the permanent domain,
-  - Open Graph/Twitter metadata using permanent-domain assets,
-  - clean structured data for the business/address/contact.
 - Do a local SEO pass:
   - create or claim Google Business Profile,
   - keep appointment-only status accurate,
@@ -153,7 +154,7 @@ Last updated: 2026-05-20
   - Durbuy,
   - Château de Durbuy,
   - brewing heritage since the 16th century,
-  - former stables of the château,
+  - former stables of the Château,
   - journal articles on estate and brewing notes.
 - Add multilingual SEO only after translation review:
   - review FR/NL/EN/DE homepage translations,

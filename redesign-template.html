@@ -320,13 +320,14 @@
     .nav-links {
       display: flex;
       justify-content: center;
-      gap: clamp(0.85rem, 2vw, 2.1rem);
+      gap: clamp(0.85rem, 1.7vw, 1.8rem);
     }
     .nav-links a {
       position: relative;
       opacity: 0.84;
       transition: opacity 220ms ease;
       padding-bottom: 0.2rem;
+      white-space: nowrap;
     }
     .nav-links a:hover, .nav-links a:focus-visible { opacity: 1; }
     .nav-links a::after {
@@ -2282,11 +2283,11 @@
       // See agent.md §14 and docs/heritage/research-findings.md.
       const translations = {
         fr: {
-          'nav.domaine': 'Le Domaine',
+          'nav.domaine': 'Domaine',
           'nav.brasserie': 'La Brasserie',
-          'nav.bieres': 'Les Bières',
-          'nav.points': 'Points de vente',
-          'nav.visite': 'La Visite',
+          'nav.bieres': 'Bières',
+          'nav.points': 'Vente',
+          'nav.visite': 'Visite',
           'nav.carnet': 'Carnet',
           'nav.reservations': 'Réservations',
           'hero.location': 'Durbuy · Belgique',
@@ -2355,9 +2356,9 @@
           'form.success.close': 'Fermer'
         },
         nl: {
-          'nav.domaine': 'Het Domein',
-          'nav.brasserie': 'De Brouwerij',
-          'nav.bieres': 'De Bieren',
+          'nav.domaine': 'Domein',
+          'nav.brasserie': 'Brouwerij',
+          'nav.bieres': 'Bieren',
           'nav.points': 'Verkoop',
           'nav.visite': 'Bezoek',
           'nav.carnet': 'Dagboek',
@@ -2428,9 +2429,9 @@
           'form.success.close': 'Sluiten'
         },
         en: {
-          'nav.domaine': 'The Estate',
-          'nav.brasserie': 'The Brewery',
-          'nav.bieres': 'The Beers',
+          'nav.domaine': 'Estate',
+          'nav.brasserie': 'Brewery',
+          'nav.bieres': 'Beers',
           'nav.points': 'Stockists',
           'nav.visite': 'Visit',
           'nav.carnet': 'Journal',
@@ -2501,9 +2502,9 @@
           'form.success.close': 'Close'
         },
         de: {
-          'nav.domaine': 'Die Domäne',
-          'nav.brasserie': 'Die Brauerei',
-          'nav.bieres': 'Die Biere',
+          'nav.domaine': 'Domäne',
+          'nav.brasserie': 'Brauerei',
+          'nav.bieres': 'Biere',
           'nav.points': 'Verkauf',
           'nav.visite': 'Besuch',
           'nav.carnet': 'Tagebuch',

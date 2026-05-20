@@ -68,9 +68,9 @@
       "updatedAt": "2025-09-22T09:00:00.000Z"
     },
     {
-      "id": "une-biere-dici-2026-05-20",
+      "id": "une-biere-dici-2026-05-17",
       "title": "Une bière d'ici",
-      "date": "2026-05-20",
+      "date": "2026-05-17",
       "language": "fr",
       "status": "published",
       "author": "Lars Kristel",
@@ -87,8 +87,8 @@
         "local",
         "domaine"
       ],
-      "createdAt": "2026-05-20T15:40:00.000+02:00",
-      "updatedAt": "2026-05-20T15:40:00.000+02:00"
+      "createdAt": "2026-05-17T10:00:00.000+02:00",
+      "updatedAt": "2026-05-20T16:10:00.000+02:00"
     },
     {
       "id": "les-anciennes-ecuries-2026-05-18",

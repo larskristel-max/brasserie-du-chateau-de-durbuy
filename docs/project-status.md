@@ -58,9 +58,9 @@ Last updated: 2026-05-20
     - `RESEND_API_KEY`
   - Public config:
     - `ORDER_TO_EMAIL = info@brasseriechateaudurbuy.be`
-    - `ORDER_FROM_EMAIL = Brasserie du Chateau de Durbuy <send@send.brasseriechateaudurbuy.be>`
+    - `ORDER_FROM_EMAIL = Brasserie du Chateau de Durbuy <reservations@brasseriechateaudurbuy.be>`
     - `RESERVATION_TO_EMAIL = info@brasseriechateaudurbuy.be`
-    - `RESERVATION_FROM_EMAIL = Brasserie du Chateau de Durbuy <send@send.brasseriechateaudurbuy.be>`
+    - `RESERVATION_FROM_EMAIL = Brasserie du Chateau de Durbuy <reservations@brasseriechateaudurbuy.be>`
 
 ## Domain And Email
 

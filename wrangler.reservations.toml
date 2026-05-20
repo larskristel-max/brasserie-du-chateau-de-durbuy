@@ -6,7 +6,7 @@ workers_dev = true
 
 [vars]
 ORDER_TO_EMAIL = "info@brasseriechateaudurbuy.be"
-ORDER_FROM_EMAIL = "Brasserie du Chateau de Durbuy <send@send.brasseriechateaudurbuy.be>"
+ORDER_FROM_EMAIL = "Brasserie du Chateau de Durbuy <reservations@brasseriechateaudurbuy.be>"
 RESERVATION_TO_EMAIL = "info@brasseriechateaudurbuy.be"
-RESERVATION_FROM_EMAIL = "Brasserie du Chateau de Durbuy <send@send.brasseriechateaudurbuy.be>"
+RESERVATION_FROM_EMAIL = "Brasserie du Chateau de Durbuy <reservations@brasseriechateaudurbuy.be>"
 ALLOWED_ORIGINS = "http://127.0.0.1:4188,http://localhost:4188,https://larskristel-max.github.io,https://brasseriechateaudurbuy.be,https://www.brasseriechateaudurbuy.be"

@@ -21,7 +21,7 @@
 - Backend requirement before direct sending works:
   - deploy updated `brasserie-reservations` Worker;
   - keep `ORDER_TO_EMAIL = info@brasseriechateaudurbuy.be`;
-  - keep `ORDER_FROM_EMAIL` on the verified sending domain.
+  - keep `ORDER_FROM_EMAIL = reservations@brasseriechateaudurbuy.be`, which is authorized for the existing Resend key.
 - Added the section to desktop and mobile navigation.
 - Refined the top navigation because the first version wrapped poorly.
 - Current FR nav labels:

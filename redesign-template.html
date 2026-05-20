@@ -320,7 +320,7 @@
     .nav-links {
       display: flex;
       justify-content: center;
-      gap: clamp(1rem, 3vw, 2.6rem);
+      gap: clamp(0.85rem, 2vw, 2.1rem);
     }
     .nav-links a {
       position: relative;
@@ -995,6 +995,22 @@
       border-top: 1px solid var(--line);
     }
     .order-request-panel[hidden] { display: none; }
+    .order-request .text-cta {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid currentColor;
+      padding: 0 0 0.3rem;
+      font: inherit;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      line-height: 1.8;
+      text-align: left;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
     .form-row select {
       width: 100%;
       border: 0;
@@ -1689,6 +1705,7 @@
       <a href="#domaine" data-i18n="nav.domaine">Le Domaine</a>
       <a href="#brasserie" data-i18n="nav.brasserie">La Brasserie</a>
       <a href="#bieres" data-i18n="nav.bieres">Les Bières</a>
+      <a href="#points-de-vente" data-i18n="nav.points">Points de vente</a>
       <a href="#visite" data-i18n="nav.visite">La Visite</a>
       <a href="/journal/" data-i18n="nav.carnet">Carnet</a>
     </nav>
@@ -1712,6 +1729,7 @@
       <a href="#domaine" data-i18n="nav.domaine">Le Domaine</a>
       <a href="#brasserie" data-i18n="nav.brasserie">La Brasserie</a>
       <a href="#bieres" data-i18n="nav.bieres">Les Bières</a>
+      <a href="#points-de-vente" data-i18n="nav.points">Points de vente</a>
       <a href="#visite" data-i18n="nav.visite">La Visite</a>
       <a href="/journal/" data-i18n="nav.carnet">Carnet</a>
       <a class="mobile-cta" href="#reservationModal" data-open-reservation data-i18n="nav.reservations">Réservations</a>
@@ -2267,6 +2285,7 @@
           'nav.domaine': 'Le Domaine',
           'nav.brasserie': 'La Brasserie',
           'nav.bieres': 'Les Bières',
+          'nav.points': 'Points de vente',
           'nav.visite': 'La Visite',
           'nav.carnet': 'Carnet',
           'nav.reservations': 'Réservations',
@@ -2339,6 +2358,7 @@
           'nav.domaine': 'Het Domein',
           'nav.brasserie': 'De Brouwerij',
           'nav.bieres': 'De Bieren',
+          'nav.points': 'Verkoop',
           'nav.visite': 'Bezoek',
           'nav.carnet': 'Dagboek',
           'nav.reservations': 'Reservaties',
@@ -2411,6 +2431,7 @@
           'nav.domaine': 'The Estate',
           'nav.brasserie': 'The Brewery',
           'nav.bieres': 'The Beers',
+          'nav.points': 'Stockists',
           'nav.visite': 'Visit',
           'nav.carnet': 'Journal',
           'nav.reservations': 'Reservations',
@@ -2483,6 +2504,7 @@
           'nav.domaine': 'Die Domäne',
           'nav.brasserie': 'Die Brauerei',
           'nav.bieres': 'Die Biere',
+          'nav.points': 'Verkauf',
           'nav.visite': 'Besuch',
           'nav.carnet': 'Tagebuch',
           'nav.reservations': 'Reservierungen',

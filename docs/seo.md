@@ -1,6 +1,6 @@
 # SEO / Visibility Notes
 
-Last updated: 2026-05-19
+Last updated: 2026-05-20
 
 ## Current Decisions
 
@@ -12,6 +12,18 @@ Last updated: 2026-05-19
 - No `hreflang` is published yet. Add it only after translation review and only for pages with real translated equivalents.
 - Journal articles currently publish in their original language only.
 - Cloudflare Managed `robots.txt` is currently active on the zone and prepends its own AI-crawler rules. The repo `robots.txt` explicitly allows AI search / assistant retrieval agents while keeping `ai-train=no`.
+- Daily SEO / Google / outreach continuity for 20/05/2026 is recorded in `docs/daily-ops-seo-google-outreach-2026-05-20.md`.
+
+## Google / Discovery State - 20/05/2026
+
+- Google Search Console domain property for `brasseriechateaudurbuy.be` was created and verified.
+- Correct Google DNS verification record was added in Cloudflare.
+- Accidental / wrong Google verification record was removed.
+- Sitemap was submitted in Search Console.
+- Indexing was requested for the homepage and `/journal/`.
+- Sitemap fetching may need time even though the live sitemap works.
+- Google Business Profile was created / updated with cautious brewery positioning: microbrasserie, official website, description, social profiles, and relevant attributes.
+- Business profile guardrails: no invented opening hours, no menu, no restaurant claims, and no unsupported service claims.
 
 ## Metadata Policy
 

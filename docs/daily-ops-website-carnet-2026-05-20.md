@@ -7,6 +7,7 @@
   - Établissements Dispas - Route de Bomal 42/A, 6940 Barvaux-sur-Ourthe.
   - L'Épicerie de Durbuy - Rue du Comte Théodule d'Ursel 39, 6940 Durbuy.
   - Confiturerie Saint-Amour - Rue Alphonse Eloy 7, 6940 Durbuy.
+  - La Librairie - Rue du Comte Théodule d'Ursel 20, 6940 Durbuy.
 - Added restrained wording:
   - "Une sélection de nos bières est disponible chez plusieurs partenaires locaux, selon arrivage."
 - Added an email-based `Demande de commande` teaser.
@@ -64,7 +65,7 @@
 
 - Review homepage translations in NL/EN/DE.
 - Decide journal translation policy.
-- Confirm whether the librairie should be added to points de vente.
+- Keep the points-de-vente list current as partners are confirmed or removed.
 - Continue checking nav appearance on real desktop/mobile sizes.
 - Monitor GitHub Pages / Cloudflare cache after publishes.
 - Keep label and beer availability claims cautious until production and labels are validated.

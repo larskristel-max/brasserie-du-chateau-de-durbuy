@@ -83,6 +83,7 @@ Last updated: 2026-05-20
   - Établissements Dispas
   - L'Épicerie de Durbuy
   - Confiturerie Saint-Amour
+  - La Librairie
 - Added an email-based order request teaser for private/professional requests. This is not ecommerce: no prices, payment, stock guarantee, or backend order handling.
 - Added the points-de-vente section to desktop and mobile navigation.
 - Tightened homepage navigation labels after the first points-de-vente nav label wrapped poorly.
@@ -131,7 +132,8 @@ Last updated: 2026-05-20
 ## To Do
 
 - Use `docs/website-thread-handoff-boss-requests-2026-05-20.md` as the current handoff for Jean-Michel's latest website requests. Also use `docs/daily-ops-website-carnet-2026-05-20.md` for the published website/Carnet state on 20/05/2026.
-- Confirm whether the librairie should be added later to `Où trouver nos bières`, including exact public name and stocking location.
+- Use `docs/daily-ops-seo-google-outreach-2026-05-20.md` for the Search Console, Google Business Profile, sitemap/indexing, and outreach state from 20/05/2026.
+- Keep the points-de-vente list current if a partner stops carrying the beer or a new confirmed stockist is added.
 - Review all homepage translations in NL/EN/DE, especially tone and heritage phrasing.
 - Decide and document the journal translation policy.
 - Add manual translation support to journal content if multilingual journal publishing is required.
@@ -176,3 +178,17 @@ Last updated: 2026-05-20
 - Updated the GitHub Pages deploy workflow to copy `robots.txt` and `sitemap.xml`.
 - Added `docs/seo.md` with metadata decisions, search themes, content principles, and local SEO tasks.
 - Kept `index.html` and `redesign-template.html` in sync after metadata changes.
+
+## Google / Outreach Pass Completed - 2026-05-20
+
+- Verified the permanent domain and `www` redirect.
+- Confirmed the old placeholder / noindex state is gone and the live site is indexable.
+- Confirmed `robots.txt` and `sitemap.xml` are reachable on the permanent domain.
+- Created and verified the Google Search Console domain property.
+- Added the correct Google DNS verification record in Cloudflare and removed the accidental wrong record.
+- Submitted the sitemap in Search Console.
+- Requested indexing for the homepage and `/journal/`.
+- Created / updated the Google Business Profile with cautious microbrewery positioning.
+- Added / confirmed Facebook profile: `https://www.facebook.com/brasseriechateaudedurbuy`.
+- Sent the website information email to relevant brewery / tourism / listing contacts with French and Dutch text.
+- Created but did not send the RSI Durbuy Gmail draft to `rsidurbuy@gmail.com`, cc `tourisme@durbuy.be`.

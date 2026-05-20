@@ -2,6 +2,30 @@
   "version": 1,
   "articles": [
     {
+      "id": "avant-letiquette-finale-2026-05-20",
+      "title": "Avant l'étiquette finale",
+      "date": "2026-05-20",
+      "language": "fr",
+      "status": "published",
+      "author": "Lars Kristel",
+      "lede": "Une étiquette ne se valide pas seulement à l'écran.",
+      "body": [
+        "Ces derniers jours, le travail s'est concentré sur un objet discret, mais décisif: l'étiquette. Avant qu'une bière ne soit présentée, offerte ou simplement posée sur une table, il faut que ce petit morceau de papier trouve sa juste mesure.",
+        "Une première épreuve physique a permis de trancher plusieurs choses. Le papier choisi ne convenait pas. Le format paraissait trop étroit. À l'écran, certains équilibres semblaient possibles; en main, sur la bouteille, ils demandaient autre chose.",
+        "La direction est donc reprise avec plus de largeur, sans changer l'esprit. Il ne s'agit pas d'agrandir pour montrer davantage, mais de laisser respirer le centre de l'étiquette: le château, le nom, la présence du lieu. Les mentions légales, elles, doivent rester nettes, lisibles, correctement tenues.",
+        "Ce travail est moins spectaculaire qu'une annonce. Il est pourtant nécessaire. Une brasserie de domaine ne peut pas se permettre une image approximative. Le papier, les marges, la coupe, la lisibilité, la couleur: tout cela fait partie de la même exigence.",
+        "Les fichiers sont donc repris, vérifiés, corrigés. Une nouvelle épreuve physique devra encore être examinée avant toute validation finale. C'est une étape lente, mais juste. Ici, mieux vaut retarder une étiquette que figer trop tôt une erreur."
+      ],
+      "heroImage": null,
+      "tags": [
+        "etiquettes",
+        "lancement",
+        "exigence"
+      ],
+      "createdAt": "2026-05-20T16:00:00.000+02:00",
+      "updatedAt": "2026-05-20T16:00:00.000+02:00"
+    },
+    {
       "id": "le-premier-brassin-de-mai-2026-05-11",
       "title": "Le premier brassin de mai",
       "date": "2026-05-11",
